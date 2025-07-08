@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/logo.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Content/Images/logo.xnb","TextureProcessor","Texture2DContent",16734,311381,0.117488
+"C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/pong-atlas.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Content/Images/pong-atlas.xnb","TextureProcessor","Texture2DContent",4746,663637,0.024152
