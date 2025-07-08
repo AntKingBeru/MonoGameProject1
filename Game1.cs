@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,10 +7,17 @@ namespace MonoGameProject1;
 
 public class Game1 : Game
 {
-    private GraphicsDeviceManager _graphics;
+    private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private SpriteFont _oswaldFont;
+    private Text MousePosition;
+    private Texture2D _logo;
+    private Texture2D _pongAtlas;
+    private Texture2D _pacman;
     private readonly Vector2 _screenCenter;
+    
+    List<IUpdateable> _updateables = new List<IUpdateable>();
+    List<IDrawable> _drawables = new List<IDrawable>();
 
     public Game1()
     {
@@ -34,11 +42,23 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        _logo = Content.Load<Texture2D>("Images/logo");
+        _pongAtlas = Content.Load<Texture2D>("Images/pong-atlas");
+        _pacman = Content.Load<Texture2D> ("Images/pacman");
+
+        /*pacman = new Player(_pacman);
+        pacman.Position = _screenCenter;
+        pacman.Scale = new Vector2(0.2f, 0.2f);
         
-        /*_logo = Content.LoadTexture2D>("Images/logo")
-         _*/
+        _updateables.Add(pacman);
+        _drawables.Add(pacman);*/
         
         _oswaldFont = Content.Load<SpriteFont>("Fonts/Oswald");
+        MousePosition.text = "Mouse Position";
+        MousePosition.Position = new Vector2();
+        
+        _updateables.Add(MousePosition);
+        _drawables.Add(MousePosition);
     }
 
     protected override void Update(GameTime gameTime)
@@ -47,33 +67,25 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        foreach (var updateable in _updateables)
+        {
+            updateable.Update(gameTime);
+        }
 
         base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
-
+        GraphicsDevice.Clear(Color.DarkSlateGray);
         _spriteBatch.Begin();
-
-        var text = "Hello, MonoGame!";
-        var textCenter = _oswaldFont.MeasureString(text) * 0.5f;
-        _spriteBatch.DrawString(
-            _oswaldFont,
-            text,
-            _screenCenter,
-            Color.White,
-            0,
-            textCenter,
-            Vector2.One,
-            SpriteEffects.None,
-            0
-            );
+        
+        foreach (IDrawable drawable in _drawables)
+        {
+            drawable.Draw(_spriteBatch);
+        }
         
         _spriteBatch.End();
-
         base.Draw(gameTime);
     }
 }
