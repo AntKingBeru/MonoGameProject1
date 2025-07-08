@@ -8,6 +8,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private SpriteFont _oswaldFont;
 
     public Game1()
     {
@@ -26,8 +27,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-        // TODO: use this.Content to load your game content here
+        _oswaldFont = Content.Load<SpriteFont>("Fonts/Oswald");
     }
 
     protected override void Update(GameTime gameTime)
@@ -43,9 +43,13 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Honeydew);
+        GraphicsDevice.Clear(Color.Black);
 
-        // TODO: Add your drawing code here
+        _spriteBatch.Begin();
+        
+        _spriteBatch.DrawString(_oswaldFont, "Hello, MonoGame!", new Vector2(100, 100),  Color.White);
+        
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }

@@ -1,3 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/logo.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Images/logo.xnb","TextureProcessor","Texture2DContent",16734,311381,0.0681009
-"C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/pong-atlas.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Images/pong-atlas.xnb","TextureProcessor","Texture2DContent",4746,663637,0.0124253
+"C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Fonts/Oswald.spritefont","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Fonts/Oswald.xnb","FontDescriptionProcessor","SpriteFontContent",2068,21529,0.1120331
+"C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/logo.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Images/logo.xnb","TextureProcessor","Texture2DContent",16734,311381,0.0255851
+"C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/pong-atlas.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Images/pong-atlas.xnb","TextureProcessor","Texture2DContent",4746,663637,0.0121747

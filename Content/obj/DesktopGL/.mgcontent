@@ -4,10 +4,12 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Fonts/Oswald.spritefont</File>
     <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/logo.png</File>
     <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/pong-atlas.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

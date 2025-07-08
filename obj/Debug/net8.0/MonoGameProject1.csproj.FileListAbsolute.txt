@@ -31,3 +31,5 @@ C:\Users\kabut\RiderProjects\MonoGameProject1\obj\Debug\net8.0\MonoGameProject1.
 C:\Users\kabut\RiderProjects\MonoGameProject1\obj\Debug\net8.0\ref\MonoGameProject1.dll
 C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\logo.xnb
 C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\pong-atlas.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Fonts\Oswald.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\obj\Debug\net8.0\MonoGameProject1.sourcelink.json
