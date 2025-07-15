@@ -6,8 +6,9 @@ namespace MonoGameProject1;
 public class Sprite : IUpdatable, IDrawable
 {
     //Semi-Dynamic variables
-    private Texture2D _texture;
+    protected Texture2D _texture;
     private Vector2 _pivot;
+    protected Rectangle? sourceRectangle = null;
     
     //Dynamic variables
     public float Rotation = 0f;
@@ -15,9 +16,14 @@ public class Sprite : IUpdatable, IDrawable
     public Vector2 Scale = Vector2.One;
     public SpriteEffects Effect = SpriteEffects.None;
     
-    public Sprite(Texture2D texture)
+    public Sprite(string name)
     {
-        _texture = texture;
+        ChangeSprite(name);
+    }
+    
+    public void ChangeSprite(string name)
+    {
+        _texture = SpriteManager.GetSprite(name).Texture;
         _pivot = new Vector2(_texture.Width * 0.5f, _texture.Height * 0.5f);
     }
     
@@ -31,7 +37,7 @@ public class Sprite : IUpdatable, IDrawable
         spriteBatch.Draw(
             _texture,
             Position,
-            null,
+            sourceRectangle,
             Color.White,
             MathHelper.ToRadians(Rotation),
             _pivot,

@@ -10,7 +10,7 @@ public class Game1 : Game
 {
     private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private Sprite pacman;
+    private Animation pacman;
     
     //Textures
     private Texture2D _logo;
@@ -33,6 +33,8 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+
+        SpriteManager.ContentMan = Content;
         
         _graphics.IsFullScreen = false;
         _graphics.PreferredBackBufferWidth = 1920;
@@ -53,17 +55,30 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
         //Texture load
-        _logo = Content.Load<Texture2D>("Images/logo");
         _pongAtlas = Content.Load<Texture2D>("Images/pong-atlas");
-        _pacman = Content.Load<Texture2D> ("Images/pacman");
+        
+        
+        
+        SpriteManager.AddSprite("logo", "Images/logo");
+        SpriteManager.AddSprite("pong-atlas", "Images/pong-atlas", 2, 1);
+        SpriteManager.AddSprite("player", "Images/pacman");
+        SpriteManager.AddSprite("logo", "Images/logo");
+
+        SpriteManager.AddSprite("bird1", "Images/Bird1_1" , 4,4);
+        SpriteManager.AddSprite("bird2", "Images/Bird1_3", 4,4);
+        SpriteManager.AddSprite("bird3", "Images/Bird2 Duck_1", 4,4);
+        SpriteManager.AddSprite("bird4", "Images/Bird2 Duck_3", 4,4);
+        SpriteManager.AddSprite("bird5", "Images/Bird3_Egret2", 4,4);
+        
         
         //Text-Related load
         _oswaldFont = Content.Load<SpriteFont>("Fonts/Oswald");
 
         //Temp content
-        pacman = new Player(_pacman);
+        pacman = new Player("bird1");
         pacman.Position = _screenCenter;
         pacman.Scale = new Vector2(0.25f, 0.25f);
+        pacman.PlayAnimation(true , 10);
         _updatables.Add(pacman);
         _drawables.Add(pacman);
         _mousePosition = new MousePosition(_oswaldFont);
