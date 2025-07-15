@@ -59,12 +59,7 @@ public class Animation : Sprite
     {
         _timeCounter += gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (_timeCounter >= 1.0f / _fps)
-        {
-            return true;
-        }
-        
-        return false;
+        return _timeCounter >= 1.0f / _fps;
     }
 
     private void MoveNextFrame()
@@ -81,7 +76,16 @@ public class Animation : Sprite
         }
         else
         {
-            //TODO: add logic for not looping
+            _indexX++;
+            if (_indexX == _info.Columns)
+            {
+                _indexY++;
+                if (_indexY == _info.Rows)
+                {
+                    _isLooping = false;
+                }
+            }
+            _indexX %= _info.Columns;
         }
     }
     
