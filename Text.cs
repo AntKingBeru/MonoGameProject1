@@ -3,12 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class Text : IUpdateable, IDrawable
+public class Text : IUpdatable, IDrawable
 {
-    private SpriteFont _font;
-    private Vector2 _textCenter;
+    //Semi-Dynamic variables
+    protected SpriteFont _font;
+    protected Vector2 _textCenter;
 
-    public string text = "";
+    //Dynamic variables
+    public string _Text;
     public float Rotation = 0f;
     public Vector2 Position =  Vector2.Zero;
     public Vector2 Scale = Vector2.One;
@@ -18,22 +20,23 @@ public class Text : IUpdateable, IDrawable
         _font = font;
     }
 
-    public void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
-        _textCenter = _font.MeasureString(text) * 0.5f;
+        _textCenter = _font.MeasureString(_Text) * 0.5f;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        /*spriteBatch.Draw(
+        spriteBatch.DrawString(
             _font,
-            text,
+            _Text,
             Position,
             Color.White,
             MathHelper.ToRadians(Rotation),
+            _textCenter,
             Scale,
             SpriteEffects.None,
             0
-            );*/
+            );
     }
 }

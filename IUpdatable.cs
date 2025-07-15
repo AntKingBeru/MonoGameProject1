@@ -2,7 +2,7 @@
 
 namespace MonoGameProject1;
 
-public interface IUpdateable
+public interface IUpdatable
 {
     void Update(GameTime gameTime);
 }

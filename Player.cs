@@ -6,7 +6,9 @@ namespace MonoGameProject1;
 
 public class Player : Sprite
 {
+    //Non-Dynamic variables
     private int _speed = 500;
+    
     public Player(Texture2D texture) : base(texture)
     {
         
@@ -15,22 +17,28 @@ public class Player : Sprite
     public override void Update(GameTime gameTime)
     {
         var state = Keyboard.GetState();
-        if (state.IsKeyDown(Keys.W))
+        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        foreach (var key in state.GetPressedKeys())
         {
-            Position.Y -= _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            switch (key)
+            {
+                case Keys.W:
+                    Position.Y -= _speed * deltaTime;
+                    break;
+                case Keys.A:
+                    Position.X -= _speed * deltaTime;
+                    Effect = SpriteEffects.FlipHorizontally;
+                    break;
+                case Keys.S:
+                    Position.Y += _speed * deltaTime;
+                    break;
+                case Keys.D:
+                    Position.X += _speed * deltaTime;
+                    Effect = SpriteEffects.None;
+                    break;
+            }
         }
-        if (state.IsKeyDown(Keys.A))
-        {
-            Position.X -= _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        if (state.IsKeyDown(Keys.S))
-        {
-            Position.Y += _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        if (state.IsKeyDown(Keys.D))
-        {
-            Position.X += _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
+
         base.Update(gameTime);
     }
 }
