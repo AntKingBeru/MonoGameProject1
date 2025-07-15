@@ -1,4 +1,5 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Fonts/Oswald.spritefont","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Content/Fonts/Oswald.xnb","FontDescriptionProcessor","SpriteFontContent",2077,70681,0.0952918
 "C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/logo.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Content/Images/logo.xnb","TextureProcessor","Texture2DContent",16734,311381,0.117488
+"C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/pacman.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Content/Images/pacman.xnb","TextureProcessor","Texture2DContent",14575,1048661,0.1868657
 "C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/pong-atlas.png","C:/Users/kabut/RiderProjects/MonoGameProject1/Content/bin/DesktopGL/Content/Images/pong-atlas.xnb","TextureProcessor","Texture2DContent",4746,663637,0.024152

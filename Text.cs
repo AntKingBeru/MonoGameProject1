@@ -25,7 +25,7 @@ public class Text : IUpdateable, IDrawable
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(
+        /*spriteBatch.Draw(
             _font,
             text,
             Position,
@@ -34,6 +34,6 @@ public class Text : IUpdateable, IDrawable
             Scale,
             SpriteEffects.None,
             0
-            );
+            );*/
     }
 }
