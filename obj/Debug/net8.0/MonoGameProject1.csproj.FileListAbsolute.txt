@@ -34,3 +34,11 @@ C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\po
 C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Fonts\Oswald.xnb
 C:\Users\kabut\RiderProjects\MonoGameProject1\obj\Debug\net8.0\MonoGameProject1.sourcelink.json
 C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\pacman.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\B4_s3.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\B4_s5.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird1_1.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird1_3.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird2 Duck_1.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird2 Duck_3.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird3_Egret2.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird3_Egret4.xnb

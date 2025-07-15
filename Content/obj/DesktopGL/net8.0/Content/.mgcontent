@@ -5,11 +5,27 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Fonts/Oswald.spritefont</File>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/B4_s3.png</File>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/B4_s5.png</File>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/Bird1_1.png</File>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/Bird1_3.png</File>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/Bird2 Duck_1.png</File>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/Bird2 Duck_3.png</File>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/Bird3_Egret2.png</File>
+    <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/Bird3_Egret4.png</File>
     <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/logo.png</File>
     <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/pacman.png</File>
     <File>C:/Users/kabut/RiderProjects/MonoGameProject1/Content/Images/pong-atlas.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

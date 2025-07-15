@@ -6,19 +6,21 @@ namespace MonoGameProject1;
 public class Sprite : IUpdatable, IDrawable
 {
     //Semi-Dynamic variables
-    private Texture2D _texture;
-    private Vector2 _pivot;
+    protected Texture2D Texture;
+    protected Vector2 Pivot;
     
     //Dynamic variables
     public float Rotation = 0f;
     public Vector2 Position =  Vector2.Zero;
     public Vector2 Scale = Vector2.One;
-    public SpriteEffects Effect = SpriteEffects.None;
+    protected SpriteEffects Effect = SpriteEffects.None;
     
-    public Sprite(Texture2D texture)
+    protected Rectangle? SourceRectangle = null;
+    
+    public Sprite(string spriteName)
     {
-        _texture = texture;
-        _pivot = new Vector2(_texture.Width * 0.5f, _texture.Height * 0.5f);
+        Texture = SpriteManager.GetSprite(spriteName).Texture;
+        Pivot = new Vector2(Texture.Width * 0.5f, Texture.Height * 0.5f);
     }
     
     public virtual void Update(GameTime gameTime)
@@ -29,12 +31,12 @@ public class Sprite : IUpdatable, IDrawable
     public void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(
-            _texture,
+            Texture,
             Position,
-            null,
+            SourceRectangle,
             Color.White,
             MathHelper.ToRadians(Rotation),
-            _pivot,
+            Pivot,
             Scale,
             Effect,
             0

@@ -10,29 +10,27 @@ public class Game1 : Game
 {
     private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private Sprite pacman;
+    private Animation _player;
     
     //Textures
-    private Texture2D _logo;
-    private Texture2D _pongAtlas;
-    private Texture2D _pacman;
     
     //Text Related
     private SpriteFont _oswaldFont;
-    private Text _mousePosition;
     
     //Vectors
     private static Vector2 _screenCenter;
     
     //Lists
-    private List<IUpdatable> _updatables = new List<IUpdatable>();
-    private List<IDrawable> _drawables = new List<IDrawable>();
+    private List<IUpdatable> _updatables = [];
+    private List<IDrawable> _drawables = [];
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+
+        SpriteManager.Content = Content;
         
         _graphics.IsFullScreen = false;
         _graphics.PreferredBackBufferWidth = 1920;
@@ -53,24 +51,27 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
         //Texture load
-        _logo = Content.Load<Texture2D>("Images/logo");
-        _pongAtlas = Content.Load<Texture2D>("Images/pong-atlas");
-        _pacman = Content.Load<Texture2D> ("Images/pacman");
+        
+        SpriteManager.AddSprite("logo", "Images/logo");
+        SpriteManager.AddSprite("player", "Images/pacman");
+        
+        SpriteManager.AddSprite("bird1", "Images/Bird1_1", 4, 4);
+        SpriteManager.AddSprite("bird2", "Images/Bird3_Egret4", 4, 4);
+        SpriteManager.AddSprite("bird3", "Images/B4_s5", 4, 4);
+        SpriteManager.AddSprite("bird4", "Images/Bird2 Duck_1", 4, 4);
+        
         
         //Text-Related load
         _oswaldFont = Content.Load<SpriteFont>("Fonts/Oswald");
 
         //Temp content
-        pacman = new Player(_pacman);
-        pacman.Position = _screenCenter;
-        pacman.Scale = new Vector2(0.25f, 0.25f);
-        _updatables.Add(pacman);
-        _drawables.Add(pacman);
-        _mousePosition = new MousePosition(_oswaldFont);
-        _mousePosition._Text = "Mouse  Position";
-        _mousePosition.Position = new Vector2(_screenCenter.X, 50);
-        _updatables.Add(_mousePosition);
-        _drawables.Add(_mousePosition);
+        _player = new Player();
+        _player.Position = _screenCenter;
+        _player.Scale = new Vector2(0.25f, 0.25f);
+        _player.PlayAnimation(true, 15);
+        
+        _updatables.Add(_player);
+        _drawables.Add(_player);
     }
 
     protected override void Update(GameTime gameTime)
@@ -97,34 +98,6 @@ public class Game1 : Game
         {
             drawable.Draw(_spriteBatch);
         }
-
-        //Drawing text
-        /*const string text = "Hello Monogame!";
-        var textCenter = _oswaldFont.MeasureString(text) * 0.5f;
-        _spriteBatch.DrawString(
-            _oswaldFont,
-            text,
-            _screenCenter,
-            Color.White,
-            0,
-            textCenter,
-            Vector2.One,
-            SpriteEffects.None,
-            0
-            );*/
-        
-        //Drawing to the screen while rotating, maximum parameters for Draw()
-        /*_spriteBatch.Draw(
-            _logo,
-            _screenCenter,
-            null,
-            Color.White,
-            MathHelper.ToRadians((float)gameTime.TotalGameTime.TotalMilliseconds * 0.25f),
-            new Vector2(_logo.Width * 0.5f, _logo.Height * 0.5f),
-            Vector2.One,
-            SpriteEffects.None,
-            0
-            );*/
 
         //Sprite Atlas usage, useful for the fish and shit in the game, IMPORTANT NOTE: use grid instead of 1 line
         /*const int index = 0;
