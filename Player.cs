@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,10 +10,14 @@ public class Player : Animation
 {
     //Non-Dynamic variables
     private int _speed = 500;
+
+    public Collider Collide;
+    public Enemy enemy;
     
     public Player() : base("bird1")
     {
-        
+        Collide = SceneManager.Create<Collider>();
+        Collide.IsTrigger = true;
     }
 
     public override void Update(GameTime gameTime)
@@ -51,6 +57,23 @@ public class Player : Animation
             }
         }
 
+        if (Collide.Intersect(enemy.Collide))
+        {
+            SceneManager.Remove(enemy);
+        }
+
         base.Update(gameTime);
+        
+        Collide.Rect = DestRectangle;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        Console.WriteLine("Trigger enter with:" + other.ToString());
+    }
+    
+    public void OnCollisionEnter(Collider other)
+    {
+        Console.WriteLine("Collision enter with:" + other.ToString());
     }
 }

@@ -42,3 +42,4 @@ C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bi
 C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird2 Duck_3.xnb
 C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird3_Egret2.xnb
 C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\Bird3_Egret4.xnb
+C:\Users\kabut\RiderProjects\MonoGameProject1\bin\Debug\net8.0\Content\Images\pixel.xnb

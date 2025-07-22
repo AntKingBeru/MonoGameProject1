@@ -16,19 +16,27 @@ public class Sprite : IUpdatable, IDrawable
     protected SpriteEffects Effect = SpriteEffects.None;
     
     protected Rectangle? SourceRectangle = null;
+    protected Rectangle DestRectangle;
     
     public Sprite(string spriteName)
     {
         Texture = SpriteManager.GetSprite(spriteName).Texture;
         Pivot = new Vector2(Texture.Width * 0.5f, Texture.Height * 0.5f);
+        
+        DestRectangle =  GetDestRectangle(Texture.Bounds);
     }
-    
+
+    protected Sprite()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public virtual void Update(GameTime gameTime)
     {
         
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public virtual void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(
             Texture,
@@ -41,5 +49,16 @@ public class Sprite : IUpdatable, IDrawable
             Effect,
             0
             );
+    }
+
+    public Rectangle GetDestRectangle(Rectangle sourceRectangle)
+    {
+        int width = (int)(sourceRectangle.Width * Scale.X);
+        int height = (int)(sourceRectangle.Height * Scale.Y);
+        
+        int pos_x =  (int)(sourceRectangle.X - Pivot.X * Scale.X);
+        int pos_y =  (int)(sourceRectangle.Y - Pivot.Y * Scale.Y);
+        
+        return  new Rectangle(pos_x, pos_y, width, height);
     }
 }

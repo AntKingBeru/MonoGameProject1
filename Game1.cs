@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
@@ -10,7 +9,8 @@ public class Game1 : Game
 {
     private readonly GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private Animation _player;
+    private Player _player;
+    private Enemy _enemy;
     
     //Textures
     
@@ -19,10 +19,6 @@ public class Game1 : Game
     
     //Vectors
     private static Vector2 _screenCenter;
-    
-    //Lists
-    private List<IUpdatable> _updatables = [];
-    private List<IDrawable> _drawables = [];
 
     public Game1()
     {
@@ -51,9 +47,9 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
         //Texture load
-        
         SpriteManager.AddSprite("logo", "Images/logo");
-        SpriteManager.AddSprite("player", "Images/pacman");
+        SpriteManager.AddSprite("pacman", "Images/pacman");
+        SpriteManager.AddSprite("pixel", "Images/pixel");
         
         SpriteManager.AddSprite("bird1", "Images/Bird1_1", 4, 4);
         SpriteManager.AddSprite("bird2", "Images/Bird3_Egret4", 4, 4);
@@ -65,13 +61,16 @@ public class Game1 : Game
         _oswaldFont = Content.Load<SpriteFont>("Fonts/Oswald");
 
         //Temp content
-        _player = new Player();
+        _player = SceneManager.Create<Player>();
+        _enemy = SceneManager.Create<Enemy>(); 
+        //Player setup
+        _player.enemy = _enemy;
         _player.Position = _screenCenter;
         _player.Scale = new Vector2(0.25f, 0.25f);
         _player.PlayAnimation(true, 15);
-        
-        _updatables.Add(_player);
-        _drawables.Add(_player);
+
+        _player.Collide.OnTrigger += _player.OnTriggerEnter;
+        _player.Collide.OnCollision += _player.OnCollisionEnter;
     }
 
     protected override void Update(GameTime gameTime)
@@ -79,11 +78,8 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
-
-        foreach (var updatable in _updatables)
-        {
-            updatable.Update(gameTime);
-        }
+        
+        SceneManager.Instance.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -93,21 +89,8 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.DarkSlateGray);
         
         _spriteBatch.Begin();
-
-        foreach (var drawable in _drawables)
-        {
-            drawable.Draw(_spriteBatch);
-        }
-
-        //Sprite Atlas usage, useful for the fish and shit in the game, IMPORTANT NOTE: use grid instead of 1 line
-        /*const int index = 0;
-        const int cellCount = 2;
-        _spriteBatch.Draw(
-            _pongAtlas,
-            Vector2.Zero,
-            new Rectangle(new Point((int)(_pongAtlas.Width * ((float)index/cellCount)), 0), new Point((int)(_pongAtlas.Width * (1.0f/cellCount)), _pongAtlas.Height)),
-            Color.White
-            );*/
+        
+        SceneManager.Instance.Draw(_spriteBatch);
         
         _spriteBatch.End();
         base.Draw(gameTime);

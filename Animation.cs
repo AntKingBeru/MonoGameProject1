@@ -102,6 +102,9 @@ public class Animation : Sprite
 
         SourceRectangle = _spritesheet[_indexX, _indexY];
         
+        Rectangle tempR = SourceRectangle ?? Rectangle.Empty;
+        DestRectangle = GetDestRectangle(tempR);
+        
         base.Update(gameTime);
     }
 }
