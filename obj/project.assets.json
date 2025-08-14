@@ -290,20 +290,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\joest\\.nuget\\packages\\": {}
+    "C:\\Users\\matan\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joest\\OneDrive\\Dokumenter\\GitHub\\MonoGameProject1\\MonoGameProject1.csproj",
+      "projectUniqueName": "C:\\Users\\matan\\Desktop\\EDU\\MonoGameProject1\\MonoGameProject1.csproj",
       "projectName": "MonoGameProject1",
-      "projectPath": "C:\\Users\\joest\\OneDrive\\Dokumenter\\GitHub\\MonoGameProject1\\MonoGameProject1.csproj",
-      "packagesPath": "C:\\Users\\joest\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joest\\OneDrive\\Dokumenter\\GitHub\\MonoGameProject1\\obj\\",
+      "projectPath": "C:\\Users\\matan\\Desktop\\EDU\\MonoGameProject1\\MonoGameProject1.csproj",
+      "packagesPath": "C:\\Users\\matan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\matan\\Desktop\\EDU\\MonoGameProject1\\obj\\",
       "projectStyle": "PackageReference",
-      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
-        "C:\\Users\\joest\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\matan\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -325,8 +324,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
-      }
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -352,30 +352,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.11, 8.0.11]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[8.0.11, 8.0.11]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.11, 8.0.11]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[8.0.11, 8.0.11]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
