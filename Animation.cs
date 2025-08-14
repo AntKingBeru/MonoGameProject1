@@ -38,6 +38,7 @@ public class Animation : Sprite
         }
 
         sourceRectangle = spriteSheet[index_x, index_y];
+        destRectangle = GetDestRectangle(sourceRectangle.Value);
         base.Update(gameTime);
     }
     

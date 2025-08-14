@@ -25,8 +25,7 @@ public class Game1 : Game
     private static Vector2 _screenCenter;
     
     //Lists
-    private List<IUpdatable> _updatables = new List<IUpdatable>();
-    private List<IDrawable> _drawables = new List<IDrawable>();
+   
 
     public Game1()
     {
@@ -58,8 +57,8 @@ public class Game1 : Game
         _pongAtlas = Content.Load<Texture2D>("Images/pong-atlas");
         
         
-        
         SpriteManager.AddSprite("logo", "Images/logo");
+        SpriteManager.AddSprite("pixel", "Images/pixel");
         SpriteManager.AddSprite("pong-atlas", "Images/pong-atlas", 2, 1);
         SpriteManager.AddSprite("player", "Images/pacman");
         SpriteManager.AddSprite("logo", "Images/logo");
@@ -75,17 +74,15 @@ public class Game1 : Game
         _oswaldFont = Content.Load<SpriteFont>("Fonts/Oswald");
 
         //Temp content
-        pacman = new Player("bird1");
+        pacman = SceneManager.Create<Player>();
         pacman.Position = _screenCenter;
         pacman.Scale = new Vector2(0.25f, 0.25f);
         pacman.PlayAnimation(true , 10);
-        _updatables.Add(pacman);
-        _drawables.Add(pacman);
+        
         _mousePosition = new MousePosition(_oswaldFont);
         _mousePosition._Text = "Mouse  Position";
         _mousePosition.Position = new Vector2(_screenCenter.X, 50);
-        _updatables.Add(_mousePosition);
-        _drawables.Add(_mousePosition);
+        
     }
 
     protected override void Update(GameTime gameTime)
@@ -94,10 +91,7 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        foreach (var updatable in _updatables)
-        {
-            updatable.Update(gameTime);
-        }
+        SceneManager.Instance.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -108,48 +102,7 @@ public class Game1 : Game
         
         _spriteBatch.Begin();
 
-        foreach (var drawable in _drawables)
-        {
-            drawable.Draw(_spriteBatch);
-        }
-
-        //Drawing text
-        /*const string text = "Hello Monogame!";
-        var textCenter = _oswaldFont.MeasureString(text) * 0.5f;
-        _spriteBatch.DrawString(
-            _oswaldFont,
-            text,
-            _screenCenter,
-            Color.White,
-            0,
-            textCenter,
-            Vector2.One,
-            SpriteEffects.None,
-            0
-            );*/
-        
-        //Drawing to the screen while rotating, maximum parameters for Draw()
-        /*_spriteBatch.Draw(
-            _logo,
-            _screenCenter,
-            null,
-            Color.White,
-            MathHelper.ToRadians((float)gameTime.TotalGameTime.TotalMilliseconds * 0.25f),
-            new Vector2(_logo.Width * 0.5f, _logo.Height * 0.5f),
-            Vector2.One,
-            SpriteEffects.None,
-            0
-            );*/
-
-        //Sprite Atlas usage, useful for the fish and shit in the game, IMPORTANT NOTE: use grid instead of 1 line
-        /*const int index = 0;
-        const int cellCount = 2;
-        _spriteBatch.Draw(
-            _pongAtlas,
-            Vector2.Zero,
-            new Rectangle(new Point((int)(_pongAtlas.Width * ((float)index/cellCount)), 0), new Point((int)(_pongAtlas.Width * (1.0f/cellCount)), _pongAtlas.Height)),
-            Color.White
-            );*/
+        SceneManager.Instance.Draw(_spriteBatch);
         
         _spriteBatch.End();
         base.Draw(gameTime);

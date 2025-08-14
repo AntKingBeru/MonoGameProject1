@@ -8,10 +8,14 @@ public class Player : Animation
 {
     //Non-Dynamic variables
     private int _speed = 500;
+
     
-    public Player(string name = "player") : base(name)
+    public Collider collider;
+    
+    public Player() : base("player")
     {
-        
+        collider = SceneManager.Create<Collider>();
+        collider.IsTrigger = true;
     }
 
     public override void Update(GameTime gameTime)
@@ -40,5 +44,7 @@ public class Player : Animation
         }
 
         base.Update(gameTime);
+        collider._rect = GetDestRectangle(collider._rect);
+
     }
 }
