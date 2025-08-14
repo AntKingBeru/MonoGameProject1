@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class Collider: Sprite
+public class Collider : Sprite
 {
     public Rectangle _rect;
     public bool IsTrigger;

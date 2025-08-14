@@ -13,6 +13,7 @@ public class Sprite : GameObject
     public SpriteEffects Effect;
     public Vector2 Origin = Vector2.Zero;
     
+    
     protected Rectangle destRectangle;
 
 
