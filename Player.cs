@@ -8,13 +8,11 @@ public class Player : Animation
 {
     //Non-Dynamic variables
     private int _speed = 500;
-
-    
     public Collider collider;
     
     public Player() : base("player")
     {
-        collider = SceneManager.Create<Collider>();
+        //collider = SceneManager.Create<Collider>();
         collider.IsTrigger = true;
     }
 

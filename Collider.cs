@@ -23,7 +23,7 @@ public class Collider: Sprite
         // Draw outline
         
         // top
-        _spriteBatch.Draw(_texture,
+        _spriteBatch.Draw(Texture,
             new Rectangle(
                 _rect.X,
                 _rect.Y,
@@ -33,7 +33,7 @@ public class Collider: Sprite
             Color.White);
         
         // left
-        _spriteBatch.Draw(_texture,
+        _spriteBatch.Draw(Texture,
             new Rectangle(
                 _rect.X,
                 _rect.Y,
@@ -43,7 +43,7 @@ public class Collider: Sprite
             Color.White);
         
         // right
-        _spriteBatch.Draw(_texture,
+        _spriteBatch.Draw(Texture,
             new Rectangle(
                 _rect.X + _rect.Width - thickness,
                 _rect.Y,
@@ -53,7 +53,7 @@ public class Collider: Sprite
             Color.White);
         
         // bottom
-        _spriteBatch.Draw(_texture,
+        _spriteBatch.Draw(Texture,
             new Rectangle(
                 _rect.X,
                 _rect.Y + _rect.Height - thickness,
@@ -65,7 +65,7 @@ public class Collider: Sprite
     
     public override void Update(GameTime gameTime)
     {
-        destRectangle = GetDestRectangle(_rect);
+        //destRectangle = GetDestRectangle(_rect);
         Position = new Vector2(_rect.X, _rect.Y);
         base.Update(gameTime);
     }

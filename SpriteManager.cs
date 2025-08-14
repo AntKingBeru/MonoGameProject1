@@ -1,25 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class SpriteManager
+public static class SpriteManager
 {
-    static Dictionary<string, SpriteSheetInfo> sprites = new Dictionary<string, SpriteSheetInfo>();
-    public static ContentManager ContentMan { set; get;  }
-    
-    
-    public static void AddSprite(string name, string filePath, int columns = 1, int rows = 1)
+    static Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
+
+    public static ContentManager Content { set; get; }
+
+    public static GraphicsDevice Graphics { set; get; }
+
+//add sprite with texture from file
+    public static void AddSprite(string spriteName, string path)
     {
-        sprites[name] = new SpriteSheetInfo();
-        sprites[name].Texture = ContentMan.Load<Texture2D>(filePath);
-        sprites[name].columns = columns;
-        sprites[name].rows = rows;
+        Console.WriteLine("Add sprite {" + spriteName + "} with path {" + path + "}");
+        Sprite newSprite = new Sprite(spriteName);
+        newSprite.Path = path;
+        newSprite.Texture = Content.Load<Texture2D>(path);
+        newSprite.SourceRectangle = new Rectangle((int)newSprite.Position.X, (int)newSprite.Position.Y,
+            newSprite.Texture.Width, newSprite.Texture.Height);
+        newSprite.SpriteEffects = SpriteEffects.None;
+
+        sprites[spriteName] = newSprite;
     }
 
-    public static SpriteSheetInfo GetSprite(string name)
+    public static void AddSprite(string spriteName, Rectangle rectangle, Color color)
     {
-        return sprites.GetValueOrDefault(name);
+        Sprite newSprite = new Sprite(spriteName);
+        Texture2D texture = new Texture2D(Graphics, rectangle.Width, rectangle.Height);
+        Color[] colorData = new Color[rectangle.Width * rectangle.Height];
+        for (int i = 0; i < colorData.Length; i++)
+            colorData[i] = color;
+        texture.SetData(colorData);
+        newSprite.Texture = texture;
+        newSprite.SourceRectangle = rectangle;
+        newSprite.SpriteEffects = SpriteEffects.None;
+
+        sprites[spriteName] = newSprite;
     }
+    
+
+    public static Sprite GetSprite(string spriteName)
+    {
+        return sprites[spriteName];
+    }
+    
 }

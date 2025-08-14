@@ -4,97 +4,155 @@ namespace MonoGameProject1;
 
 public class Animation : Sprite
 {
-    SpriteSheet spriteSheet;
-    private SpriteSheetInfo spriteSheetInfo;
-    private double timeCounter = 0f;
-    private int fps;
-    private bool isLooped = true;
-    private bool isPlaying = false;
-    
-    private int index_x = 0;
-    private int index_y = 0;
-    
-    public Animation(string name) : base(name)
-    {
-        ChangeAnimation(name);
-    }
+    public int Columns;
+    public int Rows;
 
-    public void ChangeAnimation(string name)
-    {
-        ResetAnimation();
-        spriteSheetInfo = SpriteManager.GetSprite(name);
-        spriteSheet = new SpriteSheet(spriteSheetInfo);    
-    }
+    public float CroppedWidth = 1f;
+    public float CroppedHeight = 1f;
 
-    public override void Update(GameTime gameTime)
+    private int _indexX = 0;
+    private int _indexY = 0;
+
+    private double _frameTimer = 0;
+    private bool _animating = false;
+    private int _fps;
+    private bool _inLoop;
+
+    private Rectangle Rect { get; set; }
+
+    public Rectangle this[int indexX, int indexY]
     {
-        if (isPlaying)
+        get
         {
-            if (CheckIfNextFrame(gameTime))
-            {
-                timeCounter = 0f;
-                NextFrame();
-            }
-        }
+            Point location = new Point(
+                (int)(Texture.Width * CroppedWidth * ((float)indexX / Columns)),
+                (int)(Texture.Height * CroppedHeight * ((float)indexY / Rows))
+            );
 
-        sourceRectangle = spriteSheet[index_x, index_y];
-        destRectangle = GetDestRectangle(sourceRectangle.Value);
-        base.Update(gameTime);
+            Point size = new Point(
+                (int)(Texture.Width * CroppedWidth * (1.0f / Columns)),
+                (int)(Texture.Height * CroppedHeight * (1.0f / Rows))
+            );
+            
+            return new Rectangle(location, size);
+        }
     }
-    
-    public void PlayAnimation(bool isLooped = true, int fps = 60)
+
+    public Animation(string animationName) : base("Animation_" + animationName)
     {
+    }
+
+    public Rectangle GetDestRectangle(Rectangle rect)
+    {
+        int width = (int)(rect.Width * Scale.X);
+        int height = (int)(rect.Height * Scale.Y);
+
+        int posX = (int)(Position.X - width * 0.5f);
+        int posY = (int)(Position.Y - height * 0.5f);
+
+        return new Rectangle(posX, posY, width, height);
+    }
+
+    public void PlayAnimation(bool inLoop = true, int fps = 60)
+    {
+        this._fps = fps;
+        this._inLoop = inLoop;
+        Origin = new Vector2(Texture.Width * CroppedWidth * 0.5f, Texture.Height * CroppedHeight * 0.5f);
         ResetAnimation();
-        this.fps = fps;
-        this.isLooped = isLooped;
-        isPlaying = true;
-        timeCounter = 0f;
+        _animating = true;
     }
-    
-    public void ResetAnimation()
+
+    public bool IsAnimating()
     {
-        timeCounter = 0f;
-        index_x = 0;
-        index_y = 0;
+        return _animating;
+    }
+
+    public double GetTimeRemaining(bool normalized = true)
+    {
+        int totalFrames = Columns + Rows;
+        double deltaFrame = 1.0 / _fps;
+        double totalTime = totalFrames * deltaFrame;
+
+        float remainingTime = MathHelper.Clamp((float)(totalTime - _frameTimer), 0.0f, (float)totalTime);
+
+        return (normalized) ? remainingTime / totalTime : remainingTime;
     }
 
     public void PauseAnimation()
     {
-        isPlaying = false;
+        _animating = false;
     }
 
     public void ResumeAnimation()
     {
-        isPlaying = true;
+        _animating = true;
     }
-    
+
     public void StopAnimation()
     {
-        isPlaying = false;
+        PauseAnimation();
         ResetAnimation();
     }
 
-    private bool CheckIfNextFrame(GameTime gameTime)
+    public void ResetAnimation()
     {
-        timeCounter += gameTime.ElapsedGameTime.TotalSeconds;
-        if (timeCounter >= 1.0f/fps)
-        {
+        _frameTimer = 0;
+        _indexX = 0;
+        _indexY = 0;
+    }
+
+    private bool ShouldGetNextFrame(GameTime gameTime)
+    {
+        _frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+        if (_frameTimer > (1.0 / _fps))
             return true;
-        }
+
         return false;
     }
-    
-    private void NextFrame()
+
+    private void MoveNextFrame()
     {
-        if (isLooped)
+        _frameTimer = 0;
+
+        if (_inLoop)
         {
-            index_x++;
-            if (index_x == spriteSheetInfo.columns)
+            _indexX++;
+
+            if (_indexX == Columns)
             {
-                index_y++;
-                index_y %= spriteSheetInfo.rows;
+                _indexY++;
+                _indexY %= Rows;
             }
-            index_x %= spriteSheetInfo.columns;
+
+            _indexX %= Columns;
         }
+        else
+        {
+            if (_indexX + 1 < Columns)
+                _indexX++;
+            else if (_indexY + 1 < Rows)
+            {
+                _indexY++;
+                _indexX = 0;
+            }
+        }
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        if (_animating)
+        {
+            if (ShouldGetNextFrame(gameTime))
+                MoveNextFrame();
+        }
+
+        SourceRectangle = this[_indexX, _indexY];
+
+        var r = SourceRectangle;
+
+        Rect = GetDestRectangle(r);
+
+        base.Update(gameTime);
     }
 }

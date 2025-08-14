@@ -3,63 +3,48 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class Sprite : IUpdatable, IDrawable
+public class Sprite : GameObject
 {
-    //Semi-Dynamic variables
-    protected Texture2D _texture;
-    private Vector2 _pivot;
-    protected Rectangle? sourceRectangle = null;
+    public Color Color;
+    public string Path;
+    public Texture2D Texture;
+    public SpriteEffects SpriteEffects;
+    public Rectangle SourceRectangle;
+    public SpriteEffects Effect;
+    public Vector2 Origin = Vector2.Zero;
     
-    //Dynamic variables
-    public float Rotation = 0f;
-    public Vector2 Position =  Vector2.Zero;
-    public Vector2 Scale = Vector2.One;
-    public SpriteEffects Effect = SpriteEffects.None;
-    
-    protected Vector2 Origin = Vector2.Zero;
     protected Rectangle destRectangle;
-    
-    public Sprite(string name)
-    {
-        ChangeSprite(name);
 
-        Origin = new Vector2(_texture.Width * 0.5f, _texture.Height * 0.5f);
-        
-        destRectangle = GetDestRectangle(_texture.Bounds);
-    }
-    
-    public void ChangeSprite(string name)
+
+    public Sprite(string name) : base("Sprite_" + name)
     {
-        _texture = SpriteManager.GetSprite(name).Texture;
-        _pivot = Origin;
-    }
-    
-    public virtual void Update(GameTime gameTime)
-    {
-        
     }
 
-    public virtual void Draw(SpriteBatch spriteBatch)
+    public override void Draw(SpriteBatch spriteBatch)
     {
+        Vector2 drawOrigin = Origin;
+        if (Texture != null)
+        {
+            Rectangle sourceRect = SourceRectangle.IsEmpty
+                ? new Rectangle(0, 0, Texture.Width, Texture.Height)
+                : SourceRectangle;
+          
+        }
+
         spriteBatch.Draw(
-            _texture,
+            Texture,
             Position,
-            sourceRectangle,
+            SourceRectangle,
             Color.White,
             MathHelper.ToRadians(Rotation),
-            _pivot,
+            drawOrigin, 
             Scale,
             Effect,
-            0
-            );
+            LayerDepth 
+        );
     }
 
-    public Rectangle GetDestRectangle(Rectangle sourceRectangle)
+    public override void Update(GameTime gameTime)
     {
-        int width = (int)(sourceRectangle.Width * Scale.X);
-        int height = (int)(sourceRectangle.Height * Scale.Y);
-        int pos_x = (int)(sourceRectangle.X - Origin.X * Scale.X);
-        int pos_y = (int)(sourceRectangle.Y - Origin.Y * Scale.Y);
-        return new Rectangle(pos_x, pos_y, width, height);
     }
 }
