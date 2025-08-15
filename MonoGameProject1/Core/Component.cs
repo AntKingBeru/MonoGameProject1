@@ -25,7 +25,10 @@ public abstract class Component : IUpdateables, IDrawables
 
     protected virtual void SetActive(bool activeState)
     {
-        
+        if (activeState)
+            gameObject.EnableComponent(this);
+        else
+            gameObject.DisableComponent(this);
     }
     
     public virtual void Update(GameTime gameTime)

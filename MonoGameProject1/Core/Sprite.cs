@@ -5,7 +5,7 @@ namespace MonoGameProject1.Core;
 
 public class Sprite : Component
 {
-    protected SpriteData data;
+    public SpriteData data;
 
     public Sprite() : base()
     {
@@ -14,29 +14,30 @@ public class Sprite : Component
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        /*Vector2 drawOrigin = Origin;
-        if (Texture != null)
+        var drawOrigin = gameObject.Origin;
+        if (data.texture != null)
         {
-            Rectangle sourceRect = SourceRectangle.IsEmpty
-                ? new Rectangle(0, 0, Texture.Width, Texture.Height)
-                : SourceRectangle;
+            var sourceRect = data.sourceRectangle.IsEmpty
+                ? new Rectangle(0, 0, data.texture.Width, data.texture.Height)
+                : data.sourceRectangle;
           
         }
 
         spriteBatch.Draw(
-            Texture,
-            Position,
-            SourceRectangle,
+            data.texture,
+            gameObject.Position,
+            data.sourceRectangle,
             Color.White,
-            MathHelper.ToRadians(Rotation),
+            MathHelper.ToRadians(gameObject.Rotation),
             drawOrigin, 
-            Scale,
-            Effect,
-            LayerDepth 
-        );*/
+            gameObject.Scale,
+            data.effects,
+            data.layerDepth 
+        );
     }
 
     public override void Update(GameTime gameTime)
     {
+        
     }
 }
