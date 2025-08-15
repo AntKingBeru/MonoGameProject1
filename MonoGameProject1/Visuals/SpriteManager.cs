@@ -31,8 +31,8 @@ public static class SpriteManager
         for (int i = 0; i < colorData.Length; i++)
             colorData[i] = config.Color;
         sprites[name].Texture.SetData(colorData);
-        sprites[name].columns = 1;
-        sprites[name].rows = 1;
+        sprites[name].Columns = 1;
+        sprites[name].Rows = 1;
     }
 
 

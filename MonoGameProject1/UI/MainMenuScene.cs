@@ -15,35 +15,15 @@ public class MainMenuScene : Scene
     public override void OnEnable()
     {
         SceneObjects = new Dictionary<int, GameObject>();
-
-        var testObject = new GameObject("Test");
-        SceneObjects.Add(0, testObject);
-
-        var animConfig = new AnimConfig
-        {
-            Name = "TestAnim",
-            SpriteInfo = SpriteManager.GetSprite("TestAnim"),
-            SourceRectangle = new Rectangle(0, 0, 64, 64),
-            DestRectangle = new Rectangle(100, 100, 64, 64),
-            Color = Color.White,
-            Effects = SpriteEffects.None,
-            LayerDepth = 0.5f,
-            Fps = 30,
-            InLoop = true
-        };
-
-        var c = testObject.AddComponent<Animation, AnimConfig>(animConfig);
         
-        testObject.EnableComponent(c);
-        
-        /*var startButton = new StartButton("Start");
+        var startButton = new StartButton("Start");
         SceneObjects.Add(startButton.Index, startButton);
 
         var settingsButton = new SettingsButton("Settings");
         SceneObjects.Add(settingsButton.Index, settingsButton);
 
-        var exitButton = new ExitButton("Exit");
-        SceneObjects.Add(exitButton.Index, exitButton);*/
+        // var exitButton = new ExitButton("Exit");
+        // SceneObjects.Add(exitButton.Index, exitButton);
         Init();
     }
 

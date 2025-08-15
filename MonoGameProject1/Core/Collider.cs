@@ -6,7 +6,7 @@ namespace MonoGameProject1;
 
 public class Collider : Sprite
 {
-    public ColliderConfig colliderConfig;
+    /*public ColliderConfig colliderConfig;
     public delegate void CollisionHandler(Collider other);
 
     public Collider() : base()
@@ -94,7 +94,7 @@ public class Collider : Sprite
         {
             OnCollision?.Invoke(other);
         }
-    }
+    }*/
     
     
 }

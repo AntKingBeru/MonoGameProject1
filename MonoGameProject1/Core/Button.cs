@@ -63,7 +63,7 @@ public class Button : GameObject
     //
 
 
-    public void SetFontStyle(float scale = 1.0f, float rotationDegrees = 0f, Color? color = null)
+    /*public void SetFontStyle(float scale = 1.0f, float rotationDegrees = 0f, Color? color = null)
     {
         buttonConfig.FontScale = scale;
         buttonConfig.FontRotation = MathHelper.ToRadians(rotationDegrees);
@@ -106,5 +106,5 @@ public class Button : GameObject
         }
 
         base.Update(gameTime);
-    }
+    }*/
 }

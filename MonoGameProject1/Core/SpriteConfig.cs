@@ -9,7 +9,7 @@ public class SpriteConfig : ComponentConfig
     public SpriteSheetInfo SpriteInfo;
     public Rectangle? SourceRectangle { get; set; }
     public Rectangle DestRectangle;
-    public Color Color;
-    public SpriteEffects Effects;
+    public Color Color = Color.White;
+    public SpriteEffects Effects = SpriteEffects.None;
     public float LayerDepth { get; set; }
 }

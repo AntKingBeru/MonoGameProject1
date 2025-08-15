@@ -8,6 +8,6 @@ public class AnimConfig : SpriteConfig
     public int IndexY = 0;
     public double FrameTimer = 0;
     public bool Animating = false;
-    public int Fps;
-    public bool InLoop;
+    public int Fps = 30;
+    public bool InLoop = true;
 }
