@@ -78,6 +78,7 @@ public abstract class GameObject : IUpdateables, IDrawables
     public T AddComponent<T> () where T : Component, new()
     {
         var newComponent = new T();
+        newComponent.gameObject = this;
         InactiveComponents.Add(newComponent);
         return newComponent;
     }

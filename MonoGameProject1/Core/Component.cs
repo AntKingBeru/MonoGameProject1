@@ -5,7 +5,7 @@ namespace MonoGameProject1;
 
 public abstract class Component : IUpdateables, IDrawables
 {
-    protected GameObject gameObject;
+    public GameObject gameObject;
     public bool IsActive {get; private set;}
     
     protected Component()
