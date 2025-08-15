@@ -47,15 +47,13 @@ public class GameScene : Scene
         var backgroundHandler = new GameObject("BackgroundHandler");
         SceneObjects.Add(backgroundHandler.Index, backgroundHandler);
 
-        var backSpriteConfig = new SpriteConfig
+        var backSpriteConfig = new SpriteConfig(backgroundSpriteInfo)
         {
-            SpriteInfo = backgroundSpriteInfo,
             LayerDepth = 0f
         };
 
-        var dirtSpriteConfig = new SpriteConfig
+        var dirtSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("Dirt"))
         {
-            SpriteInfo = SpriteManager.GetSprite("Dirt"),
             LayerDepth = 1f
         };
 

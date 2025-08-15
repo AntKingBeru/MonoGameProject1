@@ -37,7 +37,7 @@ public class Game1 : Game
         ScreenPosition.InitializePos(GraphicsDevice);
         MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
-        SceneManager.EnableScene("Main Menu");*/
+        SceneManager.EnableScene("Main Menu");
         var gameScene = new GameScene();
         SceneManager.AddScene("Game Scene", gameScene);
         SceneManager.EnableScene("Game Scene");
