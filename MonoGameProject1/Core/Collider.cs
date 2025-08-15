@@ -6,13 +6,21 @@ namespace MonoGameProject1;
 
 public class Collider : Sprite
 {
-    public Rectangle _rect;
-    public bool IsTrigger;
+    public ColliderConfig colliderConfig;
     public delegate void CollisionHandler(Collider other);
 
     public Collider() : base()
     {
         
+    }
+
+    public override void Initialize<T>(T config)
+    {
+        base.Initialize(config);
+        if (config is ColliderConfig colliderConfig)
+        {
+            this.colliderConfig = colliderConfig;
+        }
     }
 
     public event CollisionHandler OnCollision;
@@ -26,9 +34,9 @@ public class Collider : Sprite
         // top
         _spriteBatch.Draw(Texture,
             new Rectangle(
-                _rect.X,
-                _rect.Y,
-                _rect.Width,
+                colliderConfig.Bounds.X,
+                colliderConfig.Bounds.Y,
+                colliderConfig.Bounds.Width,
                 thickness
             ), 
             Color.White);
@@ -36,29 +44,29 @@ public class Collider : Sprite
         // left
         _spriteBatch.Draw(Texture,
             new Rectangle(
-                _rect.X,
-                _rect.Y,
+                colliderConfig.Bounds.X,
+                colliderConfig.Bounds.Y,
                 thickness,
-                _rect.Height
+                colliderConfig.Bounds.Height
             ), 
             Color.White);
         
         // right
         _spriteBatch.Draw(Texture,
             new Rectangle(
-                _rect.X + _rect.Width - thickness,
-                _rect.Y,
+                colliderConfig.Bounds.X + colliderConfig.Bounds.Width - thickness,
+                colliderConfig.Bounds.Y,
                 thickness,
-                _rect.Height
+                colliderConfig.Bounds.Height
             ), 
             Color.White);
         
         // bottom
         _spriteBatch.Draw(Texture,
             new Rectangle(
-                _rect.X,
-                _rect.Y + _rect.Height - thickness,
-                _rect.Width,
+                colliderConfig.Bounds.X,
+                colliderConfig.Bounds.Y + colliderConfig.Bounds.Height - thickness,
+                colliderConfig.Bounds.Width,
                 thickness
             ), 
             Color.White);
@@ -67,13 +75,13 @@ public class Collider : Sprite
     public override void Update(GameTime gameTime)
     {
         //destRectangle = GetDestRectangle(_rect);
-        Position = new Vector2(_rect.X, _rect.Y);
+        Position = new Vector2(colliderConfig.Bounds.X, colliderConfig.Bounds.Y);
         base.Update(gameTime);
     }
 
     public bool Intersect(Collider other)
     {
-        return _rect.Intersects(other._rect);
+        return colliderConfig.Bounds.Intersects(other.colliderConfig.Bounds);
     }
 
     public void Notify(Collider other)
