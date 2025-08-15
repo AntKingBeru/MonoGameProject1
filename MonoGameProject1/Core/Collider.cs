@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGameProject1.Core;
 
 namespace MonoGameProject1;
 
@@ -9,7 +10,7 @@ public class Collider : Sprite
     public bool IsTrigger;
     public delegate void CollisionHandler(Collider other);
 
-    public Collider() : base("pixel")
+    public Collider() : base()
     {
         
     }
