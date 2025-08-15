@@ -1,0 +1,40 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace MonoGameProject1.Core;
+
+public abstract class Component : IUpdateables, IDrawables
+{
+    protected GameObject gameObject;
+    protected bool isActive = true;
+
+    protected Component()
+    {
+        SetActive(true);
+    }
+
+    protected virtual void OnEnable()
+    {
+        
+    }
+    
+    protected virtual void OnDisable()
+    {
+        
+    }
+
+    protected virtual void SetActive(bool activeState)
+    {
+        isActive = activeState;
+    }
+    
+    public virtual void Update(GameTime gameTime)
+    {
+        
+    }
+
+    public virtual void Draw(SpriteBatch spriteBatch)
+    {
+        
+    }
+}

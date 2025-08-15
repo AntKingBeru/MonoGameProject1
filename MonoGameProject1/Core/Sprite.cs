@@ -1,17 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGameProject1;
+namespace MonoGameProject1.Core;
 
-public class Sprite : GameObject
+public class Sprite : Component
 {
-    public Color Color;
+    
+    
+    
+    /*public Color Color;
     public string Path;
     public Texture2D Texture;
     public SpriteEffects SpriteEffects;
     public Rectangle SourceRectangle;
     public SpriteEffects Effect;
-    public Vector2 Origin = Vector2.Zero;
+    public Vector2 Origin = Vector2.Zero;*/
     
     
     protected Rectangle destRectangle;
