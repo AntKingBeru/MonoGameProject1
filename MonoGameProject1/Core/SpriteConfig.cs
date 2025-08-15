@@ -12,4 +12,15 @@ public class SpriteConfig : ComponentConfig
     public Color Color;
     public SpriteEffects Effects;
     public float LayerDepth { get; set; }
+    
+    public SpriteConfig()
+    {
+        SourceRectangle = new Rectangle(0, 0, 100, 100);
+        Color = Color.White;
+        Effects = SpriteEffects.None;
+        LayerDepth = 0f;
+        Name = "";
+        DestRectangle = new Rectangle(0, 0, 100, 100);
+        SpriteInfo = null;
+    }
 }

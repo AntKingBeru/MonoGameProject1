@@ -33,11 +33,11 @@ public class Animation : Sprite
     
     public override void Initialize<T>(T config)
     {
-        base.Initialize(config);
         if (config is AnimConfig spriteConfig)
         {
             this.AnimConfig = spriteConfig;
         }
+        base.Initialize(config);
     }
 
     public Rectangle? GetDestRectangle(Rectangle rect)

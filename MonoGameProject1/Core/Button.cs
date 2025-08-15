@@ -18,23 +18,13 @@ public class Button : GameObject
 
     public Button(string name) : base(name)
     {
-        var buttonConfig = new ButtonConfig();
-        buttonConfig.Text = "Button";
-        buttonConfig.Font = SpriteManager.ContentMan.Load<SpriteFont>("Fonts/Arial");
-        buttonConfig.TextColor = Color.White;
-        buttonConfig.TextOffset = new Vector2(0, 0);
-        buttonConfig.FontScale = 1.0f;
-        buttonConfig.FontRotation = 0f;
-        buttonConfig.TextEffects = SpriteEffects.None;
-
+        buttonConfig = new ButtonConfig();
+        
         var spriteConfig = new SpriteConfig();
-        spriteConfig.SourceRectangle = new Rectangle(0, 0, 100, 100);
-        spriteConfig.Color = Color.White;
-        spriteConfig.Effects = SpriteEffects.None;
-        AddComponent<Sprite>();
+        spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
+            
         
-        
-        
+        AddComponent<Sprite, SpriteConfig>(spriteConfig);
     }
 
     public void SetFontStyle(float scale = 1.0f, float rotationDegrees = 0f, Color? color = null)
@@ -51,16 +41,7 @@ public class Button : GameObject
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        if (!string.IsNullOrEmpty(buttonConfig.Text) && buttonConfig.Font != null)
-        {
-            Vector2 position = GetTextPosition();
-            Vector2 origin = buttonConfig.Font.MeasureString(buttonConfig.Text) * 0.5f;
-        }
-
-        // Draw main text (always on top)
-        spriteBatch.DrawString(buttonConfig.Font, buttonConfig.Text, Position, buttonConfig.TextColor,
-            buttonConfig.FontRotation, Origin, buttonConfig.FontScale, buttonConfig.TextEffects, 1f);
-    }
+            }
 
 
     public override void Update(GameTime gameTime)

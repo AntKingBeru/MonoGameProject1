@@ -21,23 +21,21 @@ public static class SpriteManager
     }
 
 
-    public static void AddSprite(string name, SpriteConfig config)
-
-    {
-        sprites[name] = new SpriteSheetInfo();
-        sprites[name].Texture =
-            new Texture2D(Graphics, config.SourceRectangle.Value.Width, config.SourceRectangle.Value.Height);
-        Color[] colorData = new Color[config.SourceRectangle.Value.Width * config.SourceRectangle.Value.Height];
-        for (int i = 0; i < colorData.Length; i++)
-            colorData[i] = config.Color;
-        sprites[name].Texture.SetData(colorData);
-        sprites[name].columns = 1;
-        sprites[name].rows = 1;
-    }
-
-
-    // public static SpriteSheetInfo GetSprite(string name)
+    // public static void AddSprite(string name, SpriteConfig config)
     // {
-    //     return sprites.GetValueOrDefault(name);
+    //     sprites[name] = new SpriteSheetInfo();
+    //     sprites[name].Texture =
+    //         new Texture2D(Graphics, config.SourceRectangle.Value.Width, config.SourceRectangle.Value.Height);
+    //     Color[] colorData = new Color[config.SourceRectangle.Value.Width * config.SourceRectangle.Value.Height];
+    //     for (int i = 0; i < colorData.Length; i++)
+    //         colorData[i] = config.Color;
+    //     sprites[name].Texture.SetData(colorData);
+    //
     // }
+
+
+    public static SpriteSheetInfo GetSprite(string name)
+    {
+        return sprites.GetValueOrDefault(name);
+    }
 }

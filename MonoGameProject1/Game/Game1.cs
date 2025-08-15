@@ -19,6 +19,9 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = 1920;
         _graphics.PreferredBackBufferHeight = 1080;
         _graphics.ApplyChanges();
+        SpriteManager.ContentMan = Content;
+        SpriteManager.Graphics = GraphicsDevice;
+        SpriteManager.AddSprite("Button", "Images/pacman");
     }
 
     protected override void Initialize()
@@ -27,7 +30,7 @@ public class Game1 : Game
         ScreenPosition.InitializePos(GraphicsDevice);
         MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
-        SceneManager.EnableScene(mainMenuScene);
+        SceneManager.EnableScene("Main Menu");
 
         base.Initialize();
     }

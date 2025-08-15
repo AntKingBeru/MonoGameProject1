@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -26,6 +27,8 @@ public class GameObject : IUpdateables, IDrawables
     {
         Name = name;
         Index = GameObjectCounter++;
+        ActiveComponents = new List<Component>();
+        InactiveComponents = new List<Component>();
     }
 
     public virtual void Enable()
@@ -55,10 +58,13 @@ public class GameObject : IUpdateables, IDrawables
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
+        Console.WriteLine("Drawing " + Name);
         if (!IsActive) return;
         
         foreach (Component component in ActiveComponents)
-        {
+        {   
+            Console.WriteLine(component.GetType().Name + " is active " + component.IsActive);
+
             if (component.IsActive)
             {
                 component.Draw(spriteBatch);
@@ -100,7 +106,7 @@ public class GameObject : IUpdateables, IDrawables
     
     public void EnableComponent<T>(T component) where T : Component
     {
-        foreach (var c in InactiveComponents)
+        foreach (var c in InactiveComponents.ToList())
         {
             if (c == component)
             {

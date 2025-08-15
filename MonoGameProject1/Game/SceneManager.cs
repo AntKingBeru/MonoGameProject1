@@ -14,7 +14,7 @@ public static class SceneManager
     public static void ChangeScene(string scene)
     {
         DisableCurrentScene();
-        EnableNextScene(scene);
+        EnableScene(scene);
     }
 
     public static void EnableScene(Scene scene)
@@ -23,7 +23,7 @@ public static class SceneManager
         CurrentScene.OnEnable();
     }
 
-    private static void EnableNextScene(string scene)
+    public static void EnableScene(string scene)
     {
         CurrentScene = GetScene(scene);
         CurrentScene.OnEnable();

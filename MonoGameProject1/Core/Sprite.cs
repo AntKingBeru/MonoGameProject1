@@ -9,16 +9,16 @@ public class Sprite : Component
 
     public Sprite() : base()
     {
-        
+
     }
     
     public override void Initialize<T>(T config)
     {
-        base.Initialize(config);
         if (config is SpriteConfig spriteConfig)
         {
             this.spriteConfig = spriteConfig;
         }
+        base.Initialize(config);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
