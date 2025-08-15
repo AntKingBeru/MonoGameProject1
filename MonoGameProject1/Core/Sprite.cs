@@ -5,28 +5,15 @@ namespace MonoGameProject1.Core;
 
 public class Sprite : Component
 {
-    
-    
-    
-    /*public Color Color;
-    public string Path;
-    public Texture2D Texture;
-    public SpriteEffects SpriteEffects;
-    public Rectangle SourceRectangle;
-    public SpriteEffects Effect;
-    public Vector2 Origin = Vector2.Zero;*/
-    
-    
-    protected Rectangle destRectangle;
+    protected SpriteData data;
 
-
-    public Sprite(string name) : base("Sprite_" + name)
+    public Sprite() : base()
     {
     }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        Vector2 drawOrigin = Origin;
+        /*Vector2 drawOrigin = Origin;
         if (Texture != null)
         {
             Rectangle sourceRect = SourceRectangle.IsEmpty
@@ -45,7 +32,7 @@ public class Sprite : Component
             Scale,
             Effect,
             LayerDepth 
-        );
+        );*/
     }
 
     public override void Update(GameTime gameTime)

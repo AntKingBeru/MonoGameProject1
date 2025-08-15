@@ -10,7 +10,7 @@ public abstract class Component : IUpdateables, IDrawables
 
     protected Component()
     {
-        SetActive(true);
+        
     }
 
     protected virtual void OnEnable()
@@ -25,7 +25,7 @@ public abstract class Component : IUpdateables, IDrawables
 
     protected virtual void SetActive(bool activeState)
     {
-        isActive = activeState;
+        
     }
     
     public virtual void Update(GameTime gameTime)
