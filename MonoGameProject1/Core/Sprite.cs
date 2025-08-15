@@ -9,7 +9,7 @@ public class Sprite : Component
 
     public Sprite() : base()
     {
-
+        
     }
     
     public override void Initialize<T>(T config)

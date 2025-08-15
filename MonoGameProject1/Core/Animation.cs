@@ -38,9 +38,9 @@ public class Animation : Sprite
     
     public override void Initialize<T>(T config)
     {
-        if (config is AnimConfig spriteConfig)
+        if (config is AnimConfig animationConfig)
         {
-            this.AnimationConfig = spriteConfig;
+            AnimationConfig = animationConfig;
         }
         base.Initialize(config);
     }

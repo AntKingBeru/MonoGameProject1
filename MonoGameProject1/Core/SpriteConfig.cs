@@ -7,17 +7,17 @@ public class SpriteConfig : ComponentConfig
 {
     public string Name { get; set; }
 
-    private SpriteSheetInfo spriteSheet;
+    public SpriteSheetInfo spriteSheetInfo;
     public SpriteSheetInfo SpriteInfo
     {
-        get => spriteSheet;
+        get => spriteSheetInfo;
         set
         {
-            if (!(value == null || value == spriteSheet))
+            if (!(value == null || value == spriteSheetInfo))
             {
-                spriteSheet = value;
-                SourceRectangle = new Rectangle(0, 0, spriteSheet.Texture.Width, spriteSheet.Texture.Height);
-                Origin = new Vector2(spriteSheet.Texture.Width * 0.5f, spriteSheet.Texture.Height * 0.5f);
+                spriteSheetInfo = value;
+                SourceRectangle = new Rectangle(0, 0, spriteSheetInfo.Texture.Width, spriteSheetInfo.Texture.Height);
+                Origin = new Vector2(spriteSheetInfo.Texture.Width * 0.5f, spriteSheetInfo.Texture.Height * 0.5f);
             }
         }
     }

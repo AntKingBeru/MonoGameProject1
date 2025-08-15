@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGameProject1.Core;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace MonoGameProject1;
@@ -21,6 +22,7 @@ public class Game1 : Game
         _graphics.ApplyChanges();
         SpriteManager.ContentMan = Content; 
         SpriteManager.AddSprite("Button", "Images/pacman");
+        SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
     }
 
     protected override void Initialize()
@@ -30,6 +32,14 @@ public class Game1 : Game
         MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
         SceneManager.EnableScene("Main Menu");
+        var obj = new GameObject("Test");
+        SceneManager.CurrentScene.SceneObjects.Add(obj.Index, obj);
+        obj.Enable();
+        var animConfig = new AnimConfig();
+        animConfig.SpriteInfo = SpriteManager.GetSprite("AnimTest"); 
+        var animComp = obj.AddComponent<Animation, AnimConfig>(animConfig);
+        animComp.SetActive(true);
+        
 
         base.Initialize();
     }
