@@ -24,16 +24,16 @@ public class Sprite : Component
     public override void Draw(SpriteBatch spriteBatch)
     {
         var drawOrigin = gameObject.Origin;
-        if (spriteConfig.Texture != null)
+        if (spriteConfig.SpriteInfo != null)
         {
             var sourceRect = spriteConfig.DestRectangle.IsEmpty
-                ? new Rectangle(0, 0, spriteConfig.Texture.Width, spriteConfig.Texture.Height)
+                ? new Rectangle(0, 0, spriteConfig.SpriteInfo.Texture.Width, spriteConfig.SpriteInfo.Texture.Height)
                 : spriteConfig.SourceRectangle;
           
         }
 
         spriteBatch.Draw(
-            spriteConfig.Texture,
+            spriteConfig.SpriteInfo.Texture,
             gameObject.Position,
             spriteConfig.SourceRectangle,
             Color.White,

@@ -6,8 +6,7 @@ namespace MonoGameProject1.Core;
 public class SpriteConfig : ComponentConfig
 {
     public string Name { get; set; }
-    public string Path;
-    public Texture2D Texture;
+    public SpriteSheetInfo SpriteInfo;
     public Rectangle? SourceRectangle { get; set; }
     public Rectangle DestRectangle;
     public Color Color;

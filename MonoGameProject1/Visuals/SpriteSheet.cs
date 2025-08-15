@@ -11,11 +11,11 @@ public class SpriteSheet(SpriteSheetInfo info)
     public Rectangle this[int x, int y] =>
         new(
             new Point(
-                (int)(Info.Texture.Width* ((float)x / Info.columns)), 
-                (int)(Info.Texture.Height* ((float)y / Info.rows))),
+                (int)(Info.Texture.Width* ((float)x / Info.Columns)), 
+                (int)(Info.Texture.Height* ((float)y / Info.Rows))),
             new Point(
-                (int)(Info.Texture.Width* (1.0f / Info.columns)),
-                (int)(Info.Texture.Height* (1.0f / Info.rows)))
+                (int)(Info.Texture.Width* (1.0f / Info.Columns)),
+                (int)(Info.Texture.Height* (1.0f / Info.Rows)))
         );
 }
 

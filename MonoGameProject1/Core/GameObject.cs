@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public abstract class GameObject : IUpdateables, IDrawables
+public class GameObject : IUpdateables, IDrawables
 {
     public string Name;
 

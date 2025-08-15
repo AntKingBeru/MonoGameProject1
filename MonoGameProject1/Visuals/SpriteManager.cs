@@ -13,8 +13,8 @@ public static class SpriteManager
     {
         sprites[name] = new SpriteSheetInfo();
         sprites[name].Texture = ContentMan.Load<Texture2D>(filePath);
-        sprites[name].columns = columns;
-        sprites[name].rows = rows;
+        sprites[name].Columns = columns;
+        sprites[name].Rows = rows;
     }
 
     public static SpriteSheetInfo GetSprite(string name)

@@ -19,8 +19,7 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = 1920;
         _graphics.PreferredBackBufferHeight = 1080;
         _graphics.ApplyChanges();
-        SpriteManager.Content = Content;
-        SpriteManager.Graphics = GraphicsDevice;
+        SpriteManager.ContentMan = Content;
     }
 
     protected override void Initialize()

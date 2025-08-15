@@ -13,13 +13,13 @@ public class Animation : Sprite
         get
         {
             var location = new Point(
-                (int)(AnimConfig.Texture.Width * AnimConfig.CroppedWidth * ((float)indexX / AnimConfig.Columns)),
-                (int)(AnimConfig.Texture.Height * AnimConfig.CroppedHeight * ((float)indexY / AnimConfig.Rows))
+                (int)(AnimConfig.SpriteInfo.Texture.Width * AnimConfig.CroppedWidth * ((float)indexX / AnimConfig.SpriteInfo.Columns)),
+                (int)(AnimConfig.SpriteInfo.Texture.Height * AnimConfig.CroppedHeight * ((float)indexY / AnimConfig.SpriteInfo.Rows))
             );
 
             var size = new Point(
-                (int)(AnimConfig.Texture.Width * AnimConfig.CroppedWidth * (1.0f / AnimConfig.Columns)),
-                (int)(AnimConfig.Texture.Height * AnimConfig.CroppedHeight * (1.0f / AnimConfig.Rows))
+                (int)(AnimConfig.SpriteInfo.Texture.Width * AnimConfig.CroppedWidth * (1.0f / AnimConfig.SpriteInfo.Columns)),
+                (int)(AnimConfig.SpriteInfo.Texture.Height * AnimConfig.CroppedHeight * (1.0f / AnimConfig.SpriteInfo.Rows))
             );
             
             return new Rectangle(location, size);
@@ -55,7 +55,7 @@ public class Animation : Sprite
     {
         AnimConfig.Fps = fps;
         AnimConfig.InLoop = inLoop;
-        gameObject.Origin = new Vector2(AnimConfig.Texture.Width * AnimConfig.CroppedWidth * 0.5f, AnimConfig.Texture.Height * AnimConfig.CroppedHeight * 0.5f);
+        gameObject.Origin = new Vector2(AnimConfig.SpriteInfo.Texture.Width * AnimConfig.CroppedWidth * 0.5f, AnimConfig.SpriteInfo.Texture.Height * AnimConfig.CroppedHeight * 0.5f);
         ResetAnimation();
         AnimConfig.Animating = true;
     }
@@ -67,7 +67,7 @@ public class Animation : Sprite
 
     public double GetTimeRemaining(bool normalized = true)
     {
-        var totalFrames = AnimConfig.Columns + AnimConfig.Rows;
+        var totalFrames = AnimConfig.SpriteInfo.Columns + AnimConfig.SpriteInfo.Rows;
         var deltaFrame = 1.0 / AnimConfig.Fps;
         var totalTime = totalFrames * deltaFrame;
 
@@ -117,19 +117,19 @@ public class Animation : Sprite
         {
             AnimConfig.IndexX++;
 
-            if (AnimConfig.IndexX == AnimConfig.Columns)
+            if (AnimConfig.IndexX == AnimConfig.SpriteInfo.Columns)
             {
                 AnimConfig.IndexY++;
-                AnimConfig.IndexY %= AnimConfig.Rows;
+                AnimConfig.IndexY %= AnimConfig.SpriteInfo.Rows;
             }
 
-            AnimConfig.IndexX %= AnimConfig.Columns;
+            AnimConfig.IndexX %= AnimConfig.SpriteInfo.Columns;
         }
         else
         {
-            if (AnimConfig.IndexX + 1 < AnimConfig.Columns)
+            if (AnimConfig.IndexX + 1 < AnimConfig.SpriteInfo.Columns)
                 AnimConfig.IndexX++;
-            else if (AnimConfig.IndexY + 1 < AnimConfig.Rows)
+            else if (AnimConfig.IndexY + 1 < AnimConfig.SpriteInfo.Rows)
             {
                 AnimConfig.IndexY++;
                 AnimConfig.IndexX = 0;

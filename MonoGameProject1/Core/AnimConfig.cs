@@ -2,8 +2,6 @@
 
 public class AnimConfig : SpriteConfig
 {
-    public int Columns;
-    public int Rows;
     public float CroppedWidth = 1f;
     public float CroppedHeight = 1f;
     public int IndexX = 0;

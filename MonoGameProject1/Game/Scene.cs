@@ -5,7 +5,6 @@ namespace MonoGameProject1;
 public abstract class Scene
 {
     public delegate void SceneUnloadHandler();
-
     public event SceneUnloadHandler OnSceneUnload;
 
     public string Name { get; set; }
