@@ -27,13 +27,15 @@ public class Game1 : Game
         SpriteManager.AddSprite("Dirt", "Images/pixel");
         // SpriteManager.AddSprite("Gradiant", "Images/pixel");
         // SpriteManager.AddSprite("DepthMask", "Images/pixel");
+        SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
+        SpriteManager.AddSprite("Pixel", "Images/Pixel");
     }
 
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
         ScreenPosition.InitializePos(GraphicsDevice);
-        /*MainMenuScene mainMenuScene = new MainMenuScene();
+        MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
         SceneManager.EnableScene("Main Menu");*/
         var gameScene = new GameScene();

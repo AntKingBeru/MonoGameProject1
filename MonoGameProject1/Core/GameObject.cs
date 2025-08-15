@@ -11,14 +11,14 @@ public class GameObject : IUpdateables, IDrawables
     public string Name;
 
     public readonly int Index;
-    public bool IsActive;
-    public Vector2 Position;
+    public bool IsActive = false;
+    public Vector2 Position = Vector2.Zero;
     public Vector2 Size = Vector2.One;
     public Vector2 Scale = new Vector2(0.5f, 0.5f);
     public float Rotation;
     
-    public List<Component> ActiveComponents;
-    public List<Component> InactiveComponents;
+    private List<Component> ActiveComponents;
+    private List<Component> InactiveComponents;
 
     private static int GameObjectCounter = 0;
 
