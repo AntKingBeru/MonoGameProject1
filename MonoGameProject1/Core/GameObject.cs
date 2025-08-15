@@ -66,6 +66,7 @@ public class GameObject : IUpdateables, IDrawables
         }
     }
     
+    
     public T AddComponent<T, TConfig>(TConfig config) 
         where T : Component, new()
         where TConfig : ComponentConfig

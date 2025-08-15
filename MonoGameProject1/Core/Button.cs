@@ -18,7 +18,6 @@ public class Button : GameObject
 
     public Button(string name) : base(name)
     {
-        
         var buttonConfig = new ButtonConfig();
         buttonConfig.Text = "Button";
         buttonConfig.Font = SpriteManager.ContentMan.Load<SpriteFont>("Fonts/Arial");
@@ -27,41 +26,16 @@ public class Button : GameObject
         buttonConfig.FontScale = 1.0f;
         buttonConfig.FontRotation = 0f;
         buttonConfig.TextEffects = SpriteEffects.None;
-        
+
         var spriteConfig = new SpriteConfig();
         spriteConfig.SourceRectangle = new Rectangle(0, 0, 100, 100);
         spriteConfig.Color = Color.White;
         spriteConfig.Effects = SpriteEffects.None;
-        
-        
-        SpriteManager.AddSprite(name,spriteConfig);
         AddComponent<Sprite>();
         
         
         
     }
-
-
-    //
-
-    // public override void Initialize<T>(T config)
-
-    // {
-
-    //     base.Initialize(config);
-
-    //     if (config is ButtonConfig buttonConfig)
-
-    //     {
-
-    //         this.buttonConfig = buttonConfig;
-
-    //     }
-
-    // }
-
-    //
-
 
     public void SetFontStyle(float scale = 1.0f, float rotationDegrees = 0f, Color? color = null)
     {
@@ -72,7 +46,7 @@ public class Button : GameObject
 
     private Vector2 GetTextPosition()
     {
-        return gameObject.Position + buttonConfig.TextOffset;
+        return Position + buttonConfig.TextOffset;
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -84,8 +58,8 @@ public class Button : GameObject
         }
 
         // Draw main text (always on top)
-        spriteBatch.DrawString(buttonConfig.Font, buttonConfig.Text, gameObject.Position, buttonConfig.TextColor,
-            buttonConfig.FontRotation, gameObject.Origin, buttonConfig.FontScale, buttonConfig.TextEffects, 1f);
+        spriteBatch.DrawString(buttonConfig.Font, buttonConfig.Text, Position, buttonConfig.TextColor,
+            buttonConfig.FontRotation, Origin, buttonConfig.FontScale, buttonConfig.TextEffects, 1f);
     }
 
 
