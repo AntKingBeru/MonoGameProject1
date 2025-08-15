@@ -16,7 +16,7 @@ public abstract class GameObject : IUpdateables, IDrawables
     public Vector2 Scale;
     public float Rotation;
     public Vector2 Origin = Vector2.Zero;
-    public float LayerDepth = 0.5f; // 0.0f = back, 1.0f = front
+    
     public List<Component> ActiveComponents;
     public List<Component> InactiveComponents;
 
@@ -42,7 +42,13 @@ public abstract class GameObject : IUpdateables, IDrawables
     
     public virtual void Update(GameTime gameTime)
     {
-        
+        foreach (Component component in ActiveComponents)
+        {
+            if (component.IsActive)
+            {
+                component.Update(gameTime);
+            }
+        }
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)
@@ -50,9 +56,13 @@ public abstract class GameObject : IUpdateables, IDrawables
         
     }
     
-    public void AddComponent<T> () where T : Component, new()
+    public T AddComponent<T> () where T : Component, new()
     {
-        
+        var newComponent = new T();
+        newComponent.Initialize(this);
+        newComponent.SetActive(true);
+        ActiveComponents.Add(newComponent);
+        return newComponent;
     }
 
     public void DisableComponent<T>(T component) where T : Component
