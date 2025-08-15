@@ -6,7 +6,7 @@ namespace MonoGameProject1.Core;
 public class ButtonConfig : ComponentConfig
 {
     public Rectangle _clickArea;
-    
+    public bool WasPressed = false;
 
 
 

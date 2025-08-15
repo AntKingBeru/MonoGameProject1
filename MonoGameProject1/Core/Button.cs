@@ -13,7 +13,6 @@ public class Button : GameObject
     public event ButtonClickHandler OnButtonClick;
 
     public ButtonConfig buttonConfig { get; set; }
-    private bool WasPressed = false;
 
 
     public Button(string name) : base(name)
@@ -22,26 +21,41 @@ public class Button : GameObject
 
         var spriteConfig = new SpriteConfig();
         spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
-        
+
         AddComponent<Sprite, SpriteConfig>(spriteConfig);
+        buttonConfig._clickArea = new Rectangle(0, 0, spriteConfig.SpriteInfo.Texture.Width,
+            spriteConfig.SpriteInfo.Texture.Height);
     }
 
 
     public override void Update(GameTime gameTime)
     {
+        buttonConfig._clickArea.X = (int)Position.X;
+        buttonConfig._clickArea.Y = (int)Position.Y;
+
         if (Mouse.GetState().LeftButton == ButtonState.Pressed)
         {
-            if (WasPressed)
+            if (buttonConfig.WasPressed)
             {
                 return;
             }
-            WasPressed = true;
+
+            buttonConfig.WasPressed = true;
+            if (IsMouseOver())
+            {
+                OnButtonClick?.Invoke();
+            }
         }
         else
         {
-            WasPressed = false;
+            buttonConfig.WasPressed = false;
         }
 
         base.Update(gameTime);
+    }
+
+    private bool IsMouseOver()
+    {
+        return buttonConfig._clickArea.Contains(Mouse.GetState().Position);
     }
 }

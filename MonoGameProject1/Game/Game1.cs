@@ -22,7 +22,7 @@ public class Game1 : Game
         _graphics.PreferredBackBufferHeight = 1080;
         _graphics.ApplyChanges();
         SpriteManager.ContentMan = Content; 
-        SpriteManager.AddSprite("Button", "Images/pacman");
+        SpriteManager.AddSprite("Button", "Images/ExitButton");
         SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
     }
 
