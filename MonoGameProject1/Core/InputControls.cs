@@ -1,19 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace MonoGameProject1;
+namespace MonoGameProject1.Core;
 
-public class Player : Animation
+public class InputControls : Component
 {
     //Non-Dynamic variables
-    private int _speed = 500;
-    public Collider collider;
+    private int speed = 500;
     
-    public Player() : base("player")
+    public InputControls() : base()
     {
-        //collider = SceneManager.Create<Collider>();
-        collider.IsTrigger = true;
+        
     }
 
     public override void Update(GameTime gameTime)
@@ -25,24 +22,20 @@ public class Player : Animation
             switch (key)
             {
                 case Keys.W:
-                    Position.Y -= _speed * deltaTime;
+                    gameObject.Position.Y -= speed * deltaTime;
                     break;
                 case Keys.A:
-                    Position.X -= _speed * deltaTime;
-                    Effect = SpriteEffects.None;
+                    gameObject.Position.X -= speed * deltaTime;
                     break;
                 case Keys.S:
-                    Position.Y += _speed * deltaTime;
+                    gameObject.Position.Y += speed * deltaTime;
                     break;
                 case Keys.D:
-                    Position.X += _speed * deltaTime;
-                    Effect = SpriteEffects.FlipHorizontally;
+                    gameObject.Position.X += speed * deltaTime;
                     break;
             }
         }
 
         base.Update(gameTime);
-        collider._rect = GetDestRectangle(collider._rect);
-
     }
 }

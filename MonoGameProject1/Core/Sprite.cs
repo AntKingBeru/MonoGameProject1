@@ -5,34 +5,43 @@ namespace MonoGameProject1.Core;
 
 public class Sprite : Component
 {
-    public SpriteData data;
+    private SpriteConfig config;
 
     public Sprite() : base()
     {
         
     }
+    
+    public override void Initialize<T>(T config)
+    {
+        base.Initialize(config);
+        if (config is SpriteConfig spriteConfig)
+        {
+            this.config = spriteConfig;
+        }
+    }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
         var drawOrigin = gameObject.Origin;
-        if (data.texture != null)
+        if (config.Texture != null)
         {
-            var sourceRect = data.sourceRectangle.IsEmpty
-                ? new Rectangle(0, 0, data.texture.Width, data.texture.Height)
-                : data.sourceRectangle;
+            var sourceRect = config.DestRectangle.IsEmpty
+                ? new Rectangle(0, 0, config.Texture.Width, config.Texture.Height)
+                : config.SourceRectangle;
           
         }
 
         spriteBatch.Draw(
-            data.texture,
+            config.Texture,
             gameObject.Position,
-            data.sourceRectangle,
+            config.SourceRectangle,
             Color.White,
             MathHelper.ToRadians(gameObject.Rotation),
             drawOrigin, 
             gameObject.Scale,
-            data.effects,
-            data.layerDepth 
+            config.Effects,
+            config.LayerDepth 
         );
     }
 

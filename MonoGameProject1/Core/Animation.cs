@@ -4,34 +4,22 @@ namespace MonoGameProject1.Core;
 
 public class Animation : Sprite
 {
-    protected int columns;
-    protected int rows;
+    private AnimConfig config;
 
-    protected float croppedWidth = 1f;
-    protected float croppedHeight = 1f;
-
-    protected int indexX = 0;
-    protected int indexY = 0;
-
-    protected double frameTimer = 0;
-    protected bool animating = false;
-    protected int fps;
-    protected bool inLoop;
-
-    protected Rectangle Rect { get; set; }
+    protected Rectangle? Rect { get; set; }
 
     private Rectangle this[int indexX, int indexY]
     {
         get
         {
             var location = new Point(
-                (int)(data.texture.Width * croppedWidth * ((float)indexX / columns)),
-                (int)(data.texture.Height * croppedHeight * ((float)indexY / rows))
+                (int)(config.Texture.Width * config.CroppedWidth * ((float)indexX / config.Columns)),
+                (int)(config.Texture.Height * config.CroppedHeight * ((float)indexY / config.Rows))
             );
 
             var size = new Point(
-                (int)(data.texture.Width * croppedWidth * (1.0f / columns)),
-                (int)(data.texture.Height * croppedHeight * (1.0f / rows))
+                (int)(config.Texture.Width * config.CroppedWidth * (1.0f / config.Columns)),
+                (int)(config.Texture.Height * config.CroppedHeight * (1.0f / config.Rows))
             );
             
             return new Rectangle(location, size);
@@ -42,8 +30,17 @@ public class Animation : Sprite
     {
         
     }
+    
+    public override void Initialize<T>(T config)
+    {
+        base.Initialize(config);
+        if (config is AnimConfig spriteConfig)
+        {
+            this.config = spriteConfig;
+        }
+    }
 
-    public Rectangle GetDestRectangle(Rectangle rect)
+    public Rectangle? GetDestRectangle(Rectangle rect)
     {
         var width = (int)(rect.Width * gameObject.Scale.X);
         var height = (int)(rect.Height * gameObject.Scale.Y);
@@ -56,37 +53,37 @@ public class Animation : Sprite
 
     public void PlayAnimation(bool inLoop = true, int fps = 60)
     {
-        this.fps = fps;
-        this.inLoop = inLoop;
-        gameObject.Origin = new Vector2(data.texture.Width * croppedWidth * 0.5f, data.texture.Height * croppedHeight * 0.5f);
+        config.Fps = fps;
+        config.InLoop = inLoop;
+        gameObject.Origin = new Vector2(config.Texture.Width * config.CroppedWidth * 0.5f, config.Texture.Height * config.CroppedHeight * 0.5f);
         ResetAnimation();
-        animating = true;
+        config.Animating = true;
     }
 
     public bool IsAnimating()
     {
-        return animating;
+        return config.Animating;
     }
 
     public double GetTimeRemaining(bool normalized = true)
     {
-        var totalFrames = columns + rows;
-        var deltaFrame = 1.0 / fps;
+        var totalFrames = config.Columns + config.Rows;
+        var deltaFrame = 1.0 / config.Fps;
         var totalTime = totalFrames * deltaFrame;
 
-        var remainingTime = MathHelper.Clamp((float)(totalTime - frameTimer), 0.0f, (float)totalTime);
+        var remainingTime = MathHelper.Clamp((float)(totalTime - config.FrameTimer), 0.0f, (float)totalTime);
 
         return (normalized) ? remainingTime / totalTime : remainingTime;
     }
 
     public void PauseAnimation()
     {
-        animating = false;
+        config.Animating = false;
     }
 
     public void ResumeAnimation()
     {
-        animating = true;
+        config.Animating = true;
     }
 
     public void StopAnimation()
@@ -97,16 +94,16 @@ public class Animation : Sprite
 
     public void ResetAnimation()
     {
-        frameTimer = 0;
-        indexX = 0;
-        indexY = 0;
+        config.FrameTimer = 0;
+        config.IndexX = 0;
+        config.IndexY = 0;
     }
 
     private bool ShouldGetNextFrame(GameTime gameTime)
     {
-        frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
+        config.FrameTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (frameTimer > (1.0 / fps))
+        if (config.FrameTimer > (1.0 / config.Fps))
             return true;
 
         return false;
@@ -114,43 +111,43 @@ public class Animation : Sprite
 
     private void MoveNextFrame()
     {
-        frameTimer = 0;
+        config.FrameTimer = 0;
 
-        if (inLoop)
+        if (config.InLoop)
         {
-            indexX++;
+            config.IndexX++;
 
-            if (indexX == columns)
+            if (config.IndexX == config.Columns)
             {
-                indexY++;
-                indexY %= rows;
+                config.IndexY++;
+                config.IndexY %= config.Rows;
             }
 
-            indexX %= columns;
+            config.IndexX %= config.Columns;
         }
         else
         {
-            if (indexX + 1 < columns)
-                indexX++;
-            else if (indexY + 1 < rows)
+            if (config.IndexX + 1 < config.Columns)
+                config.IndexX++;
+            else if (config.IndexY + 1 < config.Rows)
             {
-                indexY++;
-                indexX = 0;
+                config.IndexY++;
+                config.IndexX = 0;
             }
         }
     }
 
     public override void Update(GameTime gameTime)
     {
-        if (animating)
+        if (config.Animating)
         {
             if (ShouldGetNextFrame(gameTime))
                 MoveNextFrame();
         }
 
-        data.sourceRectangle = this[indexX, indexY];
+        config.SourceRectangle = this[config.IndexX, config.IndexY];
 
-        var r = data.sourceRectangle;
+        var r = config.DestRectangle;
 
         Rect = GetDestRectangle(r);
 
