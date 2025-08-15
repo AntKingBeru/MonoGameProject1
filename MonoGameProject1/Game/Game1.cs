@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -32,14 +33,6 @@ public class Game1 : Game
         MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
         SceneManager.EnableScene("Main Menu");
-        var obj = new GameObject("Test");
-        SceneManager.CurrentScene.SceneObjects.Add(obj.Index, obj);
-        obj.Enable();
-        var animConfig = new AnimConfig();
-        animConfig.SpriteInfo = SpriteManager.GetSprite("AnimTest"); 
-        var animComp = obj.AddComponent<Animation, AnimConfig>(animConfig);
-        animComp.SetActive(true);
-        
 
         base.Initialize();
     }

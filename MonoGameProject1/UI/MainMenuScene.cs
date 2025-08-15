@@ -9,12 +9,23 @@ namespace MonoGameProject1;
 public class MainMenuScene : Scene
 {
     public event Scene.SceneUnloadHandler OnSceneUnload;
-    public string Name { get; set; }
-    public bool IsActive { get; set; }
+    // public string Name { get; set; }
+    // public bool IsActive { get; set; }
 
     public override void OnEnable()
     {
         SceneObjects = new Dictionary<int, GameObject>();
+
+        var obj = new GameObject("Test");
+        SceneObjects.Add(obj.Index, obj);
+        
+        var spriteConfig = new SpriteConfig();
+        spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
+        
+        var spriteComponent = obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
+        spriteComponent.SetActive(true);
+        var inputComponent = obj.AddComponent<Input>();
+        inputComponent.SetActive(true);
 
         //
         // var startButton = new StartButton("Start");
@@ -23,8 +34,8 @@ public class MainMenuScene : Scene
         // var settingsButton = new SettingsButton("Settings");
         // SceneObjects.Add(settingsButton.Index, settingsButton);
 
-        var exitButton = new ExitButton("Exit");
-        SceneObjects.Add(exitButton.Index, exitButton);
+        /*var exitButton = new ExitButton("Exit");
+        SceneObjects.Add(exitButton.Index, exitButton);*/
         Init();
     }
 

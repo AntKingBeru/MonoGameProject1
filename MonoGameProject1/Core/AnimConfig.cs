@@ -2,7 +2,7 @@
 
 public class AnimConfig : SpriteConfig
 {
-    public SpriteSheet spriteSheet = new SpriteSheet(spriteSheetInfo);
+    //public SpriteSheet spriteSheet = new SpriteSheet(spriteSheetInfo);
     public float CroppedWidth = 1f;
     public float CroppedHeight = 1f;
     public int IndexX = 0;

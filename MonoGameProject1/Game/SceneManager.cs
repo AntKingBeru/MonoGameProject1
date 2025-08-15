@@ -43,7 +43,6 @@ public static class SceneManager
 
     public static void AddScene(string name, Scene scene)
     {
-        
         scenes.Add(name, scene);
     }
     

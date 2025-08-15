@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public abstract class Scene
+public abstract class Scene : IUpdateables, IDrawables
 {
     public delegate void SceneUnloadHandler();
     public event SceneUnloadHandler OnSceneUnload;
@@ -13,12 +13,17 @@ public abstract class Scene
     public bool IsActive { get; set; }
     public Dictionary<int, GameObject> SceneObjects { get; set; }
 
+    public Scene()
+    {
+        
+    }
+
     public abstract void OnEnable();
 
     public abstract void Init();
     public abstract void OnDisable();
 
-    public void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         if (!IsActive) return;
 
@@ -31,7 +36,7 @@ public abstract class Scene
         }
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public virtual void Draw(SpriteBatch spriteBatch)
     {
         foreach (var gameObject in SceneObjects.Values)
         {
