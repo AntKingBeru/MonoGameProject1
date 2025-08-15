@@ -60,7 +60,7 @@ public class Animation : Sprite
     {
         AnimationConfig.Fps = fps;
         AnimationConfig.InLoop = inLoop;
-        gameObject.Origin = new Vector2(AnimationConfig.SpriteInfo.Texture.Width * AnimationConfig.CroppedWidth * 0.5f, AnimationConfig.SpriteInfo.Texture.Height * AnimationConfig.CroppedHeight * 0.5f);
+        AnimationConfig.Origin = new Vector2(AnimationConfig.SpriteInfo.Texture.Width * AnimationConfig.CroppedWidth * 0.5f, AnimationConfig.SpriteInfo.Texture.Height * AnimationConfig.CroppedHeight * 0.5f);
         ResetAnimation();
         AnimationConfig.Animating = true;
     }

@@ -14,7 +14,7 @@ public class ExitButton : Button
 
     public override void Enable()
     {
-        Position = ScreenPosition.MiddleCenter();
+        Position = ScreenPosition.TopLeft();
         OnButtonClick += Exit;
         base.Enable();
     }

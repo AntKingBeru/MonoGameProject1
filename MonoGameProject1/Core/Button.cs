@@ -19,16 +19,12 @@ public class Button : GameObject
     public Button(string name) : base(name)
     {
         buttonConfig = new ButtonConfig();
-        
+
         var spriteConfig = new SpriteConfig();
         spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
-            
         
         AddComponent<Sprite, SpriteConfig>(spriteConfig);
     }
-
-
-
 
 
     public override void Update(GameTime gameTime)
@@ -39,7 +35,6 @@ public class Button : GameObject
             {
                 return;
             }
-
             WasPressed = true;
         }
         else

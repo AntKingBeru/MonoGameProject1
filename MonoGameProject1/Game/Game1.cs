@@ -19,8 +19,7 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = 1920;
         _graphics.PreferredBackBufferHeight = 1080;
         _graphics.ApplyChanges();
-        SpriteManager.ContentMan = Content;
-        SpriteManager.Graphics = GraphicsDevice;
+        SpriteManager.ContentMan = Content; 
         SpriteManager.AddSprite("Button", "Images/pacman");
     }
 
@@ -48,18 +47,7 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
-        for (int i = 0; i < SceneManager.CurrentScene.SceneObjects.Count; i++)
-        {
-            // Check if index is still valid (in case objects were removed)
-            if (i >= SceneManager.CurrentScene.SceneObjects.Count) break;
-
-            var obj = SceneManager.CurrentScene.SceneObjects[i];
-            if (obj == null) continue;
-            if (!obj.IsActive) continue;
-
-            obj.Update(gameTime);
-        }
+        SceneManager.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -70,21 +58,8 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
-
-        if (SceneManager.CurrentScene?.SceneObjects != null)
-        {
-            for (int i = 0; i < SceneManager.CurrentScene.SceneObjects.Count; i++)
-            {
-                // Check if index is still valid
-                if (i >= SceneManager.CurrentScene.SceneObjects.Count) break;
-
-                var obj = SceneManager.CurrentScene.SceneObjects[i];
-                if (obj == null) continue;
-                if (!obj.IsActive) continue;
-
-                obj.Draw(_spriteBatch);
-            }
-        }
+        
+        SceneManager.Draw(_spriteBatch);
 
         _spriteBatch.End();
 

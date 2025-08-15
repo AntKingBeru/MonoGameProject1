@@ -6,11 +6,26 @@ namespace MonoGameProject1.Core;
 public class SpriteConfig : ComponentConfig
 {
     public string Name { get; set; }
-    public SpriteSheetInfo SpriteInfo;
+
+    private SpriteSheetInfo spriteSheet;
+    public SpriteSheetInfo SpriteInfo
+    {
+        get => spriteSheet;
+        set
+        {
+            if (!(value == null || value == spriteSheet))
+            {
+                spriteSheet = value;
+                SourceRectangle = new Rectangle(0, 0, spriteSheet.Texture.Width, spriteSheet.Texture.Height);
+                Origin = new Vector2(spriteSheet.Texture.Width * 0.5f, spriteSheet.Texture.Height * 0.5f);
+            }
+        }
+    }
     public Rectangle? SourceRectangle { get; set; }
     public Rectangle DestRectangle;
     public Color Color = Color.White;
     public SpriteEffects Effects = SpriteEffects.None;
+    public Vector2 Origin = Vector2.Zero;
     public float LayerDepth { get; set; }
     
     public SpriteConfig()

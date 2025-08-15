@@ -14,9 +14,8 @@ public class GameObject : IUpdateables, IDrawables
     public bool IsActive;
     public Vector2 Position;
     public Vector2 Size = Vector2.One;
-    public Vector2 Scale = Vector2.One;
+    public Vector2 Scale = new Vector2(0.5f, 0.5f);
     public float Rotation;
-    public Vector2 Origin = Vector2.Zero;
     
     public List<Component> ActiveComponents;
     public List<Component> InactiveComponents;

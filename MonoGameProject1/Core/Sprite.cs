@@ -23,7 +23,6 @@ public class Sprite : Component
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        var drawOrigin = gameObject.Origin;
         if (spriteConfig.SpriteInfo != null)
         {
             var sourceRect = spriteConfig.DestRectangle.IsEmpty
@@ -36,9 +35,9 @@ public class Sprite : Component
             spriteConfig.SpriteInfo.Texture,
             gameObject.Position,
             spriteConfig.SourceRectangle,
-            Color.White,
+            spriteConfig.Color,
             MathHelper.ToRadians(gameObject.Rotation),
-            drawOrigin, 
+            spriteConfig.Origin, 
             gameObject.Scale,
             spriteConfig.Effects,
             spriteConfig.LayerDepth 
@@ -48,5 +47,19 @@ public class Sprite : Component
     public override void Update(GameTime gameTime)
     {
         
+    }
+
+    public override void SetActive(bool activeState)
+    {
+        if (!activeState)
+        {
+            base.SetActive(false);
+            return;
+        }
+
+        if (spriteConfig.SpriteInfo != null)
+        {
+            base.SetActive(true);
+        }
     }
 }

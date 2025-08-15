@@ -46,5 +46,19 @@ public static class SceneManager
         
         scenes.Add(name, scene);
     }
+    
+    public static void Update(GameTime gameTime)
+    {
+        if (Exit) return;
+        if (CurrentScene == null) return;
+        CurrentScene.Update(gameTime);
+    }
+    
+    public static void Draw(SpriteBatch spriteBatch)
+    {
+        if (Exit) return;
+        if (CurrentScene == null) return;
+        CurrentScene.Draw(spriteBatch);
+    }
 
 }
