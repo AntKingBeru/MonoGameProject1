@@ -42,6 +42,8 @@ public abstract class GameObject : IUpdateables, IDrawables
     
     public virtual void Update(GameTime gameTime)
     {
+        if (!IsActive) return;
+        
         foreach (Component component in ActiveComponents)
         {
             if (component.IsActive)
@@ -53,7 +55,15 @@ public abstract class GameObject : IUpdateables, IDrawables
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
+        if (!IsActive) return;
         
+        foreach (Component component in ActiveComponents)
+        {
+            if (component.IsActive)
+            {
+                component.Draw(spriteBatch);
+            }
+        }
     }
     
     public T AddComponent<T, TConfig>(TConfig config) 
@@ -71,6 +81,8 @@ public abstract class GameObject : IUpdateables, IDrawables
         InactiveComponents.Add(newComponent);
         return newComponent;
     }
+    
+    
 
     public void DisableComponent<T>(T component) where T : Component
     {
