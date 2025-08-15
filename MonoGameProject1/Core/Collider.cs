@@ -11,6 +11,7 @@ public class Collider : Sprite
 
     public Collider() : base("pixel")
     {
+        
     }
 
     public event CollisionHandler OnCollision;

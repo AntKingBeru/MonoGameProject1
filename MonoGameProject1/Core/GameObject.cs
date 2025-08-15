@@ -8,7 +8,7 @@ public abstract class GameObject : IUpdateables, IDrawables
 {
     public string Name;
 
-    public int Index { get; private set; }
+    public readonly int Index;
     public bool IsActive;
     public Vector2 Position;
     public Vector2 Size;
@@ -23,7 +23,6 @@ public abstract class GameObject : IUpdateables, IDrawables
     {
         this.Name = name;
         Index = NextInt++;
-        
     }
 
     public virtual void Enable()
@@ -37,11 +36,19 @@ public abstract class GameObject : IUpdateables, IDrawables
         IsActive = false;
         //Disable Logic
     }
+    
     public virtual void Update(GameTime gameTime)
     {
+        
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
+        
+    }
+    
+    public void AddComponent<T> (T component) where T : Component
+    {
+        
     }
 }
