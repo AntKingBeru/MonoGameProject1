@@ -21,8 +21,21 @@ public abstract class Scene : IUpdateables, IDrawables
 
     public abstract void OnEnable();
 
-    public abstract void Init();
-    public abstract void OnDisable();
+    public virtual void Init()
+    {
+        foreach (var obj in SceneObjects)
+        {
+            obj.Value.Enable();
+        }
+    }
+
+    public virtual void OnDisable()
+    {
+        foreach (var obj in SceneObjects)
+        {
+            obj.Value.Disable();
+        }
+    }
 
     public virtual void Update(GameTime gameTime)
     {

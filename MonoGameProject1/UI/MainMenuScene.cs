@@ -18,17 +18,6 @@ public class MainMenuScene : Scene
         IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
 
-        var obj = new GameObject("Test");
-        SceneObjects.Add(obj.Index, obj);
-
-        var spriteConfig = new SpriteConfig();
-        spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
-
-        var spriteComponent = obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
-        spriteComponent.SetActive(true);
-        var inputComponent = obj.AddComponent<Input>();
-        inputComponent.SetActive(true);
-
         //
         // var startButton = new StartButton("Start");
         // SceneObjects.Add(startButton.Index, startButton);
@@ -39,21 +28,5 @@ public class MainMenuScene : Scene
         var exitButton = new ExitButton("Exit");
         SceneObjects.Add(exitButton.Index, exitButton);
         Init();
-    }
-
-    public override void Init()
-    {
-        foreach (var obj in SceneObjects)
-        {
-            obj.Value.Enable();
-        }
-    }
-
-    public override void OnDisable()
-    {
-        foreach (var obj in SceneObjects)
-        {
-            obj.Value.Disable();
-        }
     }
 }

@@ -27,7 +27,6 @@ public static class SceneManager
     {
         CurrentScene = GetScene(scene);
         CurrentScene.OnEnable();
-
     }
 
     private static Scene GetScene(string scene)
