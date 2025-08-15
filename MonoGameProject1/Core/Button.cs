@@ -27,21 +27,8 @@ public class Button : GameObject
         AddComponent<Sprite, SpriteConfig>(spriteConfig);
     }
 
-    public void SetFontStyle(float scale = 1.0f, float rotationDegrees = 0f, Color? color = null)
-    {
-        buttonConfig.FontScale = scale;
-        buttonConfig.FontRotation = MathHelper.ToRadians(rotationDegrees);
-        if (color.HasValue) buttonConfig.TextColor = color.Value;
-    }
 
-    private Vector2 GetTextPosition()
-    {
-        return Position + buttonConfig.TextOffset;
-    }
 
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-            }
 
 
     public override void Update(GameTime gameTime)

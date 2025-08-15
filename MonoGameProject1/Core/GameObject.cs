@@ -13,8 +13,8 @@ public class GameObject : IUpdateables, IDrawables
     public readonly int Index;
     public bool IsActive;
     public Vector2 Position;
-    public Vector2 Size;
-    public Vector2 Scale;
+    public Vector2 Size = Vector2.One;
+    public Vector2 Scale = Vector2.One;
     public float Rotation;
     public Vector2 Origin = Vector2.Zero;
     
@@ -58,12 +58,10 @@ public class GameObject : IUpdateables, IDrawables
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        Console.WriteLine("Drawing " + Name);
         if (!IsActive) return;
         
         foreach (Component component in ActiveComponents)
         {   
-            Console.WriteLine(component.GetType().Name + " is active " + component.IsActive);
 
             if (component.IsActive)
             {

@@ -12,7 +12,7 @@ public class ButtonConfig : ComponentConfig
 
     public ButtonConfig()
     {
-      _clickArea =
+      _clickArea = new Rectangle(0, 0, 100, 100);
     }
 
 }

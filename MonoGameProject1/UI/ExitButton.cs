@@ -14,8 +14,6 @@ public class ExitButton : Button
 
     public override void Enable()
     {
-        Console.WriteLine("Enabled ExitButton");
-        buttonConfig.Text = "Test";
         Position = ScreenPosition.MiddleCenter();
         OnButtonClick += Exit;
         base.Enable();
