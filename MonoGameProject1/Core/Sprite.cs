@@ -9,6 +9,7 @@ public class Sprite : Component
 
     public Sprite() : base()
     {
+        
     }
 
     public override void Draw(SpriteBatch spriteBatch)
