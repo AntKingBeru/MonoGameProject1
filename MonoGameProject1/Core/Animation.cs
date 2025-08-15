@@ -1,91 +1,92 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace MonoGameProject1;
+namespace MonoGameProject1.Core;
 
 public class Animation : Sprite
 {
-    public int Columns;
-    public int Rows;
+    protected int columns;
+    protected int rows;
 
-    public float CroppedWidth = 1f;
-    public float CroppedHeight = 1f;
+    protected float croppedWidth = 1f;
+    protected float croppedHeight = 1f;
 
-    private int _indexX = 0;
-    private int _indexY = 0;
+    protected int indexX = 0;
+    protected int indexY = 0;
 
-    private double _frameTimer = 0;
-    private bool _animating = false;
-    private int _fps;
-    private bool _inLoop;
+    protected double frameTimer = 0;
+    protected bool animating = false;
+    protected int fps;
+    protected bool inLoop;
 
-    private Rectangle Rect { get; set; }
+    protected Rectangle Rect { get; set; }
 
-    public Rectangle this[int indexX, int indexY]
+    private Rectangle this[int indexX, int indexY]
     {
         get
         {
-            Point location = new Point(
-                (int)(Texture.Width * CroppedWidth * ((float)indexX / Columns)),
-                (int)(Texture.Height * CroppedHeight * ((float)indexY / Rows))
+            var location = new Point(
+                (int)(data.texture.Width * croppedWidth * ((float)indexX / columns)),
+                (int)(data.texture.Height * croppedHeight * ((float)indexY / rows))
             );
 
-            Point size = new Point(
-                (int)(Texture.Width * CroppedWidth * (1.0f / Columns)),
-                (int)(Texture.Height * CroppedHeight * (1.0f / Rows))
+            var size = new Point(
+                (int)(data.texture.Width * croppedWidth * (1.0f / columns)),
+                (int)(data.texture.Height * croppedHeight * (1.0f / rows))
             );
             
             return new Rectangle(location, size);
         }
     }
 
-    public Animation(string animationName) : base("Animation_" + animationName)
+    public Animation() : base()
     {
+        
     }
 
     public Rectangle GetDestRectangle(Rectangle rect)
     {
-        int width = (int)(rect.Width * Scale.X);
-        int height = (int)(rect.Height * Scale.Y);
+        var width = (int)(rect.Width * gameObject.Scale.X);
+        var height = (int)(rect.Height * gameObject.Scale.Y);
 
-        int posX = (int)(Position.X - width * 0.5f);
-        int posY = (int)(Position.Y - height * 0.5f);
+        var posX = (int)(gameObject.Position.X - width * 0.5f);
+        var posY = (int)(gameObject.Position.Y - height * 0.5f);
 
         return new Rectangle(posX, posY, width, height);
     }
 
     public void PlayAnimation(bool inLoop = true, int fps = 60)
     {
-        this._fps = fps;
-        this._inLoop = inLoop;
-        Origin = new Vector2(Texture.Width * CroppedWidth * 0.5f, Texture.Height * CroppedHeight * 0.5f);
+        this.fps = fps;
+        this.inLoop = inLoop;
+        gameObject.Origin = new Vector2(data.texture.Width * croppedWidth * 0.5f, data.texture.Height * croppedHeight * 0.5f);
         ResetAnimation();
-        _animating = true;
+        animating = true;
     }
 
     public bool IsAnimating()
     {
-        return _animating;
+        return animating;
     }
 
     public double GetTimeRemaining(bool normalized = true)
     {
-        int totalFrames = Columns + Rows;
-        double deltaFrame = 1.0 / _fps;
-        double totalTime = totalFrames * deltaFrame;
+        var totalFrames = columns + rows;
+        var deltaFrame = 1.0 / fps;
+        var totalTime = totalFrames * deltaFrame;
 
-        float remainingTime = MathHelper.Clamp((float)(totalTime - _frameTimer), 0.0f, (float)totalTime);
+        var remainingTime = MathHelper.Clamp((float)(totalTime - frameTimer), 0.0f, (float)totalTime);
 
         return (normalized) ? remainingTime / totalTime : remainingTime;
     }
 
     public void PauseAnimation()
     {
-        _animating = false;
+        animating = false;
     }
 
     public void ResumeAnimation()
     {
-        _animating = true;
+        animating = true;
     }
 
     public void StopAnimation()
@@ -96,16 +97,16 @@ public class Animation : Sprite
 
     public void ResetAnimation()
     {
-        _frameTimer = 0;
-        _indexX = 0;
-        _indexY = 0;
+        frameTimer = 0;
+        indexX = 0;
+        indexY = 0;
     }
 
     private bool ShouldGetNextFrame(GameTime gameTime)
     {
-        _frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
+        frameTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (_frameTimer > (1.0 / _fps))
+        if (frameTimer > (1.0 / fps))
             return true;
 
         return false;
@@ -113,43 +114,43 @@ public class Animation : Sprite
 
     private void MoveNextFrame()
     {
-        _frameTimer = 0;
+        frameTimer = 0;
 
-        if (_inLoop)
+        if (inLoop)
         {
-            _indexX++;
+            indexX++;
 
-            if (_indexX == Columns)
+            if (indexX == columns)
             {
-                _indexY++;
-                _indexY %= Rows;
+                indexY++;
+                indexY %= rows;
             }
 
-            _indexX %= Columns;
+            indexX %= columns;
         }
         else
         {
-            if (_indexX + 1 < Columns)
-                _indexX++;
-            else if (_indexY + 1 < Rows)
+            if (indexX + 1 < columns)
+                indexX++;
+            else if (indexY + 1 < rows)
             {
-                _indexY++;
-                _indexX = 0;
+                indexY++;
+                indexX = 0;
             }
         }
     }
 
     public override void Update(GameTime gameTime)
     {
-        if (_animating)
+        if (animating)
         {
             if (ShouldGetNextFrame(gameTime))
                 MoveNextFrame();
         }
 
-        SourceRectangle = this[_indexX, _indexY];
+        data.sourceRectangle = this[indexX, indexY];
 
-        var r = SourceRectangle;
+        var r = data.sourceRectangle;
 
         Rect = GetDestRectangle(r);
 
