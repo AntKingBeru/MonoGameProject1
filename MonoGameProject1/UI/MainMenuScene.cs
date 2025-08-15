@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGameProject1.Core;
@@ -14,14 +15,15 @@ public class MainMenuScene : Scene
 
     public override void OnEnable()
     {
+        IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
 
         var obj = new GameObject("Test");
         SceneObjects.Add(obj.Index, obj);
-        
+
         var spriteConfig = new SpriteConfig();
         spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
-        
+
         var spriteComponent = obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
         spriteComponent.SetActive(true);
         var inputComponent = obj.AddComponent<Input>();
@@ -34,8 +36,8 @@ public class MainMenuScene : Scene
         // var settingsButton = new SettingsButton("Settings");
         // SceneObjects.Add(settingsButton.Index, settingsButton);
 
-        /*var exitButton = new ExitButton("Exit");
-        SceneObjects.Add(exitButton.Index, exitButton);*/
+        var exitButton = new ExitButton("Exit");
+        SceneObjects.Add(exitButton.Index, exitButton);
         Init();
     }
 

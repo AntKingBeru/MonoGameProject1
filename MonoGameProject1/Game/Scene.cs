@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -25,10 +26,14 @@ public abstract class Scene : IUpdateables, IDrawables
 
     public virtual void Update(GameTime gameTime)
     {
+      
         if (!IsActive) return;
 
+        
+        
         foreach (var gameObject in SceneObjects.Values)
         {
+            
             if (gameObject.IsActive)
             {
                 gameObject.Update(gameTime);
