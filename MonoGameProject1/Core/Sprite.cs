@@ -5,7 +5,7 @@ namespace MonoGameProject1.Core;
 
 public class Sprite : Component
 {
-    private SpriteConfig config;
+    public SpriteConfig spriteConfig { get; private set; }
 
     public Sprite() : base()
     {
@@ -17,31 +17,31 @@ public class Sprite : Component
         base.Initialize(config);
         if (config is SpriteConfig spriteConfig)
         {
-            this.config = spriteConfig;
+            this.spriteConfig = spriteConfig;
         }
     }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
         var drawOrigin = gameObject.Origin;
-        if (config.Texture != null)
+        if (spriteConfig.Texture != null)
         {
-            var sourceRect = config.DestRectangle.IsEmpty
-                ? new Rectangle(0, 0, config.Texture.Width, config.Texture.Height)
-                : config.SourceRectangle;
+            var sourceRect = spriteConfig.DestRectangle.IsEmpty
+                ? new Rectangle(0, 0, spriteConfig.Texture.Width, spriteConfig.Texture.Height)
+                : spriteConfig.SourceRectangle;
           
         }
 
         spriteBatch.Draw(
-            config.Texture,
+            spriteConfig.Texture,
             gameObject.Position,
-            config.SourceRectangle,
+            spriteConfig.SourceRectangle,
             Color.White,
             MathHelper.ToRadians(gameObject.Rotation),
             drawOrigin, 
             gameObject.Scale,
-            config.Effects,
-            config.LayerDepth 
+            spriteConfig.Effects,
+            spriteConfig.LayerDepth 
         );
     }
 

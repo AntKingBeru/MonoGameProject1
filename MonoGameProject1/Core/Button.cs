@@ -8,11 +8,9 @@ namespace MonoGameProject1;
 
 public class Button : Sprite
 {
-    public delegate void ButtonClickHandler();
-
+    /*public delegate void ButtonClickHandler();
 
     public event ButtonClickHandler OnButtonClick;
-
 
     public string Text = "";
     public bool TintEnabled = false;
@@ -187,5 +185,5 @@ public class Button : Sprite
         }
 
         return button;
-    }
+    }*/
 }

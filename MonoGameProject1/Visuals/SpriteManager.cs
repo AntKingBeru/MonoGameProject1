@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGameProject1.Core;
 
 namespace MonoGameProject1;
 
@@ -18,12 +19,12 @@ public static class SpriteManager
     public static void AddSprite(string spriteName, string path)
     {
         Console.WriteLine("Add sprite {" + spriteName + "} with path {" + path + "}");
-        Sprite newSprite = new Sprite(spriteName);
-        newSprite.Path = path;
-        newSprite.Texture = Content.Load<Texture2D>(path);
-        newSprite.SourceRectangle = new Rectangle((int)newSprite.Position.X, (int)newSprite.Position.Y,
-            newSprite.Texture.Width, newSprite.Texture.Height);
-        newSprite.SpriteEffects = SpriteEffects.None;
+        var newSprite = new Sprite();
+        newSprite.spriteConfig.Path = path;
+        newSprite.spriteConfig.Texture = Content.Load<Texture2D>(path);
+        newSprite.spriteConfig.SourceRectangle = new Rectangle((int)newSprite.gameObject.Position.X, (int)newSprite.Position.Y,
+            newSprite.spriteConfig.Texture.Width, newSprite.spriteConfig.Texture.Height);
+        newSprite.spriteConfig.Effects = SpriteEffects.None;
 
         sprites[spriteName] = newSprite;
     }
@@ -36,9 +37,9 @@ public static class SpriteManager
         for (int i = 0; i < colorData.Length; i++)
             colorData[i] = color;
         texture.SetData(colorData);
-        newSprite.Texture = texture;
-        newSprite.SourceRectangle = rectangle;
-        newSprite.SpriteEffects = SpriteEffects.None;
+        newSprite.spriteConfig.Texture = texture;
+        newSprite.spriteConfig.SourceRectangle = rectangle;
+        newSprite.spriteConfig.Effects = SpriteEffects.None;
 
         sprites[spriteName] = newSprite;
     }

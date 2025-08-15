@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class ExitButton : GameObject
+public class ExitButton : Button
 {
-    Button _exitButton;
+    /*Button _exitButton;
 
     public ExitButton(string name) : base(name)
     {
@@ -46,5 +46,5 @@ public class ExitButton : GameObject
     {
         _exitButton.Update(gameTime);
         base.Update(gameTime);
-    }
+    }*/
 }
