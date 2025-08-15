@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -16,13 +17,15 @@ public abstract class GameObject : IUpdateables, IDrawables
     public float Rotation;
     public Vector2 Origin = Vector2.Zero;
     public float LayerDepth = 0.5f; // 0.0f = back, 1.0f = front
+    public List<Component> ActiveComponents;
+    public List<Component> InactiveComponents;
 
-    private static int NextInt = 0;
+    private static int GameObjectCounter = 0;
 
     public GameObject(string name)
     {
-        this.Name = name;
-        Index = NextInt++;
+        Name = name;
+        Index = GameObjectCounter++;
     }
 
     public virtual void Enable()
@@ -47,8 +50,32 @@ public abstract class GameObject : IUpdateables, IDrawables
         
     }
     
-    public void AddComponent<T> (T component) where T : Component
+    public void AddComponent<T> () where T : Component, new()
     {
         
+    }
+
+    public void DisableComponent<T>(T component) where T : Component
+    {
+        foreach (var c in ActiveComponents)
+        {
+            if (c == component)
+            {
+                InactiveComponents.Add(c);
+                ActiveComponents.Remove(c);
+            }
+        }
+    }
+    
+    public void EnableComponent<T>(T component) where T : Component
+    {
+        foreach (var c in InactiveComponents)
+        {
+            if (c == component)
+            {
+                ActiveComponents.Add(c);
+                InactiveComponents.Remove(c);
+            }
+        }
     }
 }

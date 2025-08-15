@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGameProject1.Core;
+namespace MonoGameProject1;
 
 public abstract class Component : IUpdateables, IDrawables
 {

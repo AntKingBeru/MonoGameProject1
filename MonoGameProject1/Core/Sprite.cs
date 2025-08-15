@@ -22,6 +22,7 @@ public class Sprite : Component
 
     public Sprite(string name) : base("Sprite_" + name)
     {
+        
     }
 
     public override void Draw(SpriteBatch spriteBatch)
