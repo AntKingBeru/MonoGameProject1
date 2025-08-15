@@ -6,9 +6,14 @@ namespace MonoGameProject1;
 public abstract class Component : IUpdateables, IDrawables
 {
     protected GameObject gameObject;
-    protected bool isActive = true;
-
+    public bool IsActive {get; private set;}
+    
     protected Component()
+    {
+        
+    }
+    
+    public virtual void Initialize<T>(T config) where T : ComponentConfig
     {
         
     }

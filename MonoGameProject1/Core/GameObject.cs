@@ -56,12 +56,19 @@ public abstract class GameObject : IUpdateables, IDrawables
         
     }
     
+    public T AddComponent<T, TConfig>(TConfig config) 
+        where T : Component, new()
+        where TConfig : ComponentConfig
+    {
+        var component = AddComponent<T>();
+        component.Initialize(config);
+        return component;
+    }
+    
     public T AddComponent<T> () where T : Component, new()
     {
         var newComponent = new T();
-        newComponent.Initialize(this);
-        newComponent.SetActive(true);
-        ActiveComponents.Add(newComponent);
+        InactiveComponents.Add(newComponent);
         return newComponent;
     }
 
