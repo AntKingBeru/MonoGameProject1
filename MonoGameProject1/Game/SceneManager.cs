@@ -17,12 +17,6 @@ public static class SceneManager
         EnableScene(scene);
     }
 
-    public static void EnableScene(Scene scene)
-    {
-        CurrentScene = scene;
-        CurrentScene.OnEnable();
-    }
-
     public static void EnableScene(string scene)
     {
         CurrentScene = GetScene(scene);
@@ -44,6 +38,12 @@ public static class SceneManager
     public static void AddScene(string name, Scene scene)
     {
         scenes.Add(name, scene);
+    }
+    
+    public static void AddGameObjectToCurrentScene(GameObject gameObject)
+    {
+        if (CurrentScene == null) return;
+        CurrentScene.SceneObjects.Add(gameObject.Index, gameObject);
     }
     
     public static void Update(GameTime gameTime)

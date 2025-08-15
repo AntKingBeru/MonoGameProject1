@@ -20,8 +20,8 @@ public class Button : GameObject
     {
         buttonConfig = new ButtonConfig();
 
-        var spriteConfig = new SpriteConfig();
-        spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
+        var spriteInfo = SpriteManager.GetSprite("Button");
+        var spriteConfig = new SpriteConfig(spriteInfo);
         
         AddComponent<Sprite, SpriteConfig>(spriteConfig);
     }

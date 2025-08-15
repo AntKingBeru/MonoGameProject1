@@ -21,13 +21,16 @@ public class MainMenuScene : Scene
         var obj = new GameObject("Test");
         SceneObjects.Add(obj.Index, obj);
 
-        var spriteConfig = new SpriteConfig();
-        spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
+        var info = SpriteManager.GetSprite("Button");
+        var spriteConfig = new SpriteConfig(info);
 
         var spriteComponent = obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
         spriteComponent.SetActive(true);
         var inputComponent = obj.AddComponent<Input>();
         inputComponent.SetActive(true);
+        var colliderConfig = new ColliderConfig(new Rectangle(0, 0, 100, 50));
+        var colliderComponent = obj.AddComponent<Collider, ColliderConfig>(colliderConfig);
+        colliderComponent.SetActive(true);
 
         //
         // var startButton = new StartButton("Start");

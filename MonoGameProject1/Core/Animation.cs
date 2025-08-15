@@ -4,7 +4,7 @@ namespace MonoGameProject1.Core;
 
 public class Animation : Sprite
 {
-    public AnimConfig AnimationConfig { get; private set; }
+    public AnimationConfig AnimationConfig { get; private set; }
 
     protected Rectangle? Rect { get; set; }
 
@@ -25,20 +25,10 @@ public class Animation : Sprite
             return new Rectangle(location, size);
         }
     }
-
-    public Animation() : base()
-    {
-        
-    }
-
-    public void setAnimConfig(AnimConfig animConfig)
-    {
-        AnimationConfig = animConfig;
-    }
     
     public override void Initialize<T>(T config)
     {
-        if (config is AnimConfig animationConfig)
+        if (config is AnimationConfig animationConfig)
         {
             AnimationConfig = animationConfig;
         }

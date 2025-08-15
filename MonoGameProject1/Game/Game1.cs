@@ -24,6 +24,7 @@ public class Game1 : Game
         SpriteManager.ContentMan = Content; 
         SpriteManager.AddSprite("Button", "Images/pacman");
         SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
+        SpriteManager.AddSprite("Pixel", "Images/Pixel");
     }
 
     protected override void Initialize()
@@ -33,7 +34,8 @@ public class Game1 : Game
         MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
         SceneManager.EnableScene("Main Menu");
-
+        
+        
         base.Initialize();
     }
 

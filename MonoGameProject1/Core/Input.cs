@@ -34,8 +34,6 @@ public class Input : Component
         var state = Keyboard.GetState();
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         
-        Console.WriteLine("Entered Input Update");
-        
         if (!disableMovement)
         {
             foreach (var key in state.GetPressedKeys())
