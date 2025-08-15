@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class Text : IUpdatable, IDrawable
+public class Text : IUpdateables, IDrawables
 {
     //Semi-Dynamic variables
     protected SpriteFont _font;

@@ -2,7 +2,7 @@
 
 namespace MonoGameProject1;
 
-public interface IDrawable
+public interface IDrawables
 {
     void Draw(SpriteBatch spriteBatch);
 }

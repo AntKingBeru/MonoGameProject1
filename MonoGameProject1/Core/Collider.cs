@@ -18,7 +18,6 @@ public class Collider : Sprite
 
     public override void Draw(SpriteBatch _spriteBatch)
     {
-        
         int thickness = 5;
         // Draw outline
         

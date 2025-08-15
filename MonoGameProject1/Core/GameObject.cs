@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public abstract class GameObject : IUpdateable, IDrawable
+public abstract class GameObject : IUpdateables, IDrawables
 {
     public string Name;
 
@@ -40,11 +40,6 @@ public abstract class GameObject : IUpdateable, IDrawable
     public virtual void Update(GameTime gameTime)
     {
     }
-
-    public bool Enabled { get; }
-    public int UpdateOrder { get; }
-    public event EventHandler<EventArgs> EnabledChanged;
-    public event EventHandler<EventArgs> UpdateOrderChanged;
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
