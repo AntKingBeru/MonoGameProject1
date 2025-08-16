@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGameProject1.Core;
@@ -17,17 +18,6 @@ public class GameScene : Scene
     
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
-    private readonly Vector2 DisplayOrigin = ScreenPosition.MiddleCenter();
-    private readonly Vector2 EmptyOrigin = new Vector2(
-        ScreenPosition.MiddleCenter().X, ScreenPosition.MiddleCenter().Y - backgroundSpriteInfo.Texture.Height
-    );
-    private readonly Vector2 MiddleOrigin = new Vector2(
-        ScreenPosition.MiddleCenter().X, ScreenPosition.MiddleCenter().Y + backgroundSpriteInfo.Texture.Height
-    );
-    private readonly Vector2 BottomOrigin = new Vector2(
-        ScreenPosition.MiddleCenter().X, ScreenPosition.MiddleCenter().Y + (backgroundSpriteInfo.Texture.Height * 2f)
-        );
-
     public override void OnEnable()
     {
         IsActive = true;
@@ -45,31 +35,37 @@ public class GameScene : Scene
         inputComponent.SetActive(true);*/
         
         var backgroundHandler = new GameObject("BackgroundHandler");
+        backgroundHandler.Position = ScreenPosition.TopLeft();
+        
         SceneObjects.Add(backgroundHandler.Index, backgroundHandler);
 
         var backSpriteConfig = new SpriteConfig(backgroundSpriteInfo)
         {
-            LayerDepth = 0f
+            LayerDepth = 0.1f,
+            SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
 
-        var dirtSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("Dirt"))
-        {
-            LayerDepth = 1f
-        };
+        // var dirtSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("Dirt"))
+        // {
+        //     LayerDepth = 0f,
+        //     SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
+        // };
 
         for (var i = 0; i < 3; i++)
         {
-            backgroundSprites.Add(backgroundHandler.AddComponent<Sprite, SpriteConfig>(backSpriteConfig));
-            backgroundSprites[i].SetActive(true);
-            backgroundSprites[i].gameObject.Scale = new Vector2(10f, 10f);
-            dirtSprites.Add(backgroundHandler.AddComponent<Sprite, SpriteConfig>(dirtSpriteConfig));
-            dirtSprites[i].SetActive(true);
-            dirtSprites[i].gameObject.Scale = new Vector2(10f, 10f);
+            var bgSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(backSpriteConfig);
+            bgSprite.SetActive(true);
+            bgSprite.gameObject.Scale = new Vector2(0.55f, 0.55f);
+            backgroundSprites.Add(bgSprite);
+            bgSprite.spriteConfig.Origin = new Vector2(0,0);
+
+            // var dirtSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(dirtSpriteConfig);
+            // dirtSprite.SetActive(true);
+            // dirtSprite.gameObject.Scale = Vector2.One;
+            // dirtSprites.Add(dirtSprite);
+            // dirtSprite.spriteConfig.Origin = new Vector2(bgSprite.spriteConfig.SpriteInfo.Texture.Width * 0.5f, 
+            //     bgSprite.spriteConfig.SpriteInfo.Texture.Height * 0.5f);
         }
-        
-        backgroundSprites[0].spriteConfig.Origin = DisplayOrigin;
-        backgroundSprites[1].spriteConfig.Origin = MiddleOrigin;
-        backgroundSprites[2].spriteConfig.Origin = BottomOrigin;
         
         /*ar depthMaskConfig = new SpriteConfig
         {
@@ -87,35 +83,78 @@ public class GameScene : Scene
         var depthGradient = backgroundHandler.AddComponent<Sprite, SpriteConfig>(depthGradientConfig);
         depthGradient.SetActive(true);*/
         
-        backgroundHandler.Position = ScreenPosition.MiddleCenter();
-        //backgroundHandler.Scale = new Vector2(ScreenPosition.MiddleCenter().X * 2f, ScreenPosition.MiddleCenter().Y * 2f);
+        ArrangeSprites();
         
         Init();
+    }
+    
+    private void ArrangeSprites()
+    {
+        var screenHeight = 800; // Assuming a fixed screen height of 1920 pixels for this example
+        
+        for (var i = 0; i < 3; i++)
+        {
+            var yPos = ScreenPosition.TopLeft().Y - (i * screenHeight);
+            backgroundSprites[i].spriteConfig.Origin = new Vector2(
+                backgroundSprites[i].spriteConfig.Origin.X,
+                yPos
+            );
+            // dirtSprites[i].spriteConfig.Origin = new Vector2(
+            //     ScreenPosition.MiddleCenter().X,
+            //     yPos
+            // );
+        }
     }
 
     public override void Update(GameTime gameTime)
     { 
+        if (!IsActive) return;
+
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        
         MoveBackground(speed * deltaTime);
-        
-        for (int i = 0; i < 3; i++)
-        {
-            if (backgroundSprites[i].spriteConfig.Origin.Y >= EmptyOrigin.Y)
-            {
-                backgroundSprites[i].spriteConfig.Origin = BottomOrigin;
-                dirtSprites[i].spriteConfig.Origin = BottomOrigin;
-            }
-        }
-        
+
         base.Update(gameTime);
     }
 
     private void MoveBackground(float moveSpeed)
     {
-        for (int i = 0; i < 3; i++)
+        var screenHeight = 800; // Assuming a fixed screen height of 1920 pixels for this example
+
+
+        for (var i = 0; i < 3; i++)
         {
-            backgroundSprites[i].spriteConfig.Origin.Y += moveSpeed;
-            dirtSprites[i].spriteConfig.Origin.Y += moveSpeed;
+            backgroundSprites[i].gameObject.Position = new Vector2(
+                backgroundSprites[i].gameObject.Position.X,
+                backgroundSprites[i].gameObject.Position.Y - moveSpeed
+            );
+
+            // dirtSprites[i].gameObject.Position = new Vector2(
+            //     dirtSprites[i].gameObject.Position.X,
+            //     dirtSprites[i].gameObject.Position.Y - moveSpeed
+            // );
+        }
+
+        for (var i = 0; i < 3; i++)
+        {
+            if (backgroundSprites[i].gameObject.Position.Y + (screenHeight * 0.5f) <= 0)
+            {
+                // Find the current bottom-most sprite
+                var maxY = backgroundSprites.Max(s => s.gameObject.Position.Y);
+
+                // Place this sprite exactly below the bottom-most one
+                var newY = maxY + screenHeight;
+
+                backgroundSprites[i].gameObject.Position = new Vector2(
+                    backgroundSprites[i].gameObject.Position.X,
+                    newY
+                );
+
+                // dirtSprites[i].gameObject.Position = new Vector2(
+                //     dirtSprites[i].gameObject.Position.X,
+                //     newY
+                // );
+            }
         }
     }
 }

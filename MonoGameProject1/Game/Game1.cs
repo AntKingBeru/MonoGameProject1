@@ -18,12 +18,12 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        _graphics.PreferredBackBufferWidth = 1080;
-        _graphics.PreferredBackBufferHeight = 1920;
+        _graphics.PreferredBackBufferWidth = 600;
+        _graphics.PreferredBackBufferHeight = 800;
         _graphics.ApplyChanges();
         SpriteManager.ContentMan = Content; 
         SpriteManager.AddSprite("Button", "Images/pacman");
-        SpriteManager.AddSprite("Background", "Images/pixel");
+        SpriteManager.AddSprite("Background", "Images/Pipe");
         SpriteManager.AddSprite("Dirt", "Images/pixel");
         // SpriteManager.AddSprite("Gradiant", "Images/pixel");
         // SpriteManager.AddSprite("DepthMask", "Images/pixel");
