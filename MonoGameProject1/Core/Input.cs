@@ -8,7 +8,6 @@ namespace MonoGameProject1.Core;
 public class Input : Component
 {
     private float speed = 375f;
-    private float originSpeed;
 
     private Vector2 moveVector = Vector2.Zero;
     
@@ -20,7 +19,7 @@ public class Input : Component
     
     public Input() : base()
     {
-        originSpeed = speed;
+        
     }
     
     public void EnableMovement()
@@ -98,8 +97,6 @@ public class Input : Component
 
         gameObject.Position = ScreenPosition.ClampInBoundaries(gameObject.Position);
     }
-    
-    
 
     public override void Draw(SpriteBatch spriteBatch)
     {

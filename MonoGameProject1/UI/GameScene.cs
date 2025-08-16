@@ -12,7 +12,7 @@ public class GameScene : Scene
 
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float slowCooldown = 5f; //Time in seconds before the player starts slowing down
-    private float speed = 200;
+    private float speed = 200f;
     private List<GameObject> backgroundSprites = new List<GameObject>();
     
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
@@ -22,17 +22,47 @@ public class GameScene : Scene
         IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
         
-        var player = new Player();
+        // var player = GameObjectFactory.CreateGameObject("Player", new (string ComponentName, ComponentConfig Config)[] 
+        // {
+        //     ("Sprite", new SpriteConfig(SpriteManager.GetSprite("Player"))),
+        //     ("Input", null),
+        //     ("Collider", new ColliderConfig(new Rectangle(0, 0, 100, 100)))
+        // });
+        
+        var player = new GameObject("Player");
         SceneObjects.Add(player.Index, player);
+        player.Scale = new Vector2(0.2f, 0.2f);
+        player.Position = ScreenPosition.Center();
+        var playerSpriteInfo = SpriteManager.GetSprite("Player");
+        var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
+        {
+            LayerDepth = 0.5f
+        };
+        player.AddComponent<Sprite, SpriteConfig>(playerSpriteConfig);
+        var playerInput = player.AddComponent<Input>();
+        playerInput.EnableMovement();
+        
+        var playerEdge = new GameObject("PlayerEdge");
+        SceneObjects.Add(playerEdge.Index, playerEdge);
+        playerEdge.Scale = Vector2.One;
+        playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.25f * 0.2f, playerSpriteInfo.Texture.Height * 0.2f);
+        var playerEdgeInput = playerEdge.AddComponent<Input>();
+        playerEdgeInput.EnableMovement();
+        var playerColliderConfig = new ColliderConfig(new Rectangle(
+            50,
+            100, 
+            50, 
+            50));
+        playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
         
         var obj = new GameObject("Test");
         SceneObjects.Add(obj.Index, obj);
         obj.Scale = new Vector2(0.2f, 0.2f);
         obj.Position = new Vector2(200, 600);
-
+        
         var info = SpriteManager.GetSprite("Button");
         var spriteConfig = new SpriteConfig(info);
-
+        
         obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
         var input = obj.AddComponent<Input>();
         input.EnableMovement();
@@ -45,7 +75,7 @@ public class GameScene : Scene
             LayerDepth = 0.1f,
             SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
-
+        
         var deepClipConfig = new SpriteConfig(SpriteManager.GetSprite("Shading"))
         {
             LayerDepth = 0.3f,
@@ -66,7 +96,7 @@ public class GameScene : Scene
             Color = new Color(1f, 1f, 1f, 0.95f),
             SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
-
+        
         for (var i = 0; i < 3; i++)
         {
             var backgroundHandler = new GameObject("BackgroundHandler" + i);
@@ -74,13 +104,13 @@ public class GameScene : Scene
             backgroundHandler.Position = ScreenPosition.TopLeft();
             SceneObjects.Add(backgroundHandler.Index, backgroundHandler);
             backgroundSprites.Add(backgroundHandler);
-
+        
             var bgSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(backSpriteConfig);
             bgSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
-
+        
             var farClip = backgroundHandler.AddComponent<Sprite, SpriteConfig>(deepClipConfig);
             farClip.spriteConfig.Origin = ScreenPosition.TopLeft();
-
+        
             var nearClip = backgroundHandler.AddComponent<Sprite, SpriteConfig>(highLight);
             nearClip.spriteConfig.Origin = ScreenPosition.TopLeft();
             
