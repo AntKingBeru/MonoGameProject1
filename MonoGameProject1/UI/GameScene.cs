@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGameProject1.Core;
@@ -11,9 +13,12 @@ public class GameScene : Scene
     public event SceneUnloadHandler OnSceneUnload;
 
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
-    private float slowCooldown = 5f; //Time in seconds before the player starts slowing down
     private float speed = 200f;
     private List<GameObject> backgroundSprites = new List<GameObject>();
+
+    private const float TIMETHRESHOLD = 6.5f;
+    private const float GRACEPERIOD = 1.5f;
+    private const float ORIGINSPEED = 200f;
     
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
@@ -21,13 +26,6 @@ public class GameScene : Scene
     {
         IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
-        
-        // var player = GameObjectFactory.CreateGameObject("Player", new (string ComponentName, ComponentConfig Config)[] 
-        // {
-        //     ("Sprite", new SpriteConfig(SpriteManager.GetSprite("Player"))),
-        //     ("Input", null),
-        //     ("Collider", new ColliderConfig(new Rectangle(0, 0, 100, 100)))
-        // });
         
         var player = new GameObject("Player");
         SceneObjects.Add(player.Index, player);
@@ -53,7 +51,8 @@ public class GameScene : Scene
             100, 
             50, 
             50));
-        playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
+        var collider = playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
+        //collider.OnCollision += CatchFish();
         
         var obj = new GameObject("Test");
         SceneObjects.Add(obj.Index, obj);
@@ -136,11 +135,34 @@ public class GameScene : Scene
         }
     }
 
+    // private Collider.CollisionHandler CatchFish()
+    // {
+    //     fishCatchTimer = 0f;
+    //     speed *= 1.4f;
+    //     
+    //     return 
+    // }
+
     public override void Update(GameTime gameTime)
     { 
         if (!IsActive) return;
 
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        if (speed <= 0f)
+        {
+            //TODO: add logic when speed reaches 0
+        }
+
+        else
+        {
+            if (fishCatchTimer >= GRACEPERIOD)
+            {
+                speed -= deltaTime * (ORIGINSPEED / TIMETHRESHOLD);
+            }
+
+            fishCatchTimer += deltaTime;
+        }
         
         MoveBackground(speed * deltaTime);
 
