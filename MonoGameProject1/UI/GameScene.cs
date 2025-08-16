@@ -22,17 +22,21 @@ public class GameScene : Scene
         IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
         
-        /*var player = new GameObject("PlayerTest");
-        SceneObjects.Add(player.Index, player);
-        var spriteConfig = new SpriteConfig();
-        spriteConfig.SpriteInfo = SpriteManager.GetSprite("Button");
-        player.Position = new Vector2(ScreenPosition.MiddleCenter().X, spriteConfig.SpriteInfo.Texture.Width * 0.5f);
-        player.Scale = new Vector2(0.5f, 0.5f);
-        var spriteComponent = player.AddComponent<Sprite, SpriteConfig>(spriteConfig);
-        spriteComponent.SetActive(true);
-        var inputComponent = player.AddComponent<Input>();
-        inputComponent.SetActive(true);*/
+        var obj = new GameObject("Test");
+        SceneObjects.Add(obj.Index, obj);
+        obj.Scale = new Vector2(0.2f, 0.2f);
+        obj.Position = new Vector2(200, 600);
 
+        var info = SpriteManager.GetSprite("Button");
+        var spriteConfig = new SpriteConfig(info);
+
+        obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
+        var input = obj.AddComponent<Input>();
+        input.EnableMovement();
+        var colliderConfig = new ColliderConfig( new Rectangle(0, 0, 100, 100));
+        obj.AddComponent<Collider, ColliderConfig>(colliderConfig);
+        
+        
         var backSpriteConfig = new SpriteConfig(backgroundSpriteInfo)
         {
             LayerDepth = 0.1f,
@@ -56,6 +60,7 @@ public class GameScene : Scene
         var outLine = new SpriteConfig(SpriteManager.GetSprite("OutLine"))
         {
             LayerDepth = 1f,
+            Color = new Color(1f, 1f, 1f, 0.95f),
             SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
 
@@ -79,7 +84,6 @@ public class GameScene : Scene
             var outLineSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(outLine);
             outLineSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
-
         ArrangeSprites();
         
         Init();

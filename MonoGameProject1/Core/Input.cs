@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace MonoGameProject1.Core;
@@ -32,6 +33,14 @@ public class Input : Component
     {
         disableMovement = true;
         SetActive(false);
+    }
+
+    protected override void OnEnable()
+    {
+    }
+
+    protected override void OnDisable()
+    {
     }
 
     public override void Update(GameTime gameTime)
@@ -86,7 +95,13 @@ public class Input : Component
             
             gameObject.Position += moveVector;
         }
-        
-        base.Update(gameTime);
+
+        gameObject.Position = ScreenPosition.ClampInBoundaries(gameObject.Position);
+    }
+    
+    
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
     }
 }

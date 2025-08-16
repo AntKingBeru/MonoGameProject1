@@ -33,7 +33,7 @@ public class SpriteConfig : ComponentConfig
         SourceRectangle = new Rectangle(0, 0, 512, 512);
         Color = Color.White;
         Effects = SpriteEffects.None;
-        LayerDepth = 0f;
+        LayerDepth = 1f;
         Name = "";
         DestRectangle = new Rectangle(0, 0, 100, 100);
         SpriteInfo = null;

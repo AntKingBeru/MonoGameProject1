@@ -21,6 +21,14 @@ public class Sprite : Component
         base.Initialize(config);
     }
 
+    protected override void OnEnable()
+    {
+    }
+
+    protected override void OnDisable()
+    {
+    }
+
     public override void Draw(SpriteBatch spriteBatch)
     {
         if (spriteConfig.SpriteInfo != null)

@@ -26,6 +26,14 @@ public class Collider : Component
         base.Initialize(config);
     }
 
+    protected override void OnEnable()
+    {
+    }
+
+    protected override void OnDisable()
+    {
+    }
+
     public event CollisionHandler OnCollision;
     public event CollisionHandler OnTrigger;
 
@@ -79,7 +87,6 @@ public class Collider : Component
     public override void Update(GameTime gameTime)
     {
         colliderConfig.Bounds = new Rectangle((int)gameObject.Position.X, (int)gameObject.Position.Y, colliderConfig.Bounds.Width, colliderConfig.Bounds.Height);
-        base.Update(gameTime);
     }
     
     public void Notify(Collider other)
