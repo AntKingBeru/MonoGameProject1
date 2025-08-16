@@ -40,6 +40,7 @@ public class GameScene : Scene
         var playerInput = player.AddComponent<Input>();
         playerInput.EnableMovement();
         
+        
         var playerEdge = new GameObject("PlayerEdge");
         SceneObjects.Add(playerEdge.Index, playerEdge);
         playerEdge.Scale = Vector2.One;
@@ -54,6 +55,15 @@ public class GameScene : Scene
         var collider = playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
         //collider.OnCollision += CatchFish();
         
+        CreateBackground();
+        
+        ArrangeSprites();
+        
+        Init();
+    }
+
+    private void CreateBackground()
+    {
         var obj = new GameObject("Test");
         SceneObjects.Add(obj.Index, obj);
         obj.Scale = new Vector2(0.2f, 0.2f);
@@ -116,11 +126,8 @@ public class GameScene : Scene
             var outLineSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(outLine);
             outLineSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
-        ArrangeSprites();
-        
-        Init();
     }
-    
+
     private void ArrangeSprites()
     {
         var screenHeight = ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example

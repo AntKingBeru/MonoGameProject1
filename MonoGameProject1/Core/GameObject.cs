@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class GameObject : IUpdateables, IDrawables
+public class GameObject : IUpdateables, IDrawables, ICollider
 {
     public string Name;
     public readonly int Index;
