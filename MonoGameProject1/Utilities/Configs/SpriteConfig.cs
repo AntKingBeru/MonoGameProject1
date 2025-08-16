@@ -7,7 +7,7 @@ public class SpriteConfig : ComponentConfig
 {
     public string Name { get; set; }
 
-    public SpriteSheetInfo spriteSheetInfo;
+    private SpriteSheetInfo spriteSheetInfo;
     public SpriteSheetInfo SpriteInfo
     {
         get => spriteSheetInfo;
@@ -25,17 +25,18 @@ public class SpriteConfig : ComponentConfig
     public Rectangle DestRectangle;
     public Color Color = Color.White;
     public SpriteEffects Effects = SpriteEffects.None;
-    public Vector2 Origin = Vector2.Zero;
+    public Vector2 Origin = ScreenPosition.TopLeft();
     public float LayerDepth { get; set; }
     
-    public SpriteConfig()
+    public SpriteConfig(SpriteSheetInfo spriteSheetInfo)
     {
-        SourceRectangle = new Rectangle(0, 0, 100, 100);
+        SourceRectangle = new Rectangle(0, 0, 512, 512);
         Color = Color.White;
         Effects = SpriteEffects.None;
-        LayerDepth = 0f;
+        LayerDepth = 1f;
         Name = "";
         DestRectangle = new Rectangle(0, 0, 100, 100);
         SpriteInfo = null;
+        this.spriteSheetInfo = spriteSheetInfo;
     }
 }

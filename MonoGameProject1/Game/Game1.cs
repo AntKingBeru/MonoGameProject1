@@ -18,12 +18,18 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        _graphics.PreferredBackBufferWidth = 1920;
-        _graphics.PreferredBackBufferHeight = 1080;
+        _graphics.PreferredBackBufferWidth = 600;
+        _graphics.PreferredBackBufferHeight = 800;
         _graphics.ApplyChanges();
         SpriteManager.ContentMan = Content; 
-        SpriteManager.AddSprite("Button", "Images/ExitButton");
+        SpriteManager.AddSprite("Button", "Images/pacman");
+        SpriteManager.AddSprite("Background", "Images/Pipe");
+        SpriteManager.AddSprite("OutLine", "Images/PipeOutLine");
+        SpriteManager.AddSprite("Shading", "Images/BackClip");
+        SpriteManager.AddSprite("HighLight", "Images/FrontClip");
         SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
+        SpriteManager.AddSprite("Pixel", "Images/Pixel");
+        SpriteManager.AddSprite("Player", "Images/pacman");
     }
 
     protected override void Initialize()
@@ -33,6 +39,9 @@ public class Game1 : Game
         MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
         SceneManager.EnableScene("Main Menu");
+        var gameScene = new GameScene();
+        SceneManager.AddScene("Game Scene", gameScene);
+        SceneManager.EnableScene("Game Scene");
 
         base.Initialize();
     }
@@ -51,6 +60,7 @@ public class Game1 : Game
             Exit();
 
         SceneManager.Update(gameTime);
+        CollisionManager.DetectCollisions();
 
         base.Update(gameTime);
     }

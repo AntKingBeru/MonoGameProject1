@@ -18,15 +18,9 @@ public abstract class Component : IUpdateables, IDrawables
         SetActive(true);
     }
 
-    protected virtual void OnEnable()
-    {
-        
-    }
-    
-    protected virtual void OnDisable()
-    {
-        
-    }
+    protected abstract void OnEnable();
+
+    protected abstract void OnDisable();
 
     public virtual void SetActive(bool activeState)
     {
@@ -34,22 +28,18 @@ public abstract class Component : IUpdateables, IDrawables
         {
             IsActive = true;
             gameObject.EnableComponent(this);    
+            OnEnable();
         }
 
         else
         {
             IsActive = false;
             gameObject.DisableComponent(this);
+            OnDisable();
         }
     }
-    
-    public virtual void Update(GameTime gameTime)
-    {
-        
-    }
 
-    public virtual void Draw(SpriteBatch spriteBatch)
-    {
-        
-    }
+    public abstract void Update(GameTime gameTime);
+
+    public abstract void Draw(SpriteBatch spriteBatch);
 }
