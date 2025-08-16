@@ -10,17 +10,18 @@ public class FishBehaviour : Component
     
     public void SetPattern(Func<GameObject, GameTime, Vector2> pattern)
     {
+        IsActive = true;
+
         currentPattern = pattern;
     }
 
-  
 
     protected override void OnEnable()
     {
         // Set default pattern
         IsActive = true;
         currentPattern = FishPatterns.SineWave;
-
+        
     }
 
     protected override void OnDisable()
@@ -31,7 +32,6 @@ public class FishBehaviour : Component
     public override void Update(GameTime gameTime)
     {
         
-        Console.WriteLine("Update of fishBehaviour is active = " + IsActive + "");
         if (!IsActive || currentPattern == null) return;
         
         gameObject.Position = currentPattern(gameObject, gameTime);

@@ -25,19 +25,18 @@ public class Fish : GameObject
 
 
         var width = (Position.X + spriteInfo.Texture.Width) * Scale.X;
-        var height = (+Position.Y + spriteInfo.Texture.Height) * Scale.Y;
-        var rect = new Rectangle((int)Position.X, (int)Position.Y, (int)width, (int)height);
-        var colliderConfig = new ColliderConfig(rect);
-        AddComponent<Collider, ColliderConfig>(colliderConfig);
+        var height = (Position.Y + spriteInfo.Texture.Height) * Scale.Y;
+        var rect = new Rectangle((int)(Position.X - width * 0.5f), (int)(Position.Y - height * 0.5f), (int)width,
+            (int)height);
+        // var colliderConfig = new ColliderConfig(rect);
+        // AddComponent<Collider, ColliderConfig>(colliderConfig);
 
         behaviour = AddComponent<FishBehaviour>();
-        behaviour.SetActive(true);
+        behaviour.SetPattern(FishPatterns.Circle);
+
+        EnableComponent(behaviour);
     }
 
-    public override void Update(GameTime gameTime)
-    {
-        behaviour.SetPattern(FishPatterns.Circle);
-    }
 
     private static string GetRandomFishSprite()
     {

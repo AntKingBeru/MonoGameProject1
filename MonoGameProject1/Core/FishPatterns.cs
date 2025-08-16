@@ -29,15 +29,15 @@ public static class FishPatterns
         return new Vector2(x, gameObject.Position.Y);
     };
     
-    public static Func<GameObject, GameTime, Vector2> Circle = (gameObject, gameTime) =>
+    public static Vector2 Circle(GameObject go, GameTime gt)
     {
-        float time = (float)gameTime.TotalGameTime.TotalSeconds;
-        float radius = 100f;
+        float time = (float)gt.TotalGameTime.TotalSeconds;
+        float radius = 5f;
         float speed = 2f;
         
         return new Vector2(
-            gameObject.Position.X + MathF.Cos(time * speed) * radius,
-            gameObject.Position.Y + MathF.Sin(time * speed) * radius
+            go.Position.X + MathF.Cos(time * speed) * radius,
+            go.Position.Y + MathF.Sin(time * speed) * radius
         );
-    };
+    }
 }
