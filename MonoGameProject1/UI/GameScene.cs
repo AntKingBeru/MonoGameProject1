@@ -22,13 +22,6 @@ public class GameScene : Scene
         IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
         
-        // var player = GameObjectFactory.CreateGameObject("Player", new (string ComponentName, ComponentConfig Config)[] 
-        // {
-        //     ("Sprite", new SpriteConfig(SpriteManager.GetSprite("Player"))),
-        //     ("Input", null),
-        //     ("Collider", new ColliderConfig(new Rectangle(0, 0, 100, 100)))
-        // });
-        
         var player = new GameObject("Player");
         SceneObjects.Add(player.Index, player);
         player.Scale = new Vector2(0.2f, 0.2f);
@@ -41,6 +34,7 @@ public class GameScene : Scene
         player.AddComponent<Sprite, SpriteConfig>(playerSpriteConfig);
         var playerInput = player.AddComponent<Input>();
         playerInput.EnableMovement();
+        
         
         var playerEdge = new GameObject("PlayerEdge");
         SceneObjects.Add(playerEdge.Index, playerEdge);
@@ -55,6 +49,15 @@ public class GameScene : Scene
             50));
         playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
         
+        CreateBackground();
+        
+        ArrangeSprites();
+        
+        Init();
+    }
+
+    private void CreateBackground()
+    {
         var obj = new GameObject("Test");
         SceneObjects.Add(obj.Index, obj);
         obj.Scale = new Vector2(0.2f, 0.2f);
@@ -117,11 +120,8 @@ public class GameScene : Scene
             var outLineSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(outLine);
             outLineSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
-        ArrangeSprites();
-        
-        Init();
     }
-    
+
     private void ArrangeSprites()
     {
         var screenHeight = ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
