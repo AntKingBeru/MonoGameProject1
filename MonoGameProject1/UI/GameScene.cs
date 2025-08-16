@@ -22,6 +22,9 @@ public class GameScene : Scene
         IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
         
+        var player = new Player();
+        SceneObjects.Add(player.Index, player);
+        
         var obj = new GameObject("Test");
         SceneObjects.Add(obj.Index, obj);
         obj.Scale = new Vector2(0.2f, 0.2f);

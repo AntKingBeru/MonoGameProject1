@@ -12,7 +12,10 @@ public class Player : GameObject
     public Player() : base("player")
     {
         spriteInfo = SpriteManager.GetSprite("Player");
-        spriteConfig = new SpriteConfig(spriteInfo);
+        spriteConfig = new SpriteConfig(spriteInfo)
+        {
+            LayerDepth = 0.5f
+        };
         Scale = new Vector2(0.2f, 0.2f);
         Position = new Vector2(200, 0);
         AddComponent<Sprite, SpriteConfig>(spriteConfig);
