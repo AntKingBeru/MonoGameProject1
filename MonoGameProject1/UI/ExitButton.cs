@@ -14,11 +14,17 @@ public class ExitButton : Button
 
     public override void Enable()
     {
-        Position = ScreenPosition.MiddleCenter();
+        Position = ScreenPosition.Center();
         OnButtonClick += Exit;
         base.Enable();
     }
 
+    
+    public override void Disable()
+    {
+        OnButtonClick -= Exit;
+        base.Disable();
+    }
     private void Exit()
     {
         SceneManager.Exit = true;

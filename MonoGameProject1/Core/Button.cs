@@ -29,6 +29,8 @@ public class Button : GameObject
 
     public override void Update(GameTime gameTime)
     {
+        this.buttonConfig._clickArea.X = (int)this.Position.X;
+        this.buttonConfig._clickArea.Y = (int)this.Position.Y;
         if (Mouse.GetState().LeftButton == ButtonState.Pressed)
         {
             if (WasPressed)
@@ -36,6 +38,11 @@ public class Button : GameObject
                 return;
             }
             WasPressed = true;
+            if (IsMouseOver())
+            {
+               Console.WriteLine("Button Clicked");
+                OnButtonClick?.Invoke();
+            }
         }
         else
         {
@@ -43,5 +50,11 @@ public class Button : GameObject
         }
 
         base.Update(gameTime);
+    }
+    
+    private bool IsMouseOver()
+    {
+     
+        return buttonConfig._clickArea.Contains(Mouse.GetState().Position);
     }
 }
