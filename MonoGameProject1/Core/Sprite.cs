@@ -25,10 +25,9 @@ public class Sprite : Component
     {
         if (spriteConfig.SpriteInfo != null)
         {
-            var sourceRect = spriteConfig.DestRectangle.IsEmpty
+            spriteConfig.SourceRectangle = spriteConfig.DestRectangle.IsEmpty
                 ? new Rectangle(0, 0, spriteConfig.SpriteInfo.Texture.Width, spriteConfig.SpriteInfo.Texture.Height)
                 : spriteConfig.SourceRectangle;
-          
         }
 
         spriteBatch.Draw(

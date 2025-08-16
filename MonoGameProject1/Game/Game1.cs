@@ -38,9 +38,9 @@ public class Game1 : Game
         MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
         SceneManager.EnableScene("Main Menu");
-        var gameScene = new GameScene();
-        SceneManager.AddScene("Game Scene", gameScene);
-        SceneManager.EnableScene("Game Scene");
+        // var gameScene = new GameScene();
+        // SceneManager.AddScene("Game Scene", gameScene);
+        // SceneManager.EnableScene("Game Scene");
 
         base.Initialize();
     }
@@ -59,6 +59,7 @@ public class Game1 : Game
             Exit();
 
         SceneManager.Update(gameTime);
+        CollisionManager.DetectCollisions();
 
         base.Update(gameTime);
     }

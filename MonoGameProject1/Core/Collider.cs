@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGameProject1.Core;
 
@@ -6,22 +7,23 @@ namespace MonoGameProject1;
 
 public class Collider : Component
 {
-    private ColliderConfig colliderConfig;
+    public ColliderConfig colliderConfig {get; private set; }
+
     public delegate void CollisionHandler(Collider other);
     public static Texture2D Texture => SpriteManager.GetSprite("Pixel").Texture;
 
     public Collider() : base()
     {
-        
     }
 
     public override void Initialize<T>(T config)
     {
-        base.Initialize(config);
         if (config is ColliderConfig colliderConfig)
         {
             this.colliderConfig = colliderConfig;
         }
+        CollisionManager.RegisterCollider(this);
+        base.Initialize(config);
     }
 
     public event CollisionHandler OnCollision;
@@ -30,7 +32,7 @@ public class Collider : Component
     public override void Draw(SpriteBatch _spriteBatch)
     {
         int thickness = 5;
-        var color = Color.IndianRed;
+        var color = Color.Red;
         // Draw outline
         
         // top
@@ -76,19 +78,15 @@ public class Collider : Component
     
     public override void Update(GameTime gameTime)
     {
-        gameObject.Position = new Vector2(colliderConfig.Bounds.X, colliderConfig.Bounds.Y);
+        colliderConfig.Bounds = new Rectangle((int)gameObject.Position.X, (int)gameObject.Position.Y, colliderConfig.Bounds.Width, colliderConfig.Bounds.Height);
         base.Update(gameTime);
     }
-
-    public bool Intersect(Collider other)
-    {
-        return colliderConfig.Bounds.Intersects(other.colliderConfig.Bounds);
-    }
-
+    
     public void Notify(Collider other)
     {
         if (colliderConfig.IsTrigger)
         {
+            Console.WriteLine("Collision Detected: " + gameObject.Name + " with " + other.gameObject.Name);
             OnTrigger?.Invoke(other);
         }
         else

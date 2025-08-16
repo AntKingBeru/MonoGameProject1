@@ -13,7 +13,6 @@ public class GameObject : IUpdateables, IDrawables
     public readonly int Index;
     public bool IsActive = false;
     public Vector2 Position = Vector2.Zero;
-    public Vector2 Size = Vector2.One;
     public Vector2 Scale = new Vector2(0.5f, 0.5f);
     public float Rotation;
     
@@ -76,6 +75,7 @@ public class GameObject : IUpdateables, IDrawables
     {
         var component = AddComponent<T>();
         component.Initialize(config);
+        component.SetActive(true);
         return component;
     }
     

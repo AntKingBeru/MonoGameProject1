@@ -22,8 +22,8 @@ public static class ScreenPosition
     public static Vector2 BottomRight() => new Vector2(ScreenWidth, ScreenHeight) ;
 
 
-    private static int ScreenWidth => _graphics.Viewport.Width;
-    private static int ScreenHeight => _graphics.Viewport.Height;
+    public static int ScreenWidth => _graphics.Viewport.Width;
+    public static int ScreenHeight => _graphics.Viewport.Height;
 
 
     public static void InitializePos(GraphicsDevice graphics)

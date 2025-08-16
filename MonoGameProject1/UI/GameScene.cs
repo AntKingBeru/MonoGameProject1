@@ -13,8 +13,7 @@ public class GameScene : Scene
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float slowCooldown = 5f; //Time in seconds before the player starts slowing down
     private float speed = 10f;
-    private List<Sprite> backgroundSprites = new List<Sprite>();
-    private List<Sprite> dirtSprites = new List<Sprite>();
+    private List<GameObject> backgroundSprites = new List<GameObject>();
     
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
@@ -33,11 +32,6 @@ public class GameScene : Scene
         spriteComponent.SetActive(true);
         var inputComponent = player.AddComponent<Input>();
         inputComponent.SetActive(true);*/
-        
-        var backgroundHandler = new GameObject("BackgroundHandler");
-        backgroundHandler.Position = ScreenPosition.TopLeft();
-        
-        SceneObjects.Add(backgroundHandler.Index, backgroundHandler);
 
         var backSpriteConfig = new SpriteConfig(backgroundSpriteInfo)
         {
@@ -53,10 +47,15 @@ public class GameScene : Scene
 
         for (var i = 0; i < 3; i++)
         {
+            var backgroundHandler = new GameObject("BackgroundHandler");
+            backgroundHandler.Position = ScreenPosition.TopLeft();
+        
+            SceneObjects.Add(backgroundHandler.Index, backgroundHandler);
+            
             var bgSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(backSpriteConfig);
             bgSprite.SetActive(true);
             bgSprite.gameObject.Scale = new Vector2(0.55f, 0.55f);
-            backgroundSprites.Add(bgSprite);
+            backgroundSprites.Add(backgroundHandler);
             bgSprite.spriteConfig.Origin = new Vector2(0,0);
 
             // var dirtSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(dirtSpriteConfig);
@@ -90,13 +89,13 @@ public class GameScene : Scene
     
     private void ArrangeSprites()
     {
-        var screenHeight = 800; // Assuming a fixed screen height of 1920 pixels for this example
+        var screenHeight = ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
         
         for (var i = 0; i < 3; i++)
         {
             var yPos = ScreenPosition.TopLeft().Y - (i * screenHeight);
-            backgroundSprites[i].spriteConfig.Origin = new Vector2(
-                backgroundSprites[i].spriteConfig.Origin.X,
+            backgroundSprites[i].Position = new Vector2(
+                backgroundSprites[i].Position.X,
                 yPos
             );
             // dirtSprites[i].spriteConfig.Origin = new Vector2(
@@ -112,49 +111,49 @@ public class GameScene : Scene
 
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         
-        MoveBackground(speed * deltaTime);
+        //MoveBackground(speed * deltaTime);
 
         base.Update(gameTime);
     }
 
-    private void MoveBackground(float moveSpeed)
-    {
-        var screenHeight = 800; // Assuming a fixed screen height of 1920 pixels for this example
-
-
-        for (var i = 0; i < 3; i++)
-        {
-            backgroundSprites[i].gameObject.Position = new Vector2(
-                backgroundSprites[i].gameObject.Position.X,
-                backgroundSprites[i].gameObject.Position.Y - moveSpeed
-            );
-
-            // dirtSprites[i].gameObject.Position = new Vector2(
-            //     dirtSprites[i].gameObject.Position.X,
-            //     dirtSprites[i].gameObject.Position.Y - moveSpeed
-            // );
-        }
-
-        for (var i = 0; i < 3; i++)
-        {
-            if (backgroundSprites[i].gameObject.Position.Y + (screenHeight * 0.5f) <= 0)
-            {
-                // Find the current bottom-most sprite
-                var maxY = backgroundSprites.Max(s => s.gameObject.Position.Y);
-
-                // Place this sprite exactly below the bottom-most one
-                var newY = maxY + screenHeight;
-
-                backgroundSprites[i].gameObject.Position = new Vector2(
-                    backgroundSprites[i].gameObject.Position.X,
-                    newY
-                );
-
-                // dirtSprites[i].gameObject.Position = new Vector2(
-                //     dirtSprites[i].gameObject.Position.X,
-                //     newY
-                // );
-            }
-        }
-    }
+    // private void MoveBackground(float moveSpeed)
+    // {
+    //     var screenHeight = ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
+    //
+    //
+    //     for (var i = 0; i < 3; i++)
+    //     {
+    //         backgroundSprites[i].gameObject.Position = new Vector2(
+    //             backgroundSprites[i].gameObject.Position.X,
+    //             backgroundSprites[i].gameObject.Position.Y - moveSpeed
+    //         );
+    //
+    //         // dirtSprites[i].gameObject.Position = new Vector2(
+    //         //     dirtSprites[i].gameObject.Position.X,
+    //         //     dirtSprites[i].gameObject.Position.Y - moveSpeed
+    //         // );
+    //     }
+    //
+    //     for (var i = 0; i < 3; i++)
+    //     {
+    //         if (backgroundSprites[i].gameObject.Position.Y + (screenHeight * 0.5f) <= 0)
+    //         {
+    //             // Find the current bottom-most sprite
+    //             var maxY = backgroundSprites.Max(s => s.gameObject.Position.Y);
+    //
+    //             // Place this sprite exactly below the bottom-most one
+    //             var newY = maxY + screenHeight;
+    //
+    //             backgroundSprites[i].gameObject.Position = new Vector2(
+    //                 backgroundSprites[i].gameObject.Position.X,
+    //                 newY
+    //             );
+    //
+    //             // dirtSprites[i].gameObject.Position = new Vector2(
+    //             //     dirtSprites[i].gameObject.Position.X,
+    //             //     newY
+    //             // );
+    //         }
+    //     }
+    // }
 }

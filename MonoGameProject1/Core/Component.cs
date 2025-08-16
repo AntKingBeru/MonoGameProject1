@@ -34,12 +34,14 @@ public abstract class Component : IUpdateables, IDrawables
         {
             IsActive = true;
             gameObject.EnableComponent(this);    
+            OnEnable();
         }
 
         else
         {
             IsActive = false;
             gameObject.DisableComponent(this);
+            OnDisable();
         }
     }
     

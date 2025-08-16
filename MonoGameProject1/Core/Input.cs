@@ -25,13 +25,15 @@ public class Input : Component
     public void EnableMovement()
     {
         disableMovement = false;
+        SetActive(true);
     }
     
     public void DisableMovement()
     {
         disableMovement = true;
+        SetActive(false);
     }
-    
+
     public override void Update(GameTime gameTime)
     {
         moveVector = Vector2.Zero;
