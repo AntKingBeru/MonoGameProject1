@@ -53,7 +53,7 @@ public class GameScene : Scene
             50, 
             50));
         var collider = playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
-        //collider.OnCollision += CatchFish();
+        collider.OnCollision += CatchFish;
         
         CreateBackground();
         
@@ -142,13 +142,11 @@ public class GameScene : Scene
         }
     }
 
-    // private Collider.CollisionHandler CatchFish()
-    // {
-    //     fishCatchTimer = 0f;
-    //     speed *= 1.4f;
-    //     
-    //     return 
-    // }
+    private void CatchFish(Collider other)
+    {
+        fishCatchTimer = 0f;
+        speed *= 1.4f;
+    }
 
     public override void Update(GameTime gameTime)
     { 
