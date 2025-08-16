@@ -27,10 +27,21 @@ public class GameScene : Scene
         IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
         
+        CreateBackground();
+
+        CreatePlayer();
+        
+        ArrangeSprites();
+        
+        Init();
+    }
+
+    private void CreatePlayer()
+    {
         var player = new GameObject("Player");
         SceneObjects.Add(player.Index, player);
         player.Scale = new Vector2(0.2f, 0.2f);
-        player.Position = ScreenPosition.Center();
+        player.Position = ScreenPosition.TopLeft();
         var playerSpriteInfo = SpriteManager.GetSprite("Player");
         var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
         {
@@ -54,12 +65,6 @@ public class GameScene : Scene
             50));
         var collider = playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
         collider.OnCollision += CatchFish;
-        
-        CreateBackground();
-        
-        ArrangeSprites();
-        
-        Init();
     }
 
     private void CreateBackground()
@@ -177,7 +182,6 @@ public class GameScene : Scene
     private void MoveBackground(float moveSpeed)
     {
         var screenHeight = ScreenPosition.ScreenHeight; 
-    
     
         for (var i = 0; i < 3; i++)
         {
