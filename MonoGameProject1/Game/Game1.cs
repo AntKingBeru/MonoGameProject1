@@ -24,9 +24,9 @@ public class Game1 : Game
         SpriteManager.ContentMan = Content; 
         SpriteManager.AddSprite("Button", "Images/pacman");
         SpriteManager.AddSprite("Background", "Images/Pipe");
-        SpriteManager.AddSprite("Dirt", "Images/pixel");
-        // SpriteManager.AddSprite("Gradiant", "Images/pixel");
-        // SpriteManager.AddSprite("DepthMask", "Images/pixel");
+        SpriteManager.AddSprite("OutLine", "Images/PipeOutLine");
+        SpriteManager.AddSprite("Shading", "Images/BackClip");
+        SpriteManager.AddSprite("HighLight", "Images/FrontClip");
         SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
         SpriteManager.AddSprite("Pixel", "Images/Pixel");
     }
@@ -38,9 +38,9 @@ public class Game1 : Game
         MainMenuScene mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
         SceneManager.EnableScene("Main Menu");
-        // var gameScene = new GameScene();
-        // SceneManager.AddScene("Game Scene", gameScene);
-        // SceneManager.EnableScene("Game Scene");
+        var gameScene = new GameScene();
+        SceneManager.AddScene("Game Scene", gameScene);
+        SceneManager.EnableScene("Game Scene");
 
         base.Initialize();
     }

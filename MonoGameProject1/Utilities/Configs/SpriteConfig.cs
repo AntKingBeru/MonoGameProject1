@@ -25,7 +25,7 @@ public class SpriteConfig : ComponentConfig
     public Rectangle DestRectangle;
     public Color Color = Color.White;
     public SpriteEffects Effects = SpriteEffects.None;
-    public Vector2 Origin = Vector2.Zero;
+    public Vector2 Origin = ScreenPosition.TopLeft();
     public float LayerDepth { get; set; }
     
     public SpriteConfig(SpriteSheetInfo spriteSheetInfo)
@@ -38,6 +38,5 @@ public class SpriteConfig : ComponentConfig
         DestRectangle = new Rectangle(0, 0, 100, 100);
         SpriteInfo = null;
         this.spriteSheetInfo = spriteSheetInfo;
-
     }
 }
