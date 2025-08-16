@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Intrinsics.X86;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoGameProject1.Core;
 
 namespace MonoGameProject1;
@@ -22,6 +19,11 @@ public class GameScene : Scene
     
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
+    private GameObject player;
+    private GameObject playerEdge;
+    private SpriteSheetInfo playerSpriteInfo = SpriteManager.GetSprite("PlayerControl");
+    private SpriteSheetInfo playerEdgeSpriteInfo = SpriteManager.GetSprite("PlayerCollider");
+
     public override void OnEnable()
     {
         IsActive = true;
@@ -38,11 +40,10 @@ public class GameScene : Scene
 
     private void CreatePlayer()
     {
-        var player = new GameObject("Player");
+        player = new GameObject("Player");
         SceneObjects.Add(player.Index, player);
-        player.Scale = new Vector2(0.2f, 0.2f);
+        player.Scale = new Vector2(0.25f, 0.25f);
         player.Position = ScreenPosition.TopLeft();
-        var playerSpriteInfo = SpriteManager.GetSprite("Player");
         var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
         {
             LayerDepth = 0.5f
@@ -52,36 +53,41 @@ public class GameScene : Scene
         playerInput.EnableMovement();
         
         
-        var playerEdge = new GameObject("PlayerEdge");
+        playerEdge = new GameObject("PlayerEdge");
         SceneObjects.Add(playerEdge.Index, playerEdge);
-        playerEdge.Scale = Vector2.One;
-        playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.25f * 0.2f, playerSpriteInfo.Texture.Height * 0.2f);
-        var playerEdgeInput = playerEdge.AddComponent<Input>();
-        playerEdgeInput.EnableMovement();
+        playerEdge.Scale = new Vector2(0.125f, 0.125f);
+        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width * 0.3f , playerSpriteInfo.Texture.Height * 0.05f);
+        var playerEdgeSpriteConfig = new SpriteConfig(playerEdgeSpriteInfo)
+        {
+            LayerDepth = 0.5f
+        };
+        playerEdge.AddComponent<Sprite, SpriteConfig>(playerEdgeSpriteConfig);
         var playerColliderConfig = new ColliderConfig(new Rectangle(
             50,
             100, 
             50, 
-            50));
+            75));
         var collider = playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
-        collider.OnCollision += CatchFish;
+        var playerEdgeInput = playerEdge.AddComponent<Input>();
+        playerEdgeInput.EnableMovement();
+        // collider.OnCollision += CatchFish;
     }
 
     private void CreateBackground()
     {
-        var obj = new GameObject("Test");
-        SceneObjects.Add(obj.Index, obj);
-        obj.Scale = new Vector2(0.2f, 0.2f);
-        obj.Position = new Vector2(200, 600);
+        // var obj = new GameObject("Test");
+        // SceneObjects.Add(obj.Index, obj);
+        // obj.Scale = new Vector2(0.2f, 0.2f);
+        // obj.Position = new Vector2(200, 600);
         
-        var info = SpriteManager.GetSprite("Button");
-        var spriteConfig = new SpriteConfig(info);
-        
-        obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
-        var input = obj.AddComponent<Input>();
-        input.EnableMovement();
-        var colliderConfig = new ColliderConfig( new Rectangle(0, 0, 100, 100));
-        obj.AddComponent<Collider, ColliderConfig>(colliderConfig);
+        // var info = SpriteManager.GetSprite("Button");
+        // var spriteConfig = new SpriteConfig(info);
+        //
+        // obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
+        // var input = obj.AddComponent<Input>();
+        // input.EnableMovement();
+        // var colliderConfig = new ColliderConfig( new Rectangle(0, 0, 100, 100));
+        // obj.AddComponent<Collider, ColliderConfig>(colliderConfig);
         
         
         var backSpriteConfig = new SpriteConfig(backgroundSpriteInfo)
@@ -156,7 +162,8 @@ public class GameScene : Scene
     public override void Update(GameTime gameTime)
     { 
         if (!IsActive) return;
-
+        
+        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width * 0.45f , playerSpriteInfo.Texture.Height * 0.05f);
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         if (speed <= 0f)

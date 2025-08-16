@@ -29,7 +29,8 @@ public class Game1 : Game
         SpriteManager.AddSprite("HighLight", "Images/FrontClip");
         SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
         SpriteManager.AddSprite("Pixel", "Images/Pixel");
-        SpriteManager.AddSprite("Player", "Images/pacman");
+        SpriteManager.AddSprite("PlayerControl", "Images/HarpoonStick");
+        SpriteManager.AddSprite("PlayerCollider", "Images/HarpoonHook");
     }
 
     protected override void Initialize()
