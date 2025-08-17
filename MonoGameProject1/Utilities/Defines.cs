@@ -21,10 +21,10 @@ public static class ScreenPosition
     public static Vector2 BottomCenter() => new Vector2(ScreenWidth * 0.5f, ScreenHeight) ;
     public static Vector2 BottomRight() => new Vector2(ScreenWidth, ScreenHeight) ;
     
-    public static Vector2 LeftGameBoundary() => new Vector2(30, 0);
-    public static Vector2 RightGameBoundary() => new Vector2(ScreenWidth - 30, 0);
-    public static Vector2 TopGameBoundary() => new Vector2(0, 30);
-    public static Vector2 BottomGameBoundary() => new Vector2(0, ScreenHeight - 30);
+    public static Vector2 LeftGameBoundary() => new Vector2(40, 0);
+    public static Vector2 RightGameBoundary() => new Vector2(ScreenWidth - 140, 0);
+    public static Vector2 TopGameBoundary() => new Vector2(0, 0);
+    public static Vector2 BottomGameBoundary() => new Vector2(0, ScreenHeight - 140);
 
 
     public static int ScreenWidth => _graphics.Viewport.Width;

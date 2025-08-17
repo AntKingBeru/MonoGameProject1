@@ -93,7 +93,7 @@ public class Collider : Component
     {
         if (colliderConfig.IsTrigger)
         {
-            Console.WriteLine("Collision Detected: " + gameObject.Name + " with " + other.gameObject.Name);
+            //Console.WriteLine("Collision Detected: " + gameObject.Name + " with " + other.gameObject.Name);
             OnTrigger?.Invoke(other);
         }
         else

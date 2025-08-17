@@ -21,7 +21,7 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = 600;
         _graphics.PreferredBackBufferHeight = 800;
         _graphics.ApplyChanges();
-        SpriteManager.ContentMan = Content;
+        SpriteManager.ContentMan = Content; 
         SpriteManager.AddSprite("Button", "Images/pacman");
         SpriteManager.AddSprite("Background", "Images/Pipe");
         SpriteManager.AddSprite("OutLine", "Images/PipeOutLine");
@@ -29,6 +29,8 @@ public class Game1 : Game
         SpriteManager.AddSprite("HighLight", "Images/FrontClip");
         SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
         SpriteManager.AddSprite("Pixel", "Images/Pixel");
+        SpriteManager.AddSprite("PlayerControl", "Images/HarpoonStick");
+        SpriteManager.AddSprite("PlayerCollider", "Images/HarpoonHook");
         SpriteManager.AddSprite("Player", "Images/pacman");
         SpriteManager.AddSprite("GoldFish", "Images/GoldFish");
         SpriteManager.AddSprite("SrimpPink", "Images/SrimpPink");
@@ -46,7 +48,7 @@ public class Game1 : Game
         SceneManager.EnableScene("Main Menu");
         var gameScene = new GameScene();
         SceneManager.AddScene("Game Scene", gameScene);
-
+        SceneManager.EnableScene("Game Scene");
 
         base.Initialize();
     }
@@ -76,7 +78,7 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
-
+        
         SceneManager.Draw(_spriteBatch);
 
         _spriteBatch.End();
