@@ -56,7 +56,7 @@
 /processorParam:TextureFormat=Color
 /build:Images/DirtClip.png
 
-#begin Images/DirtClip.png
+#begin Images/ExitButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -66,7 +66,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/DirtClip.png
+/build:Images/ExitButton.png
 
 #begin Images/GoldFish.png
 /importer:TextureImporter
@@ -152,6 +152,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/pixel.png
 
+#begin Images/SettingsButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/SettingsButton.png
+
 #begin Images/ShrimpsOrange.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -187,6 +199,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/ShrimpsRed.png
+
+#begin Images/StartButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/StartButton.png
 
 #begin Images/WhiteCenterClip.png
 /importer:TextureImporter

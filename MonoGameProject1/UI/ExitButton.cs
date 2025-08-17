@@ -1,33 +1,38 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class ExitButton : Button
+public class ExitButton : GameObject
 {
-
+    Button button;
+    
     public ExitButton(string name) : base(name)
     {
-       
+        button = AddComponent<Button>();
+        EnableComponent(button);
+        button.sprite.spriteConfig.SpriteInfo = SpriteManager.GetSprite("ExitButton");
+
+        Position = ScreenPosition.Center() + new Vector2(0, 200); // offset
     }
 
     public override void Enable()
     {
-        Position = ScreenPosition.Center();
-        OnButtonClick += Exit;
+        button.OnButtonClick += Exit;
+
+
         base.Enable();
     }
 
-    
+
     public override void Disable()
     {
-        OnButtonClick -= Exit;
+        button.OnButtonClick -= Exit;
         base.Disable();
     }
+
     private void Exit()
     {
         SceneManager.Exit = true;
     }
-    
 }

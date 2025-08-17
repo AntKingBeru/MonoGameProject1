@@ -1,11 +1,21 @@
-﻿using MonoGameProject1.Core;
+﻿using Microsoft.Xna.Framework;
+using MonoGameProject1.Core;
 
 namespace MonoGameProject1;
 
-public class StartButton : Button
+public class StartButton : GameObject
 {
+    
+    Button button;
+
     public StartButton(string name) : base(name)
     {
+        
+        button = AddComponent<Button>();
+        EnableComponent(button);
+        button.sprite.spriteConfig.SpriteInfo = SpriteManager.GetSprite("StartButton");
+
+        Position = ScreenPosition.Center() - new Vector2(0, 200); // offset
     }
 
 
@@ -13,15 +23,14 @@ public class StartButton : Button
     {
         
         
-        Position = ScreenPosition.TopCenter();
-        OnButtonClick += StartGame;
+        button.OnButtonClick += StartGame;
         
         base.Enable();
     }
 
     public override void Disable()
     {
-        this.OnButtonClick -= StartGame;
+        button.OnButtonClick -= StartGame;
         
         base.Disable();
     }
