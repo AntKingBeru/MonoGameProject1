@@ -19,7 +19,11 @@ public class FishBehaviour : Component
     {
         FishPatterns.SineWave,
         FishPatterns.ZigZag,
-        FishPatterns.Circle
+        FishPatterns.Circle,
+        FishPatterns.SpiralOut,
+        FishPatterns.Figure8,
+        FishPatterns.RandomDrift,
+        FishPatterns.Bounce
     };
 
     public void SetPattern(Func<GameObject, GameTime, Vector2> pattern)
