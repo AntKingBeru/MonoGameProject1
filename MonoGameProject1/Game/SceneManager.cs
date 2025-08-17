@@ -42,7 +42,7 @@ public static class SceneManager
     public static void AddGameObjectToCurrentScene(GameObject gameObject)
     {
         if (CurrentScene == null) return;
-        CurrentScene.SceneObjects.Add(gameObject.Index, gameObject);
+        CurrentScene.ActiveSceneObjects.Add(gameObject.Index, gameObject);
     }
     
     public static void Update(GameTime gameTime)

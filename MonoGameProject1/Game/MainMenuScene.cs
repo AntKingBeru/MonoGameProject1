@@ -14,10 +14,10 @@ public class MainMenuScene : Scene
     public override void OnEnable()
     {
         IsActive = true;
-        SceneObjects = new Dictionary<int, GameObject>();
+        ActiveSceneObjects = new Dictionary<int, GameObject>();
 
         var testfish = new Fish("testfish");
-        SceneObjects.Add(testfish.Index, testfish);
+        ActiveSceneObjects.Add(testfish.Index, testfish);
         for (int i = 0; i < 10; i++)
         {
             
@@ -76,7 +76,7 @@ public class MainMenuScene : Scene
 
     public override void OnDisable()
     {
-        foreach (var obj in SceneObjects)
+        foreach (var obj in ActiveSceneObjects)
         {
             obj.Value.Disable();
         }

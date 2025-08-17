@@ -11,19 +11,15 @@ public abstract class Scene : IUpdateables, IDrawables
     public event SceneUnloadHandler OnSceneUnload;
 
     public string Name { get; set; }
-    public bool IsActive { get; set; }
-    public Dictionary<int, GameObject> SceneObjects { get; set; }
-
-    public Scene()
-    {
-        
-    }
+    public bool IsActive { get; set; } = false;
+    public Dictionary<int, GameObject> ActiveSceneObjects { get; set; } = new();
+    public Dictionary<int, GameObject> InactiveSceneObjects { get; set; } = new();
 
     public abstract void OnEnable();
 
     public virtual void Init()
     {
-        foreach (var obj in SceneObjects)
+        foreach (var obj in ActiveSceneObjects)
         {
             obj.Value.Enable();
         }
@@ -31,7 +27,7 @@ public abstract class Scene : IUpdateables, IDrawables
 
     public virtual void OnDisable()
     {
-        foreach (var obj in SceneObjects)
+        foreach (var obj in ActiveSceneObjects)
         {
             obj.Value.Disable();
         }
@@ -44,7 +40,7 @@ public abstract class Scene : IUpdateables, IDrawables
 
         
         
-        foreach (var gameObject in SceneObjects.Values)
+        foreach (var gameObject in ActiveSceneObjects.Values)
         {
             
             if (gameObject.IsActive)
@@ -56,7 +52,7 @@ public abstract class Scene : IUpdateables, IDrawables
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        foreach (var gameObject in SceneObjects.Values)
+        foreach (var gameObject in ActiveSceneObjects.Values)
         {
             if (gameObject.IsActive)
             {
