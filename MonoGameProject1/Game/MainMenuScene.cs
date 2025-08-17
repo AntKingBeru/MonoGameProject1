@@ -14,8 +14,7 @@ public class MainMenuScene : Scene
     public override void OnEnable()
     {
         IsActive = true;
-        ActiveSceneObjects = new Dictionary<int, GameObject>();
-
+        
         var testfish = new Fish("testfish");
         ActiveSceneObjects.Add(testfish.Index, testfish);
         for (int i = 0; i < 10; i++)
