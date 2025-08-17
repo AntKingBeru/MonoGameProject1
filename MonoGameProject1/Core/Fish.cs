@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using MonoGameProject1.Core;
 
-namespace MonoGameProject1.Core;
+namespace MonoGameProject1;
 
 public class Fish : GameObject
 {
@@ -25,7 +26,7 @@ public class Fish : GameObject
             0,
             50,
             50);
-        var colliderConfig = new ColliderConfig(rect);
+        var colliderConfig = new ColliderConfig(rect , true);
         AddConfigComponent<Collider, ColliderConfig>(colliderConfig);
 
         behaviour = AddComponent<FishBehaviour>();
@@ -36,4 +37,5 @@ public class Fish : GameObject
     {
         spriteInfo = SpriteManager.GetSprite(FishBehaviour.GetRandomFishSprite());
     }
+
 }

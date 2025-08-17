@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class GameObject : IUpdateables, IDrawables, ICollider
+public class GameObject : IUpdateables, IDrawables, IColliderMethods
 {
     public string Name;
     public readonly int Index;
@@ -125,5 +126,30 @@ public class GameObject : IUpdateables, IDrawables, ICollider
                 component.SetActive(true); //Added by Matan to fix the activation of components without a config
             }
         }
+    }
+
+
+    public virtual void OnCollisionEnter(Collider other)
+    {
+    }
+
+    public void OnCollisionStay(Collider other)
+    {
+    }
+
+    public void OnCollisionExit(Collider other)
+    {
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
     }
 }

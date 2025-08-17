@@ -38,7 +38,7 @@ public class GameScene : Scene
         CreatePlayer();
 
         CreateFish();
-        
+
         ArrangeSprites();
 
         Init();
@@ -59,12 +59,12 @@ public class GameScene : Scene
             AddInactiveObject(fish);
         }
     }
-    
+
     private int GetActiveFishCount()
     {
         return ActiveSceneObjects.Count(potentialFish => potentialFish.Value is Fish);
     }
-    
+
     private void CreatePlayer()
     {
         playerEdge = new GameObject("PlayerEdge");
@@ -77,15 +77,15 @@ public class GameScene : Scene
         playerEdge.AddConfigComponent<Sprite, SpriteConfig>(playerEdgeSpriteConfig);
         var playerColliderConfig = new ColliderConfig(new Rectangle(
             50,
-            100, 
-            50, 
+            100,
+            50,
             75));
         var collider = playerEdge.AddConfigComponent<Collider, ColliderConfig>(playerColliderConfig);
         var playerEdgeInput = playerEdge.AddComponent<Input>();
         playerEdgeInput.EnableMovement();
-        
+
         player = new GameObject("Player");
-        AddActiveObject( player);
+        AddActiveObject(player);
         player.Scale = playerEdge.Scale * 2f;
         player.Position = ScreenPosition.TopCenter();
         var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
@@ -93,9 +93,10 @@ public class GameScene : Scene
             LayerDepth = 0.5f
         };
         player.AddConfigComponent<Sprite, SpriteConfig>(playerSpriteConfig);
-        
-        playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f, playerSpriteInfo.Texture.Height * 0.05f);
-        
+
+        playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
+            playerSpriteInfo.Texture.Height * 0.05f);
+
         collider.OnCollision += CatchFish;
     }
 
@@ -104,57 +105,63 @@ public class GameScene : Scene
         var backSpriteConfig = new SpriteConfig(backgroundSpriteInfo)
         {
             LayerDepth = 0.1f,
-            SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
+            SourceRectangle =
+                new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
-        
+
         var outLine = new SpriteConfig(SpriteManager.GetSprite("OutLine"))
         {
             LayerDepth = 0.9f,
             Color = new Color(1f, 1f, 1f, 0.95f),
-            SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
+            SourceRectangle =
+                new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
-        
+
         var highLight = new SpriteConfig(SpriteManager.GetSprite("HighLight"))
         {
             LayerDepth = 0.2f,
-            Color = new Color(0.2f, 0.2f, 0.2f,0.1f),
-            SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
+            Color = new Color(0.2f, 0.2f, 0.2f, 0.1f),
+            SourceRectangle =
+                new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
-        
+
         var deepClipConfig = new SpriteConfig(SpriteManager.GetSprite("Shading"))
         {
             LayerDepth = 0.3f,
             Color = new Color(1f, 1f, 1f, 0.5f),
-            SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
+            SourceRectangle =
+                new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
-        
+
         var dirtClip = new SpriteConfig(SpriteManager.GetSprite("DirtClip"))
         {
             LayerDepth = 0.3f,
             Color = new Color(1f, 1f, 1f, 1f),
-            SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
+            SourceRectangle =
+                new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
-        
+
         for (var i = 0; i < backgroundAmount; i++)
         {
             var backgroundHandler = new GameObject("BackgroundHandler" + i);
-            backgroundHandler.Scale = new Vector2(0.56f, 0.42f); // don't touch this, it is the correct scale for the background
+            backgroundHandler.Scale =
+                new Vector2(0.56f, 0.42f); // don't touch this, it is the correct scale for the background
             backgroundHandler.Position = ScreenPosition.TopLeft();
             AddActiveObject(backgroundHandler);
             backgroundSprites.Add(backgroundHandler);
-        
+
             var bgSprite = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(backSpriteConfig);
             bgSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
-            
+
             var nearClip = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(highLight);
             nearClip.spriteConfig.Origin = ScreenPosition.TopLeft();
-            
+
             var outLineSprite = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(outLine);
             outLineSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
-            
+
             var farClip = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(deepClipConfig);
             farClip.spriteConfig.Origin = ScreenPosition.TopLeft();
-            
+
             var dirtClipSprite = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(dirtClip);
             dirtClipSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
@@ -162,8 +169,9 @@ public class GameScene : Scene
 
     private void ArrangeSprites()
     {
-        var screenHeight = ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
-        
+        var screenHeight =
+            ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
+
         for (var i = 0; i < backgroundAmount; i++)
         {
             var yPos = ScreenPosition.TopLeft().Y - (i * screenHeight);
@@ -185,10 +193,11 @@ public class GameScene : Scene
     }
 
     public override void Update(GameTime gameTime)
-    { 
+    {
         if (!IsActive) return;
-        
-        player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f, playerSpriteInfo.Texture.Height * 0.05f);
+
+        player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
+            playerSpriteInfo.Texture.Height * 0.05f);
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         if (speed <= 1f)
@@ -206,19 +215,21 @@ public class GameScene : Scene
                     isSlowing = true;
                     speedLoseStartSpeed = speed;
                 }
-                
+
                 speed -= deltaTime * (speedLoseStartSpeed / TIMETHRESHOLD);
             }
 
             fishCatchTimer += deltaTime;
         }
-        
+
         MoveBackground(speed * deltaTime);
 
         if (GetActiveFishCount() < 5)
         {
             var fish = fishPool.Dequeue() as Fish;
-            fish.Position = new Vector2(RandomFloat(ScreenPosition.LeftGameBoundary().X, ScreenPosition.RightGameBoundary().X),RandomFloat(ScreenPosition.Center().Y, ScreenPosition.BottomGameBoundary().Y));
+            fish.Position =
+                new Vector2(RandomFloat(ScreenPosition.LeftGameBoundary().X, ScreenPosition.RightGameBoundary().X),
+                    RandomFloat(ScreenPosition.Center().Y, ScreenPosition.BottomGameBoundary().Y));
             fish.RandomizeSprite();
             fish.Enable();
         }
@@ -235,8 +246,8 @@ public class GameScene : Scene
 
     private void MoveBackground(float moveSpeed)
     {
-        var screenHeight = ScreenPosition.ScreenHeight; 
-    
+        var screenHeight = ScreenPosition.ScreenHeight;
+
         for (var i = 0; i < 3; i++)
         {
             backgroundSprites[i].Position = new Vector2(
@@ -244,17 +255,17 @@ public class GameScene : Scene
                 backgroundSprites[i].Position.Y - moveSpeed
             );
         }
-    
+
         for (var i = 0; i < 3; i++)
         {
             if (backgroundSprites[i].Position.Y + screenHeight <= 0)
             {
                 // Find the current bottom-most sprite
                 var maxY = backgroundSprites.Max(s => s.Position.Y);
-    
+
                 // Place this sprite exactly below the bottom-most one
                 var newY = maxY + screenHeight;
-    
+
                 backgroundSprites[i].Position = new Vector2(
                     backgroundSprites[i].Position.X,
                     newY
