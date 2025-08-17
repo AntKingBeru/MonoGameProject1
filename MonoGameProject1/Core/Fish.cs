@@ -7,7 +7,7 @@ namespace MonoGameProject1.Core;
 public class Fish : GameObject
 {
     private static readonly List<string> FishSprites = new()
-        { "GoldFish", "SrimpPink", "SrimpPurple", "ShrimpRed", "Abumnapha" };
+        { "GoldFish", "ShrimpsPink", "ShrimpsOrange", "ShrimpsRed", "Abumnapha" };
 
     FishBehaviour behaviour;
 

@@ -23,20 +23,20 @@ public class Game1 : Game
         _graphics.ApplyChanges();
         SpriteManager.ContentMan = Content; 
         SpriteManager.AddSprite("Button", "Images/pacman");
-        SpriteManager.AddSprite("Background", "Images/Pipe");
+        SpriteManager.AddSprite("Background", "Images/PipeNew");
         SpriteManager.AddSprite("OutLine", "Images/PipeOutLine");
-        SpriteManager.AddSprite("Shading", "Images/BackClip");
-        SpriteManager.AddSprite("HighLight", "Images/FrontClip");
-        SpriteManager.AddSprite("AnimTest", "Images/Bird2 Duck_1", 4, 4);
+        SpriteManager.AddSprite("HighLight", "Images/WhiteCenterClip");
+        SpriteManager.AddSprite("Shading", "Images/BlackSideClip");
         SpriteManager.AddSprite("Pixel", "Images/Pixel");
-        SpriteManager.AddSprite("PlayerControl", "Images/HarpoonStick");
-        SpriteManager.AddSprite("PlayerCollider", "Images/HarpoonHook");
+        SpriteManager.AddSprite("PlayerControl", "Images/HarpoonHandle");
+        SpriteManager.AddSprite("PlayerCollider", "Images/HarpoonTipNew");
         SpriteManager.AddSprite("Player", "Images/pacman");
         SpriteManager.AddSprite("GoldFish", "Images/GoldFish");
-        SpriteManager.AddSprite("SrimpPink", "Images/SrimpPink");
-        SpriteManager.AddSprite("SrimpPurple", "Images/SrimpPurple");
-        SpriteManager.AddSprite("ShrimpRed", "Images/ShrimpRed");
-        SpriteManager.AddSprite("Abumnapha", "Images/Abumnapha");
+        SpriteManager.AddSprite("ShrimpsPink", "Images/ShrimpsPink");
+        SpriteManager.AddSprite("ShrimpsOrange", "Images/ShrimpsOrange");
+        SpriteManager.AddSprite("ShrimpsRed", "Images/ShrimpsRed");
+        SpriteManager.AddSprite("Abumnapha", "Images/Abuna");
+        SpriteManager.AddSprite("DirtClip", "Images/DirtClip");
     }
 
     protected override void Initialize()

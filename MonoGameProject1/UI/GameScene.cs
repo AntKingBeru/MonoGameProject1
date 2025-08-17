@@ -75,45 +75,37 @@ public class GameScene : Scene
 
     private void CreateBackground()
     {
-        // var obj = new GameObject("Test");
-        // SceneObjects.Add(obj.Index, obj);
-        // obj.Scale = new Vector2(0.2f, 0.2f);
-        // obj.Position = new Vector2(200, 600);
-        
-        // var info = SpriteManager.GetSprite("Button");
-        // var spriteConfig = new SpriteConfig(info);
-        //
-        // obj.AddComponent<Sprite, SpriteConfig>(spriteConfig);
-        // var input = obj.AddComponent<Input>();
-        // input.EnableMovement();
-        // var colliderConfig = new ColliderConfig( new Rectangle(0, 0, 100, 100));
-        // obj.AddComponent<Collider, ColliderConfig>(colliderConfig);
-        
-        
         var backSpriteConfig = new SpriteConfig(backgroundSpriteInfo)
         {
             LayerDepth = 0.1f,
             SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
         
-        var deepClipConfig = new SpriteConfig(SpriteManager.GetSprite("Shading"))
+        var outLine = new SpriteConfig(SpriteManager.GetSprite("OutLine"))
         {
-            LayerDepth = 0.3f,
-            Color = new Color(1f, 1f, 1f, 0.4f),
+            LayerDepth = 0.9f,
+            Color = new Color(1f, 1f, 1f, 0.95f),
             SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
         
         var highLight = new SpriteConfig(SpriteManager.GetSprite("HighLight"))
         {
             LayerDepth = 0.2f,
-            Color = new Color(0.2f, 0.2f, 0.2f,0f),
+            Color = new Color(0.2f, 0.2f, 0.2f,0.1f),
             SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
         
-        var outLine = new SpriteConfig(SpriteManager.GetSprite("OutLine"))
+        var deepClipConfig = new SpriteConfig(SpriteManager.GetSprite("Shading"))
         {
-            LayerDepth = 1f,
-            Color = new Color(1f, 1f, 1f, 0.95f),
+            LayerDepth = 0.3f,
+            Color = new Color(1f, 1f, 1f, 0.5f),
+            SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
+        };
+        
+        var dirtClip = new SpriteConfig(SpriteManager.GetSprite("DirtClip"))
+        {
+            LayerDepth = 0.3f,
+            Color = new Color(1f, 1f, 1f, 1f),
             SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
         
@@ -127,15 +119,18 @@ public class GameScene : Scene
         
             var bgSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(backSpriteConfig);
             bgSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
-        
-            var farClip = backgroundHandler.AddComponent<Sprite, SpriteConfig>(deepClipConfig);
-            farClip.spriteConfig.Origin = ScreenPosition.TopLeft();
-        
+            
             var nearClip = backgroundHandler.AddComponent<Sprite, SpriteConfig>(highLight);
             nearClip.spriteConfig.Origin = ScreenPosition.TopLeft();
             
             var outLineSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(outLine);
             outLineSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
+            
+            var farClip = backgroundHandler.AddComponent<Sprite, SpriteConfig>(deepClipConfig);
+            farClip.spriteConfig.Origin = ScreenPosition.TopLeft();
+            
+            var dirtClipSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(dirtClip);
+            dirtClipSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
     }
 
