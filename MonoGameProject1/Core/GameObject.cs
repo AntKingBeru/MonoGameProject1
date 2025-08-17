@@ -12,20 +12,21 @@ public class GameObject : IUpdateables, IDrawables, ICollider
     public bool IsActive = false;
 
     public Vector2 Position = Vector2.Zero;
-    
+
     public Vector2 Scale = new Vector2(0.5f, 0.5f);
     public float Rotation;
-    
+
     private List<Component> ActiveComponents;
     private List<Component> InactiveComponents;
 
     private static int GameObjectCounter = 0;
 
-    public GameObject(string name)
     public delegate void GameObjectHandler(GameObject gameObject);
+
     public event GameObjectHandler OnGameObjectDisable;
     public event GameObjectHandler OnGameObjectEnable;
 
+    public GameObject(string name)
     {
         Name = name;
         Index = GameObjectCounter++;
@@ -48,11 +49,11 @@ public class GameObject : IUpdateables, IDrawables, ICollider
         IsActive = false;
         //Disable Logic
     }
-    
+
     public virtual void Update(GameTime gameTime)
     {
         if (!IsActive) return;
-        
+
         foreach (Component component in ActiveComponents)
         {
             if (component.IsActive)
@@ -65,19 +66,18 @@ public class GameObject : IUpdateables, IDrawables, ICollider
     public virtual void Draw(SpriteBatch spriteBatch)
     {
         if (!IsActive) return;
-        
-        foreach (Component component in ActiveComponents)
-        {   
 
+        foreach (Component component in ActiveComponents)
+        {
             if (component.IsActive)
             {
                 component.Draw(spriteBatch);
             }
         }
     }
-    
-    
-    public T AddConfigComponent<T, TConfig>(TConfig config) 
+
+
+    public T AddConfigComponent<T, TConfig>(TConfig config)
         where T : ConfigComponent, new()
         where TConfig : ComponentConfig
     {
@@ -86,23 +86,22 @@ public class GameObject : IUpdateables, IDrawables, ICollider
         component.SetActive(true);
         return component;
     }
-    
-    public T AddComponent<T> () where T : Component, new()
+
+    public T AddComponent<T>() where T : Component, new()
     {
         var newComponent = new T();
         newComponent.gameObject = this;
         InactiveComponents.Add(newComponent);
         return newComponent;
     }
-    
+
     public T AddSimpleComponent<T>() where T : SimpleComponent, new()
     {
         var newComponent = AddComponent<T>();
         newComponent.SetActive(true); // Automatically activate simple components
         return newComponent;
     }
-    
-    
+
 
     public void DisableComponent<T>(T component) where T : Component
     {
@@ -115,7 +114,7 @@ public class GameObject : IUpdateables, IDrawables, ICollider
             }
         }
     }
-    
+
     public void EnableComponent<T>(T component) where T : Component
     {
         foreach (var c in InactiveComponents.ToList())

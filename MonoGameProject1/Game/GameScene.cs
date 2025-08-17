@@ -45,7 +45,7 @@ public class GameScene : Scene
     private void CreateFish()
     {
         var testFish = new Fish("testFish");
-        ActiveSceneObjects.Add(testFish.Index, testFish);
+        AddActiveObject(testFish);
         
         Fishes = new Queue<GameObject>();
     }
@@ -53,7 +53,7 @@ public class GameScene : Scene
     private void CreatePlayer()
     {
         playerEdge = new GameObject("PlayerEdge");
-        ActiveSceneObjects.Add(playerEdge.Index, playerEdge);
+        AddActiveObject(playerEdge);
         playerEdge.Scale = new Vector2(0.125f, 0.125f);
         var playerEdgeSpriteConfig = new SpriteConfig(playerEdgeSpriteInfo)
         {
@@ -70,7 +70,7 @@ public class GameScene : Scene
         playerEdgeInput.EnableMovement();
         
         player = new GameObject("Player");
-        ActiveSceneObjects.Add(player.Index, player);
+        AddActiveObject( player);
         player.Scale = playerEdge.Scale * 2f;
         player.Position = ScreenPosition.TopCenter();
         var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
@@ -125,7 +125,7 @@ public class GameScene : Scene
             var backgroundHandler = new GameObject("BackgroundHandler" + i);
             backgroundHandler.Scale = new Vector2(0.56f, 0.42f); // don't touch this, it is the correct scale for the background
             backgroundHandler.Position = ScreenPosition.TopLeft();
-            ActiveSceneObjects.Add(backgroundHandler.Index, backgroundHandler);
+            AddActiveObject(backgroundHandler);
             backgroundSprites.Add(backgroundHandler);
         
             var bgSprite = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(backSpriteConfig);

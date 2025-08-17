@@ -46,13 +46,13 @@ public class MainMenuScene : Scene
         //
         //
          var startButton = new StartButton("Start");
-         ActiveSceneObjects.Add(startButton.Index, startButton);
+        AddActiveObject(startButton);
         
          var settingsButton = new SettingsButton("Settings");
-         ActiveSceneObjects.Add(settingsButton.Index, settingsButton);
+         AddActiveObject(settingsButton);
         
         var exitButton = new ExitButton("Exit");
-        ActiveSceneObjects.Add(exitButton.Index, exitButton);
+        AddActiveObject(exitButton);
 
 
         Init();
@@ -60,11 +60,6 @@ public class MainMenuScene : Scene
 
 
 
-    public override void OnDisable()
-    {
-        foreach (var obj in ActiveSceneObjects)
-        {
-            obj.Value.Disable();
-        }
-    }
+   
+    
 }
