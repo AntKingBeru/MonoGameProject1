@@ -7,14 +7,18 @@ namespace MonoGameProject1;
 
 public class GameScene : Scene
 {
+    private int backgroundAmount = 5;
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float speed = 200f;
+    private float speedLoseStartSpeed = 0f;
+    private bool isSlowing = false;
     private List<GameObject> backgroundSprites = new List<GameObject>();
 
     private const float GRACEPERIOD = 1.5f;
-    private const float TIMETHRESHOLD = GRACEPERIOD+ 5f;
+    private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
     private const float ORIGINSPEED = 200f;
-    
+    private const float MAXSPEED = 2500f;
+
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
     private GameObject player;
@@ -22,39 +26,37 @@ public class GameScene : Scene
     private SpriteSheetInfo playerSpriteInfo = SpriteManager.GetSprite("PlayerControl");
     private SpriteSheetInfo playerEdgeSpriteInfo = SpriteManager.GetSprite("PlayerCollider");
 
+    public Queue<GameObject> Fishes;
+
     public override void OnEnable()
     {
         IsActive = true;
         SceneObjects = new Dictionary<int, GameObject>();
-        
+
         CreateBackground();
 
         CreatePlayer();
+
+        CreateFish();
         
         ArrangeSprites();
-        
+
         Init();
     }
 
+    private void CreateFish()
+    {
+        var testFish = new Fish("testFish");
+        SceneObjects.Add(testFish.Index, testFish);
+        
+        Fishes = new Queue<GameObject>();
+    }
+    
     private void CreatePlayer()
     {
-        player = new GameObject("Player");
-        SceneObjects.Add(player.Index, player);
-        player.Scale = new Vector2(0.25f, 0.25f);
-        player.Position = ScreenPosition.TopCenter();
-        var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
-        {
-            LayerDepth = 0.5f
-        };
-        player.AddComponent<Sprite, SpriteConfig>(playerSpriteConfig);
-        var playerInput = player.AddComponent<Input>();
-        playerInput.EnableMovement();
-        
-        
         playerEdge = new GameObject("PlayerEdge");
         SceneObjects.Add(playerEdge.Index, playerEdge);
-        playerEdge.Scale = player.Scale * 0.5f;
-        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width, playerSpriteInfo.Texture.Height * 0.05f);
+        playerEdge.Scale = new Vector2(0.125f, 0.125f);
         var playerEdgeSpriteConfig = new SpriteConfig(playerEdgeSpriteInfo)
         {
             LayerDepth = 0.5f
@@ -68,6 +70,19 @@ public class GameScene : Scene
         var collider = playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
         var playerEdgeInput = playerEdge.AddComponent<Input>();
         playerEdgeInput.EnableMovement();
+        
+        player = new GameObject("Player");
+        SceneObjects.Add(player.Index, player);
+        player.Scale = playerEdge.Scale * 2f;
+        player.Position = ScreenPosition.TopCenter();
+        var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
+        {
+            LayerDepth = 0.5f
+        };
+        player.AddComponent<Sprite, SpriteConfig>(playerSpriteConfig);
+        
+        playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f, playerSpriteInfo.Texture.Height * 0.05f);
+        
         collider.OnCollision += CatchFish;
     }
 
@@ -107,7 +122,7 @@ public class GameScene : Scene
             SourceRectangle = new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
         
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < backgroundAmount; i++)
         {
             var backgroundHandler = new GameObject("BackgroundHandler" + i);
             backgroundHandler.Scale = new Vector2(0.56f, 0.42f); // don't touch this, it is the correct scale for the background
@@ -136,7 +151,7 @@ public class GameScene : Scene
     {
         var screenHeight = ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
         
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < backgroundAmount; i++)
         {
             var yPos = ScreenPosition.TopLeft().Y - (i * screenHeight);
             backgroundSprites[i].Position = new Vector2(
@@ -149,7 +164,9 @@ public class GameScene : Scene
     private void CatchFish(Collider other)
     {
         fishCatchTimer = 0f;
+        isSlowing = false;
         speed *= 1.4f;
+        speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
         //TODO return fish to pool
     }
 
@@ -157,11 +174,12 @@ public class GameScene : Scene
     { 
         if (!IsActive) return;
         
-        playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f, playerSpriteInfo.Texture.Height * 0.05f);
+        player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f, playerSpriteInfo.Texture.Height * 0.05f);
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (speed <= 0f)
+        if (speed <= 1f)
         {
+            speed = 1f;
             //TODO: add logic when speed reaches 0
         }
 
@@ -169,7 +187,13 @@ public class GameScene : Scene
         {
             if (fishCatchTimer >= GRACEPERIOD)
             {
-                speed -= deltaTime * (ORIGINSPEED / TIMETHRESHOLD);
+                if (!isSlowing)
+                {
+                    isSlowing = true;
+                    speedLoseStartSpeed = speed;
+                }
+                
+                speed -= deltaTime * (speedLoseStartSpeed / TIMETHRESHOLD);
             }
 
             fishCatchTimer += deltaTime;

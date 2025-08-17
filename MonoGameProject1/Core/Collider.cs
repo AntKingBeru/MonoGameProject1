@@ -101,6 +101,4 @@ public class Collider : Component
             OnCollision?.Invoke(other);
         }
     }
-    
-    
 }
