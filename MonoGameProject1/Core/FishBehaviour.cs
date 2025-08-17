@@ -9,8 +9,9 @@ public class FishBehaviour : SimpleComponent
 {
     private Func<GameObject, GameTime, Vector2> currentPattern;
     private double lastPatternChangeTime;
-    private const double PatternChangeInterval = 0.3;
+    private const float PatternChangeInterval = 0.5f; //change interval in seconds
     private bool invertPattern = false;
+    private float timer = 0f;
 
     private static readonly List<string> FishSprites = new()
         { "GoldFish", "ShrimpsPink", "ShrimpsOrange", "ShrimpsRed", "Abumnapha" };
@@ -38,35 +39,30 @@ public class FishBehaviour : SimpleComponent
         lastPatternChangeTime = 0;
     }
 
-    protected override void OnDisable()
-    {
-    }
-
     public override void Update(GameTime gameTime)
     {
+        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        timer += deltaTime;
         if (!IsActive || currentPattern == null) return;
 
-        if (gameTime.TotalGameTime.TotalSeconds - lastPatternChangeTime >= PatternChangeInterval)
+        if (timer - lastPatternChangeTime >= PatternChangeInterval)
         {
-            int randomIndex = Random.Shared.Next(0, AllPatterns.Count);
+            var randomIndex = Random.Shared.Next(0, AllPatterns.Count);
 
             currentPattern = AllPatterns[randomIndex];
-            lastPatternChangeTime = gameTime.TotalGameTime.TotalSeconds;
+            lastPatternChangeTime = timer;
         }
 
 
-        Vector2 nextPosition = currentPattern(gameObject, gameTime);
+        var nextPosition = currentPattern(gameObject, gameTime);
+        
         if (nextPosition.X >= ScreenPosition.RightGameBoundary().X ||
-            nextPosition.X <= ScreenPosition.LeftGameBoundary().X || nextPosition.Y >= ScreenPosition.BottomGameBoundary().Y || nextPosition.Y <= ScreenPosition.TopGameBoundary().Y)
+            nextPosition.X <= ScreenPosition.LeftGameBoundary().X || nextPosition.Y >= ScreenPosition.BottomGameBoundary().Y)
         {
             return;
         }
 
         gameObject.Position = nextPosition;
-    }
-
-    public override void Draw(SpriteBatch spriteBatch)
-    {
     }
 
     public static string GetRandomFishSprite()

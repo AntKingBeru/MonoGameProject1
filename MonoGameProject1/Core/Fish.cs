@@ -8,18 +8,18 @@ public class Fish : GameObject
 {
     FishBehaviour behaviour;
 
+    private SpriteSheetInfo spriteInfo;
+
     public Fish(string name) : base(name)
     {
         Position = ScreenPosition.Center();
         Scale = new Vector2(0.1f, 0.1f);
-        var spriteInfo = SpriteManager.GetSprite(FishBehaviour.GetRandomFishSprite());
+        spriteInfo = SpriteManager.GetSprite(FishBehaviour.GetRandomFishSprite());
         var spriteConfig = new SpriteConfig(spriteInfo);
         spriteConfig.LayerDepth = 0.6f;
         spriteConfig.Origin = Vector2.Zero;
         AddConfigComponent<Sprite, SpriteConfig>(spriteConfig);
-
-        var width = (Position.X + spriteInfo.Texture.Width) * Scale.X;
-        var height = (Position.Y + spriteInfo.Texture.Height) * Scale.Y;
+        
         var rect = new Rectangle(
             0,
             0,
@@ -30,5 +30,10 @@ public class Fish : GameObject
 
         behaviour = AddComponent<FishBehaviour>();
         EnableComponent(behaviour);
+    }
+
+    public void RandomizeSprite()
+    {
+        spriteInfo = SpriteManager.GetSprite(FishBehaviour.GetRandomFishSprite());
     }
 }

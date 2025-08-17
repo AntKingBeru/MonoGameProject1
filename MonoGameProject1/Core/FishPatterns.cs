@@ -63,12 +63,12 @@ public static class FishPatterns
         if (!Invert)
         {
             x=go.Position.X + MathF.Cos(time * speed) * radius;
-            y= go.Position.Y + MathF.Sin(time * speed) * radius;
+            y= (go.Position.Y + MathF.Sin(time * speed) * radius);
         }
         else
         {
             x=go.Position.X - MathF.Cos(time * speed) * radius;
-            y= go.Position.Y - MathF.Sin(time * speed) * radius;
+            y= (go.Position.Y - MathF.Sin(time * speed) * radius);
         }
         
         
@@ -89,12 +89,12 @@ public static class FishPatterns
         if (!Invert)
         {
             x = go.Position.X + MathF.Cos(time * spiralSpeed) * currentRadius;
-            y = go.Position.Y + MathF.Sin(time * spiralSpeed) * currentRadius;
+            y = (go.Position.Y + MathF.Sin(time * spiralSpeed) * currentRadius);
         }
         else
         {
             x = go.Position.X - MathF.Cos(time * spiralSpeed) * currentRadius;
-            y = go.Position.Y - MathF.Sin(time * spiralSpeed) * currentRadius;
+            y = (go.Position.Y - MathF.Sin(time * spiralSpeed) * currentRadius);
         }
         
         return new Vector2(x, y);
@@ -110,12 +110,12 @@ public static class FishPatterns
         if (!Invert)
         {
             x = go.Position.X + MathF.Sin(time * speed) * amplitude;
-            y = go.Position.Y + MathF.Sin(time * speed * 2) * amplitude * 0.5f;
+            y = (go.Position.Y + MathF.Sin(time * speed * 2) * amplitude * 0.5f);
         }
         else
         {
             x = go.Position.X - MathF.Sin(time * speed) * amplitude;
-            y = go.Position.Y - MathF.Sin(time * speed * 2) * amplitude * 0.5f;
+            y = (go.Position.Y - MathF.Sin(time * speed * 2) * amplitude * 0.5f);
         }
         
         return new Vector2(x, y);
@@ -136,12 +136,12 @@ public static class FishPatterns
         if (!Invert)
         {
             x = go.Position.X + noiseX * driftStrength * (float)gt.ElapsedGameTime.TotalSeconds;
-            y = go.Position.Y + noiseY * driftStrength * (float)gt.ElapsedGameTime.TotalSeconds;
+            y = (go.Position.Y + noiseY * driftStrength * (float)gt.ElapsedGameTime.TotalSeconds);
         }
         else
         {
             x = go.Position.X - noiseX * driftStrength * (float)gt.ElapsedGameTime.TotalSeconds;
-            y = go.Position.Y - noiseY * driftStrength * (float)gt.ElapsedGameTime.TotalSeconds;
+            y = (go.Position.Y - noiseY * driftStrength * (float)gt.ElapsedGameTime.TotalSeconds);
         }
         
         return new Vector2(x, y);
@@ -158,12 +158,12 @@ public static class FishPatterns
         if (!Invert)
         {
             x = go.Position.X + horizontalSpeed * (float)gt.ElapsedGameTime.TotalSeconds;
-            y = go.Position.Y + MathF.Abs(MathF.Sin(time * bounceSpeed)) * bounceHeight * (float)gt.ElapsedGameTime.TotalSeconds;
+            y = (go.Position.Y + MathF.Abs(MathF.Sin(time * bounceSpeed)) * bounceHeight * (float)gt.ElapsedGameTime.TotalSeconds);
         }
         else
         {
             x = go.Position.X - horizontalSpeed * (float)gt.ElapsedGameTime.TotalSeconds;
-            y = go.Position.Y - MathF.Abs(MathF.Sin(time * bounceSpeed)) * bounceHeight * (float)gt.ElapsedGameTime.TotalSeconds;
+            y = (go.Position.Y - MathF.Abs(MathF.Sin(time * bounceSpeed)) * bounceHeight * (float)gt.ElapsedGameTime.TotalSeconds);
         }
         
         return new Vector2(x, y);
