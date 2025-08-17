@@ -6,8 +6,6 @@ namespace MonoGameProject1.Core;
 
 public class Fish : GameObject
 {
-    private static readonly List<string> FishSprites = new()
-        { "GoldFish", "ShrimpsPink", "ShrimpsOrange", "ShrimpsRed", "Abumnapha" };
 
     FishBehaviour behaviour;
 
@@ -16,8 +14,7 @@ public class Fish : GameObject
     {
         Position = ScreenPosition.Center();
         Scale = new Vector2(0.1f, 0.1f);
-
-        var spriteInfo = SpriteManager.GetSprite(GetRandomFishSprite());
+        var spriteInfo = SpriteManager.GetSprite(FishBehaviour.GetRandomFishSprite());
         var spriteConfig = new SpriteConfig(spriteInfo);
         spriteConfig.LayerDepth = 0.6f;
         spriteConfig.Origin = new Vector2(spriteInfo.Texture.Width * 0.5f, spriteInfo.Texture.Height * 0.5f);
@@ -32,14 +29,6 @@ public class Fish : GameObject
         // AddComponent<Collider, ColliderConfig>(colliderConfig);
 
         behaviour = AddComponent<FishBehaviour>();
-        behaviour.SetPattern(FishPatterns.Circle);
-
         EnableComponent(behaviour);
-    }
-
-
-    private static string GetRandomFishSprite()
-    {
-        return FishSprites[Random.Shared.Next(0, FishSprites.Count)];
     }
 }

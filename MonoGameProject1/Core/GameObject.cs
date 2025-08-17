@@ -109,6 +109,7 @@ public class GameObject : IUpdateables, IDrawables, ICollider
             {
                 ActiveComponents.Add(c);
                 InactiveComponents.Remove(c);
+                component.SetActive(true); //Added by Matan to fix the activation of components without a config
             }
         }
     }

@@ -11,7 +11,6 @@ public class MainMenuScene : Scene
 {
     public Queue<GameObject> Fishes;
 
-
     public override void OnEnable()
     {
         IsActive = true;
@@ -19,10 +18,13 @@ public class MainMenuScene : Scene
 
         var testfish = new Fish("testfish");
         SceneObjects.Add(testfish.Index, testfish);
-        
+        for (int i = 0; i < 10; i++)
+        {
+            
+        }
 
 
-        // Fishes = new Queue<GameObject>();
+        Fishes = new Queue<GameObject>();
         // GameObjectFactory.CreateGameObject("fish1",
         // {
         //     
@@ -69,6 +71,7 @@ public class MainMenuScene : Scene
 
         Init();
     }
+
 
 
     public override void OnDisable()
