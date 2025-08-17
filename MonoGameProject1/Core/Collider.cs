@@ -20,9 +20,9 @@ public class Collider : ConfigComponent
         if (config is ColliderConfig colliderConfig)
         {
             this.colliderConfig = colliderConfig;
+            CollisionManager.RegisterCollider(this);
+            base.Initialize(config);
         }
-        CollisionManager.RegisterCollider(this);
-        base.Initialize(config);
     }
 
     protected override void OnEnable()

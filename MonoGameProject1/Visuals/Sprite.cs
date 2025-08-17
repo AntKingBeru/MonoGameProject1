@@ -17,8 +17,8 @@ public class Sprite : ConfigComponent
         if (config is SpriteConfig spriteConfig)
         {
             this.spriteConfig = spriteConfig;
+            base.Initialize(config);
         }
-        base.Initialize(config);
     }
 
     protected override void OnEnable()

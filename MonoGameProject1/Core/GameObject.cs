@@ -83,7 +83,6 @@ public class GameObject : IUpdateables, IDrawables, ICollider
     {
         var component = AddComponent<T>();
         component.Initialize(config);
-        component.SetActive(true);
         return component;
     }
 

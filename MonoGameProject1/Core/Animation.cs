@@ -31,8 +31,8 @@ public class Animation : Sprite
         if (config is AnimationConfig animationConfig)
         {
             AnimationConfig = animationConfig;
+            base.Initialize(config);
         }
-        base.Initialize(config);
     }
 
     public Rectangle? GetDestRectangle(Rectangle rect)

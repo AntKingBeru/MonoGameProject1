@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGameProject1.Core;
-using Color = Microsoft.Xna.Framework.Color;
 
 namespace MonoGameProject1;
 
@@ -15,7 +11,7 @@ public class MainMenuScene : Scene
     public override void OnEnable()
     {
         IsActive = true;
-        
+
 
         // var obj = new GameObject("Test");
         // SceneObjects.Add(obj.Index, obj);
@@ -45,21 +41,16 @@ public class MainMenuScene : Scene
         // obj2.AddComponent<Collider, ColliderConfig>(colliderConfig2);
         //
         //
-         var startButton = new StartButton("Start");
+        var startButton = new StartButton("Start");
         AddActiveObject(startButton);
-        
-         var settingsButton = new SettingsButton("Settings");
-         AddActiveObject(settingsButton);
-        
+
+        var settingsButton = new SettingsButton("Settings");
+        AddActiveObject(settingsButton);
+
         var exitButton = new ExitButton("Exit");
         AddActiveObject(exitButton);
 
 
         Init();
     }
-
-
-
-   
-    
 }
