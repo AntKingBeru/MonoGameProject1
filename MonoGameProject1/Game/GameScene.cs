@@ -61,13 +61,13 @@ public class GameScene : Scene
         {
             LayerDepth = 0.5f
         };
-        playerEdge.AddComponent<Sprite, SpriteConfig>(playerEdgeSpriteConfig);
+        playerEdge.AddConfigComponent<Sprite, SpriteConfig>(playerEdgeSpriteConfig);
         var playerColliderConfig = new ColliderConfig(new Rectangle(
             50,
             100, 
             50, 
             75));
-        var collider = playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
+        var collider = playerEdge.AddConfigComponent<Collider, ColliderConfig>(playerColliderConfig);
         var playerEdgeInput = playerEdge.AddComponent<Input>();
         playerEdgeInput.EnableMovement();
         
@@ -79,7 +79,7 @@ public class GameScene : Scene
         {
             LayerDepth = 0.5f
         };
-        player.AddComponent<Sprite, SpriteConfig>(playerSpriteConfig);
+        player.AddConfigComponent<Sprite, SpriteConfig>(playerSpriteConfig);
         
         playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f, playerSpriteInfo.Texture.Height * 0.05f);
         
@@ -130,19 +130,19 @@ public class GameScene : Scene
             SceneObjects.Add(backgroundHandler.Index, backgroundHandler);
             backgroundSprites.Add(backgroundHandler);
         
-            var bgSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(backSpriteConfig);
+            var bgSprite = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(backSpriteConfig);
             bgSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
             
-            var nearClip = backgroundHandler.AddComponent<Sprite, SpriteConfig>(highLight);
+            var nearClip = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(highLight);
             nearClip.spriteConfig.Origin = ScreenPosition.TopLeft();
             
-            var outLineSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(outLine);
+            var outLineSprite = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(outLine);
             outLineSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
             
-            var farClip = backgroundHandler.AddComponent<Sprite, SpriteConfig>(deepClipConfig);
+            var farClip = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(deepClipConfig);
             farClip.spriteConfig.Origin = ScreenPosition.TopLeft();
             
-            var dirtClipSprite = backgroundHandler.AddComponent<Sprite, SpriteConfig>(dirtClip);
+            var dirtClipSprite = backgroundHandler.AddConfigComponent<Sprite, SpriteConfig>(dirtClip);
             dirtClipSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
     }

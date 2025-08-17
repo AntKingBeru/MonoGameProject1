@@ -23,7 +23,7 @@ public class Button : GameObject
         var spriteInfo = SpriteManager.GetSprite("Button");
         var spriteConfig = new SpriteConfig(spriteInfo);
         
-        AddComponent<Sprite, SpriteConfig>(spriteConfig);
+        AddConfigComponent<Sprite, SpriteConfig>(spriteConfig);
     }
 
 

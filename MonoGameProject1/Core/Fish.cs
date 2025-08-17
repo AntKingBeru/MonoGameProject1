@@ -16,7 +16,7 @@ public class Fish : GameObject
         var spriteConfig = new SpriteConfig(spriteInfo);
         spriteConfig.LayerDepth = 0.6f;
         spriteConfig.Origin = Vector2.Zero;
-        AddComponent<Sprite, SpriteConfig>(spriteConfig);
+        AddConfigComponent<Sprite, SpriteConfig>(spriteConfig);
 
         var width = (Position.X + spriteInfo.Texture.Width) * Scale.X;
         var height = (Position.Y + spriteInfo.Texture.Height) * Scale.Y;
@@ -26,7 +26,7 @@ public class Fish : GameObject
             50,
             50);
         var colliderConfig = new ColliderConfig(rect);
-        AddComponent<Collider, ColliderConfig>(colliderConfig);
+        AddConfigComponent<Collider, ColliderConfig>(colliderConfig);
 
         behaviour = AddComponent<FishBehaviour>();
         EnableComponent(behaviour);

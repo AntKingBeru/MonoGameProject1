@@ -13,10 +13,6 @@ public abstract class Component : IUpdateables, IDrawables
         
     }
     
-    public virtual void Initialize<T>(T config) where T : ComponentConfig
-    {
-        SetActive(true);
-    }
 
     protected abstract void OnEnable();
 

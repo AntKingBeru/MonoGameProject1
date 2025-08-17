@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1.Core;
 
-public class FishBehaviour : Component
+public class FishBehaviour : SimpleComponent
 {
     private Func<GameObject, GameTime, Vector2> currentPattern;
     private double lastPatternChangeTime;

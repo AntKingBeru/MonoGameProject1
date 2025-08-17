@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoGameProject1.Core;
 
-public class Input : Component
+public class Input : SimpleComponent
 {
     private float speed = 375f;
 

@@ -69,8 +69,8 @@ public class GameObject : IUpdateables, IDrawables, ICollider
     }
     
     
-    public T AddComponent<T, TConfig>(TConfig config) 
-        where T : Component, new()
+    public T AddConfigComponent<T, TConfig>(TConfig config) 
+        where T : ConfigComponent, new()
         where TConfig : ComponentConfig
     {
         var component = AddComponent<T>();
@@ -84,6 +84,13 @@ public class GameObject : IUpdateables, IDrawables, ICollider
         var newComponent = new T();
         newComponent.gameObject = this;
         InactiveComponents.Add(newComponent);
+        return newComponent;
+    }
+    
+    public T AddSimpleComponent<T>() where T : SimpleComponent, new()
+    {
+        var newComponent = AddComponent<T>();
+        newComponent.SetActive(true); // Automatically activate simple components
         return newComponent;
     }
     
