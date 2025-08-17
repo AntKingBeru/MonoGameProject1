@@ -22,6 +22,10 @@ public class GameObject : IUpdateables, IDrawables, ICollider
     private static int GameObjectCounter = 0;
 
     public GameObject(string name)
+    public delegate void GameObjectHandler(GameObject gameObject);
+    public event GameObjectHandler OnGameObjectDisable;
+    public event GameObjectHandler OnGameObjectEnable;
+
     {
         Name = name;
         Index = GameObjectCounter++;
@@ -31,12 +35,16 @@ public class GameObject : IUpdateables, IDrawables, ICollider
 
     public virtual void Enable()
     {
+        if (IsActive) return; // Prevent re-enabling if already active
+        OnGameObjectEnable?.Invoke(this);
         IsActive = true;
         //Enable Logic 
     }
 
     public virtual void Disable()
     {
+        if (!IsActive) return; // Prevent re-disabling if already inactive
+        OnGameObjectDisable?.Invoke(this);
         IsActive = false;
         //Disable Logic
     }

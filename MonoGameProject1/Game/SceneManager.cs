@@ -39,12 +39,6 @@ public static class SceneManager
         scenes.Add(name, scene);
     }
     
-    public static void AddGameObjectToCurrentScene(GameObject gameObject)
-    {
-        if (CurrentScene == null) return;
-        CurrentScene.ActiveSceneObjects.Add(gameObject.Index, gameObject);
-    }
-    
     public static void Update(GameTime gameTime)
     {
         if (Exit) return;

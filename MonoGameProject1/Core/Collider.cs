@@ -8,9 +8,8 @@ namespace MonoGameProject1;
 public class Collider : ConfigComponent
 {
     public ColliderConfig colliderConfig {get; private set; }
-
     public delegate void CollisionHandler(Collider other);
-    public static Texture2D Texture => SpriteManager.GetSprite("Pixel").Texture;
+    private static Texture2D Texture => SpriteManager.GetSprite("Pixel").Texture;
 
     public Collider() : base()
     {
