@@ -21,11 +21,10 @@ public class GameObject : IUpdateables, IDrawables, ICollider
 
     private static int GameObjectCounter = 0;
 
-    public GameObject(string name)
     public delegate void GameObjectHandler(GameObject gameObject);
     public event GameObjectHandler OnGameObjectDisable;
     public event GameObjectHandler OnGameObjectEnable;
-
+    public GameObject(string name)
     {
         Name = name;
         Index = GameObjectCounter++;
