@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoGameProject1.Core;
@@ -19,6 +20,7 @@ public class GameScene : Scene
     private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
     private const float ORIGINSPEED = 200f;
     private const float MAXSPEED = 2500f;
+    private const float SPEED_MULTIPLIER = 1.005f;
 
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
@@ -42,6 +44,11 @@ public class GameScene : Scene
         Init();
     }
 
+    private static float RandomFloat(float min, float max)
+    {
+        return (float)new Random().NextDouble() * (max - min) + min;
+    }
+
     private void CreateFish()
     {
         for (var i = 0; i < 10; i++)
@@ -49,12 +56,13 @@ public class GameScene : Scene
             var fish = new Fish("fish" + i);
             fish.Disable();
             fishPool.Enqueue(fish);
+            AddInactiveObject(fish);
         }
     }
     
     private int GetActiveFishCount()
     {
-        return fishPool.Count(fish => fish.IsActive);
+        return ActiveSceneObjects.Count(potentialFish => potentialFish.Value is Fish);
     }
     
     private void CreatePlayer()
@@ -170,7 +178,7 @@ public class GameScene : Scene
     {
         fishCatchTimer = 0f;
         isSlowing = false;
-        speed *= 1.4f;
+        speed *= SPEED_MULTIPLIER;
         speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
         fishPool.Enqueue(other.gameObject);
         other.gameObject.Disable();
@@ -207,9 +215,19 @@ public class GameScene : Scene
         
         MoveBackground(speed * deltaTime);
 
-        if (GetActiveFishCount() < 6)
+        if (GetActiveFishCount() < 5)
         {
-            fishPool.Dequeue().Enable();
+            var fish = fishPool.Dequeue() as Fish;
+            fish.Position = new Vector2(RandomFloat(ScreenPosition.LeftGameBoundary().X, ScreenPosition.RightGameBoundary().X),RandomFloat(ScreenPosition.Center().Y, ScreenPosition.BottomGameBoundary().Y));
+            fish.RandomizeSprite();
+            fish.Enable();
+        }
+
+        foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
+        {
+            if (!(fish.Position.Y <= 0)) continue;
+            fishPool.Enqueue(fish);
+            fish.Disable();
         }
 
         base.Update(gameTime);

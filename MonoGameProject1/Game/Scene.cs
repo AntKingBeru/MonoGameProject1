@@ -13,8 +13,8 @@ public abstract class Scene : IUpdateables, IDrawables
 
     public string Name { get; set; }
     protected bool IsActive { get; set; } = false;
-    private Dictionary<int, GameObject> ActiveSceneObjects { get; set; } = new();
-    private Dictionary<int, GameObject> InactiveSceneObjects { get; set; } = new();
+    protected Dictionary<int, GameObject> ActiveSceneObjects { get; set; } = new();
+    protected Dictionary<int, GameObject> InactiveSceneObjects { get; set; } = new();
 
     public virtual void OnEnable()
     {
