@@ -9,7 +9,6 @@ namespace MonoGameProject1;
 
 public class MainMenuScene : Scene
 {
-    public event SceneUnloadHandler OnSceneUnload;
     public Queue<GameObject> Fishes;
 
 

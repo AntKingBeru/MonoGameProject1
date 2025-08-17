@@ -95,7 +95,7 @@ public class Input : Component
             gameObject.Position += moveVector;
         }
 
-        gameObject.Position = ScreenPosition.ClampInBoundaries(gameObject.Position);
+        //gameObject.Position = ScreenPosition.ClampInBoundaries(gameObject.Position);
     }
 
     public override void Draw(SpriteBatch spriteBatch)

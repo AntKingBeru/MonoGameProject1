@@ -7,14 +7,12 @@ namespace MonoGameProject1;
 
 public class GameScene : Scene
 {
-    public event SceneUnloadHandler OnSceneUnload;
-
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float speed = 200f;
     private List<GameObject> backgroundSprites = new List<GameObject>();
 
-    private const float TIMETHRESHOLD = 6.5f;
     private const float GRACEPERIOD = 1.5f;
+    private const float TIMETHRESHOLD = GRACEPERIOD+ 5f;
     private const float ORIGINSPEED = 200f;
     
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
@@ -43,7 +41,7 @@ public class GameScene : Scene
         player = new GameObject("Player");
         SceneObjects.Add(player.Index, player);
         player.Scale = new Vector2(0.25f, 0.25f);
-        player.Position = ScreenPosition.TopLeft();
+        player.Position = ScreenPosition.TopCenter();
         var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
         {
             LayerDepth = 0.5f
@@ -55,8 +53,8 @@ public class GameScene : Scene
         
         playerEdge = new GameObject("PlayerEdge");
         SceneObjects.Add(playerEdge.Index, playerEdge);
-        playerEdge.Scale = new Vector2(0.125f, 0.125f);
-        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width * 0.3f , playerSpriteInfo.Texture.Height * 0.05f);
+        playerEdge.Scale = player.Scale * 0.5f;
+        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width * 0.5f , playerSpriteInfo.Texture.Height * 0.05f);
         var playerEdgeSpriteConfig = new SpriteConfig(playerEdgeSpriteInfo)
         {
             LayerDepth = 0.5f
@@ -70,7 +68,7 @@ public class GameScene : Scene
         var collider = playerEdge.AddComponent<Collider, ColliderConfig>(playerColliderConfig);
         var playerEdgeInput = playerEdge.AddComponent<Input>();
         playerEdgeInput.EnableMovement();
-        // collider.OnCollision += CatchFish;
+        collider.OnCollision += CatchFish;
     }
 
     private void CreateBackground()
@@ -158,7 +156,7 @@ public class GameScene : Scene
     { 
         if (!IsActive) return;
         
-        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width * 0.45f , playerSpriteInfo.Texture.Height * 0.05f);
+        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width * 0.5f, playerSpriteInfo.Texture.Height * 0.05f);
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         if (speed <= 0f)
