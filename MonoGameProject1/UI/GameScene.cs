@@ -54,7 +54,7 @@ public class GameScene : Scene
         playerEdge = new GameObject("PlayerEdge");
         SceneObjects.Add(playerEdge.Index, playerEdge);
         playerEdge.Scale = player.Scale * 0.5f;
-        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width * 0.5f , playerSpriteInfo.Texture.Height * 0.05f);
+        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width, playerSpriteInfo.Texture.Height * 0.05f);
         var playerEdgeSpriteConfig = new SpriteConfig(playerEdgeSpriteInfo)
         {
             LayerDepth = 0.5f
@@ -150,13 +150,14 @@ public class GameScene : Scene
     {
         fishCatchTimer = 0f;
         speed *= 1.4f;
+        //TODO return fish to pool
     }
 
     public override void Update(GameTime gameTime)
     { 
         if (!IsActive) return;
         
-        playerEdge.Position = player.Position + new Vector2(-playerSpriteInfo.Texture.Width * 0.5f, playerSpriteInfo.Texture.Height * 0.05f);
+        playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f, playerSpriteInfo.Texture.Height * 0.05f);
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         if (speed <= 0f)
