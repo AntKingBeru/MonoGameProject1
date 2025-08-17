@@ -48,7 +48,7 @@ public class Game1 : Game
         SceneManager.EnableScene("Main Menu");
         var gameScene = new GameScene();
         SceneManager.AddScene("Game Scene", gameScene);
-        SceneManager.EnableScene("Game Scene");
+    
 
         base.Initialize();
     }
