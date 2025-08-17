@@ -57,7 +57,7 @@ public class FishBehaviour : SimpleComponent
 
         Vector2 nextPosition = currentPattern(gameObject, gameTime);
         if (nextPosition.X >= ScreenPosition.RightGameBoundary().X ||
-            nextPosition.X <= ScreenPosition.LeftGameBoundary().X)
+            nextPosition.X <= ScreenPosition.LeftGameBoundary().X || nextPosition.Y >= ScreenPosition.BottomGameBoundary().Y || nextPosition.Y <= ScreenPosition.TopGameBoundary().Y)
         {
             return;
         }

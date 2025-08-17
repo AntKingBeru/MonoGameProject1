@@ -13,6 +13,7 @@ public class GameScene : Scene
     private float speedLoseStartSpeed = 0f;
     private bool isSlowing = false;
     private List<GameObject> backgroundSprites = new List<GameObject>();
+    private Queue<GameObject> fishPool = new Queue<GameObject>();
 
     private const float GRACEPERIOD = 1.5f;
     private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
@@ -26,7 +27,6 @@ public class GameScene : Scene
     private SpriteSheetInfo playerSpriteInfo = SpriteManager.GetSprite("PlayerControl");
     private SpriteSheetInfo playerEdgeSpriteInfo = SpriteManager.GetSprite("PlayerCollider");
 
-    public Queue<GameObject> Fishes;
     public override void OnEnable()
     {
         IsActive = true;
@@ -44,10 +44,17 @@ public class GameScene : Scene
 
     private void CreateFish()
     {
-        var testFish = new Fish("testFish");
-        ActiveSceneObjects.Add(testFish.Index, testFish);
-        
-        Fishes = new Queue<GameObject>();
+        for (var i = 0; i < 10; i++)
+        {
+            var fish = new Fish("fish" + i);
+            fish.Disable();
+            fishPool.Enqueue(fish);
+        }
+    }
+    
+    private int GetActiveFishCount()
+    {
+        return fishPool.Count(fish => fish.IsActive);
     }
     
     private void CreatePlayer()
@@ -165,7 +172,8 @@ public class GameScene : Scene
         isSlowing = false;
         speed *= 1.4f;
         speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
-        //TODO return fish to pool
+        fishPool.Enqueue(other.gameObject);
+        other.gameObject.Disable();
     }
 
     public override void Update(GameTime gameTime)
@@ -198,6 +206,11 @@ public class GameScene : Scene
         }
         
         MoveBackground(speed * deltaTime);
+
+        if (GetActiveFishCount() < 6)
+        {
+            fishPool.Dequeue().Enable();
+        }
 
         base.Update(gameTime);
     }

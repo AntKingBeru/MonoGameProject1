@@ -35,14 +35,10 @@ public abstract class Scene : IUpdateables, IDrawables
 
     public virtual void Update(GameTime gameTime)
     {
-      
         if (!IsActive) return;
-
-        
         
         foreach (var gameObject in ActiveSceneObjects.Values)
         {
-            
             if (gameObject.IsActive)
             {
                 gameObject.Update(gameTime);
