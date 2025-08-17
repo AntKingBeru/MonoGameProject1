@@ -23,6 +23,9 @@ public class Game1 : Game
         _graphics.ApplyChanges();
         SpriteManager.ContentMan = Content; 
         SpriteManager.AddSprite("Button", "Images/pacman");
+        SpriteManager.AddSprite("ExitButton", "Images/ExitButton");
+        SpriteManager.AddSprite("SettingsButton", "Images/SettingsButton");
+        SpriteManager.AddSprite("StartButton", "Images/StartButton");
         SpriteManager.AddSprite("Background", "Images/PipeNew");
         SpriteManager.AddSprite("OutLine", "Images/PipeOutLine");
         SpriteManager.AddSprite("HighLight", "Images/WhiteCenterClip");
@@ -43,12 +46,12 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
         ScreenPosition.InitializePos(GraphicsDevice);
-        // var mainMenuScene = new MainMenuScene();
-        // SceneManager.AddScene("Main Menu", mainMenuScene);
-        // SceneManager.EnableScene("Main Menu");
+        var mainMenuScene = new MainMenuScene();
+        SceneManager.AddScene("Main Menu", mainMenuScene);
+        SceneManager.EnableScene("Main Menu");
         var gameScene = new GameScene();
         SceneManager.AddScene("Game Scene", gameScene);
-        SceneManager.EnableScene("Game Scene");
+        // SceneManager.EnableScene("Game Scene");
 
         base.Initialize();
     }
@@ -63,7 +66,7 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-            Keyboard.GetState().IsKeyDown(Keys.Escape))
+            Keyboard.GetState().IsKeyDown(Keys.Escape) || SceneManager.Exit)
             Exit();
 
         SceneManager.Update(gameTime);

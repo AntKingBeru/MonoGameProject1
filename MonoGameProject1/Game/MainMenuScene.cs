@@ -9,26 +9,13 @@ namespace MonoGameProject1;
 
 public class MainMenuScene : Scene
 {
+    public event SceneUnloadHandler OnSceneUnload;
     public Queue<GameObject> Fishes;
 
     public override void OnEnable()
     {
         IsActive = true;
         
-        var testfish = new Fish("testfish");
-        ActiveSceneObjects.Add(testfish.Index, testfish);
-        for (int i = 0; i < 10; i++)
-        {
-            
-        }
-
-
-        Fishes = new Queue<GameObject>();
-        // GameObjectFactory.CreateGameObject("fish1",
-        // {
-        //     
-        // }
-
 
         // var obj = new GameObject("Test");
         // SceneObjects.Add(obj.Index, obj);
@@ -58,14 +45,14 @@ public class MainMenuScene : Scene
         // obj2.AddComponent<Collider, ColliderConfig>(colliderConfig2);
         //
         //
-        //  var startButton = new StartButton("Start");
-        //  SceneObjects.Add(startButton.Index, startButton);
-        //
-        //  var settingsButton = new SettingsButton("Settings");
-        //  SceneObjects.Add(settingsButton.Index, settingsButton);
-        //
-        // var exitButton = new ExitButton("Exit");
-        // SceneObjects.Add(exitButton.Index, exitButton);
+         var startButton = new StartButton("Start");
+        AddActiveObject(startButton);
+        
+         var settingsButton = new SettingsButton("Settings");
+         AddActiveObject(settingsButton);
+        
+        var exitButton = new ExitButton("Exit");
+        AddActiveObject(exitButton);
 
 
         Init();
@@ -73,11 +60,6 @@ public class MainMenuScene : Scene
 
 
 
-    public override void OnDisable()
-    {
-        foreach (var obj in ActiveSceneObjects)
-        {
-            obj.Value.Disable();
-        }
-    }
+   
+    
 }
