@@ -39,8 +39,8 @@ WASD / Arrow Keys to move.
         var howToPlayText = new GameObject("HowToPlayText");
         AddActiveObject(howToPlayText);
         howToPlayText.AddConfigComponent<Text, TextConfig>(TextConfig);
-        howToPlayText.Position = (ScreenPosition.Center() + ScreenPosition.TopCenter()) * 0.5f;
-        howToPlayText.Scale = new Vector2(0.3f, 0.3f);
+        howToPlayText.Position = (ScreenPosition.Center() + ScreenPosition.TopCenter()) * 0.5f + new Vector2(0, 100);
+        howToPlayText.Scale = new Vector2(0.35f, 0.5f);
             
         Init();
     }
