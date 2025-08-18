@@ -70,7 +70,6 @@ public class Game1 : Game
             Exit();
 
         SceneManager.Update(gameTime);
-        CollisionManager.DetectCollisions();
 
         base.Update(gameTime);
     }
