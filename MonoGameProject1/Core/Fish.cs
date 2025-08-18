@@ -41,7 +41,6 @@ public class Fish : GameObject
         spriteInfo = SpriteManager.GetSprite(FishBehaviour.GetRandomFishSprite());
     }
     
-    
     public override void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.Name == "PlayerEdge")
@@ -50,4 +49,8 @@ public class Fish : GameObject
         }
     }
 
+    public void SetSpeed(float speed)
+    {
+        behaviour.Speed = speed;
+    }
 }

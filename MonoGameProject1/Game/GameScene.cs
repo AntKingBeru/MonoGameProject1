@@ -81,6 +81,11 @@ public class GameScene : Scene
         MoveBackground(speed * deltaTime);
         CleanupIlligalFish();
         TopUpActiveFishInScene();
+
+        foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
+        {
+            fish.SetSpeed(speed);
+        }
         
         base.Update(gameTime);
 
@@ -115,7 +120,7 @@ public class GameScene : Scene
             var fish = fishPool.Dequeue() as Fish;
             fish.Position =
                 new Vector2(RandomFloat(ScreenPosition.LeftGameBoundary().X, ScreenPosition.RightGameBoundary().X),
-                    RandomFloat(ScreenPosition.Center().Y, ScreenPosition.ScreenHeight * 1.2f));
+                    RandomFloat(ScreenPosition.Center().Y, ScreenPosition.BottomGameBoundary().Y));
             fish.RandomizeSprite();
             fish.Enable();
         }

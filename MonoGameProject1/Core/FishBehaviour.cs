@@ -13,6 +13,8 @@ public class FishBehaviour : SimpleComponent
     private bool invertPattern = false;
     private float timer = 0f;
     private SpriteConfig spriteConfiguration;
+    
+    public float Speed;
 
     private static readonly List<string> FishSprites = new()
         { "GoldFish", "ShrimpsPink", "ShrimpsOrange", "ShrimpsRed", "Abumnapha" };
@@ -57,7 +59,7 @@ public class FishBehaviour : SimpleComponent
         var nextPosition = currentPattern(gameObject, gameTime , invertPattern);
         
         if (nextPosition.X >= ScreenPosition.RightGameBoundary().X ||
-            nextPosition.X <= ScreenPosition.LeftGameBoundary().X)
+            nextPosition.X <= ScreenPosition.LeftGameBoundary().X || nextPosition.Y >= ScreenPosition.BottomGameBoundary().Y * 1.2f)
         {
             invertPattern = !invertPattern;
         }
@@ -72,6 +74,8 @@ public class FishBehaviour : SimpleComponent
         }
 
         gameObject.Position = nextPosition;
+        
+        gameObject.Position.Y -= Speed * deltaTime * 0.1f;
     }
 
     public static string GetRandomFishSprite()
