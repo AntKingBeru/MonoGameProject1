@@ -23,13 +23,14 @@ public class GameScene : Scene
 
     private const float GRACE_PERIOD = 1.5f;
     private const float TIME_THRESHOLD = GRACE_PERIOD + 5f;
-    private const float ORIGIN_SPEED = 1000f;
-    private const float MAX_MOVEMENT_SPEED = 2500f;
+    private const float ORIGIN_SPEED = 700f;
+    private const float MAX_MOVEMENT_SPEED = 1500f;
     private const float SPEED_MULTIPLIER = 1.3f;
     private const int MAX_FISH = 4;
     private const float RED_BOOST = 5f;
     private const float YELLOW_BOOST = 7.5f;
     private const float GREEN_BOOST = 10f;
+    private const float ABOOMNAPHA_SPEED_MULTIPLIER = 0.7f;
 
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
@@ -190,7 +191,7 @@ public class GameScene : Scene
     {
         if (isAboomnpha)
         {
-            speed *= 0.5f;
+            speed *= ABOOMNAPHA_SPEED_MULTIPLIER;
         }
         else
         {
@@ -347,7 +348,7 @@ public class GameScene : Scene
         {
             var backgroundHandler = new GameObject("BackgroundHandler" + i);
             backgroundHandler.Scale =
-                new Vector2(0.56f, 0.42f); // don't touch this, it is the correct scale for the background
+                new Vector2(0.67f, 0.525f); // don't touch this, it is the correct scale for the background
             backgroundHandler.Position = ScreenPosition.TopLeft();
             AddActiveObject(backgroundHandler);
             backgroundSprites.Add(backgroundHandler);
