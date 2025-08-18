@@ -115,7 +115,7 @@ public class GameScene : Scene
             var fish = fishPool.Dequeue() as Fish;
             fish.Position =
                 new Vector2(RandomFloat(ScreenPosition.LeftGameBoundary().X, ScreenPosition.RightGameBoundary().X),
-                    RandomFloat(ScreenPosition.Center().Y, ScreenPosition.BottomGameBoundary().Y));
+                    RandomFloat(ScreenPosition.Center().Y, ScreenPosition.ScreenHeight * 1.2f));
             fish.RandomizeSprite();
             fish.Enable();
         }
