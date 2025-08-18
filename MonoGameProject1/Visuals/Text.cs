@@ -1,42 +1,47 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGameProject1.Utilities.Configs;
 
 namespace MonoGameProject1;
 
-public class Text : IUpdateables, IDrawables
+public class Text : ConfigComponent
 {
-    //Semi-Dynamic variables
-    protected SpriteFont _font;
-    protected Vector2 _textCenter;
+    public TextConfig textConfig { get; set; }
 
-    //Dynamic variables
-    public string _Text;
-    public float Rotation = 0f;
-    public Vector2 Position =  Vector2.Zero;
-    public Vector2 Scale = Vector2.One;
-    
-    public Text(SpriteFont font)
+    public Text() : base()
     {
-        _font = font;
     }
 
-    public virtual void Update(GameTime gameTime)
+    public override void Initialize<T>(T config)
     {
-        _textCenter = _font.MeasureString(_Text) * 0.5f;
+        if (config is TextConfig textConfig)
+        {
+            this.textConfig = textConfig;
+        }
+
+        base.Initialize(config);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    protected override void OnEnable()
+    {
+    }
+
+    protected override void OnDisable()
+    {
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.DrawString(
-            _font,
-            _Text,
-            Position,
-            Color.White,
-            MathHelper.ToRadians(Rotation),
-            _textCenter,
-            Scale,
-            SpriteEffects.None,
-            0
-            );
+            textConfig.Font,
+            textConfig.Text,
+            gameObject.Position,
+            textConfig.Color,
+            MathHelper.ToRadians(gameObject.Rotation),
+            textConfig.TextCenter,
+            textConfig.Scale,
+            textConfig.SpriteEffects,
+            textConfig.Layer
+        );
     }
 }
