@@ -76,7 +76,7 @@ public class GameScene : Scene
         base.Update(gameTime);
 
         player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
-            playerSpriteInfo.Texture.Height * 0.05f); // enforce handle position
+            playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f); // enforce handle position
         
         CollisionManager.DetectCollisions();
     }
