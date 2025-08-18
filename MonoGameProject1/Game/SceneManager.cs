@@ -6,7 +6,7 @@ namespace MonoGameProject1;
 
 public static class SceneManager
 {
-    public static Scene CurrentScene;
+    private static Scene CurrentScene;
     private static Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
     public static bool Exit { get; set; }
     public static bool IsLoading { get; set; }

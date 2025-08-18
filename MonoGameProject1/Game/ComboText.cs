@@ -17,7 +17,7 @@ public class ComboText : GameObject
         TextConfig = new TextConfig(fontInfo);
         ConfigureComboEffects(TextConfig);
         Text = AddConfigComponent<Text, TextConfig>(TextConfig);
-        Position = ScreenPosition.TopLeft()  + new Vector2(100, 40);
+        Position = ScreenPosition.TopLeft()  + new Vector2(150, 50);
     }
 
 

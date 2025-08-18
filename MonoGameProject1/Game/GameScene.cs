@@ -10,13 +10,6 @@ namespace MonoGameProject1;
 
 public class GameScene : Scene
 {
-    private enum BoostZone
-    {
-        Red,
-        Yellow,
-        Green
-    }
-    
     private int backgroundAmount = 5;
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float speed;
@@ -28,10 +21,10 @@ public class GameScene : Scene
     private float miniTimer = 0f;
     private float fixedPlayerX = -1f; // -1 means not initialized
 
-    private const float GRACEPERIOD = 1.5f;
-    private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
-    private const float ORIGINSPEED = 1000f;
-    private const float MAXSPEED = 2500f;
+    private const float GRACE_PERIOD = 1.5f;
+    private const float TIME_THRESHOLD = GRACE_PERIOD + 5f;
+    private const float ORIGIN_SPEED = 1000f;
+    private const float MAX_MOVEMENT_SPEED = 2500f;
     private const float SPEED_MULTIPLIER = 1.3f;
     private const int MAX_FISH = 4;
     private const float RED_BOOST = 5f;
@@ -51,6 +44,7 @@ public class GameScene : Scene
     private SpriteSheetInfo playerSpriteInfo = SpriteManager.GetSprite("PlayerControl");
     private SpriteSheetInfo playerEdgeSpriteInfo = SpriteManager.GetSprite("PlayerCollider");
 
+    #region Core Methods
     public override void OnEnable()
     {
         IsActive = true;
@@ -59,7 +53,7 @@ public class GameScene : Scene
         CreatePlayer();
         CreateBoostBar();
         ArrangeSprites();
-        speed = ORIGINSPEED;
+        speed = ORIGIN_SPEED;
         miniTimer = 0f;
 
 
@@ -77,27 +71,6 @@ public class GameScene : Scene
         Init();
         
     }
-
-    private static float RandomFloat(float min, float max)
-    {
-        return (float)new Random().NextDouble() * (max - min) + min;
-    }
-
-    private void ArrangeSprites()
-    {
-        var screenHeight =
-            ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
-
-        for (var i = 0; i < backgroundAmount; i++)
-        {
-            var yPos = ScreenPosition.TopLeft().Y - (i * screenHeight);
-            backgroundSprites[i].Position = new Vector2(
-                backgroundSprites[i].Position.X,
-                yPos
-            );
-        }
-    }
-
     public override void Update(GameTime gameTime)
     {
         if (!IsActive) return;
@@ -162,7 +135,7 @@ public class GameScene : Scene
                                 break;
                         }
                         
-                        speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
+                        speed = MathHelper.Clamp(speed, 0f, MAX_MOVEMENT_SPEED);
                     }
                     
                     // Remove boost bar
@@ -179,7 +152,7 @@ public class GameScene : Scene
             MoveBackground(speed * deltaTime);
             comboManager?.UpdateDepth(speed, deltaTime);
 
-            CleanupIlligalFish();
+            CleanupIllegalFish();
             TopUpActiveFishInScene();
 
             foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
@@ -195,13 +168,16 @@ public class GameScene : Scene
 
         CollisionManager.DetectCollisions();
     }
+    
+    #endregion
 
-    public static Vector2 UpdatePlayerPosition(Vector2 start, Vector2 end, float totalTime)
+    #region Helper Methods
+    private static float RandomFloat(float min, float max)
     {
-        var t = (float)(Math.Sin(totalTime * 2f) * 0.5f + 0.5f);
-
-        return Vector2.Lerp(start, end, t);
+        return (float)new Random().NextDouble() * (max - min) + min;
     }
+
+    #endregion
 
     #region Fish Catch Logic
 
@@ -223,7 +199,7 @@ public class GameScene : Scene
             speed *= SPEED_MULTIPLIER;
         }
 
-        speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
+        speed = MathHelper.Clamp(speed, 0f, MAX_MOVEMENT_SPEED);
         fishPool.Enqueue(fish);
         fish.Disable();
     }
@@ -241,7 +217,7 @@ public class GameScene : Scene
         }
     }
 
-    private void CleanupIlligalFish()
+    private void CleanupIllegalFish()
     {
         foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
         {
@@ -392,11 +368,32 @@ public class GameScene : Scene
             dirtClipSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
     }
+    
+    private void ArrangeSprites()
+    {
+        var screenHeight =
+            ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
+
+        for (var i = 0; i < backgroundAmount; i++)
+        {
+            var yPos = ScreenPosition.TopLeft().Y - (i * screenHeight);
+            backgroundSprites[i].Position = new Vector2(
+                backgroundSprites[i].Position.X,
+                yPos
+            );
+        }
+    }
 
     #endregion
 
     #region Game Logic
 
+    private static Vector2 UpdatePlayerPosition(Vector2 start, Vector2 end, float totalTime)
+    {
+        var t = (float)(Math.Sin(totalTime * 2f) * 0.5f + 0.5f);
+
+        return Vector2.Lerp(start, end, t);
+    }
     private BoostZone GetBoostZone(Collider playerCollider, Collider booster)
     {
         // Get rectangles of each collider
@@ -442,7 +439,7 @@ public class GameScene : Scene
 
         else
         {
-            if (fishCatchTimer >= GRACEPERIOD)
+            if (fishCatchTimer >= GRACE_PERIOD)
             {
                 if (!isSlowing)
                 {
@@ -450,7 +447,7 @@ public class GameScene : Scene
                     speedLoseStartSpeed = speed;
                 }
 
-                speed -= deltaTime * (speedLoseStartSpeed / TIMETHRESHOLD);
+                speed -= deltaTime * (speedLoseStartSpeed / TIME_THRESHOLD);
             }
 
             fishCatchTimer += deltaTime;
@@ -488,4 +485,12 @@ public class GameScene : Scene
     }
 
     #endregion
+}
+
+
+public enum BoostZone
+{
+    Red,
+    Yellow,
+    Green
 }

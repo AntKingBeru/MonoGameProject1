@@ -18,8 +18,7 @@ public class FishBehaviour : SimpleComponent
     
     private static GameObject player;
     
-    
-    private const float SPEED_MULTIPLIER = 0.3f;
+    private const float SPEED_MULTIPLIER = 0.4f;
     private const float MINIMUM_RUN_AWAY_DISTANCE = 100f;
 
     private static readonly List<string> FishSprites = new()
