@@ -21,9 +21,6 @@ public class DepthMarker : GameObject
         MarkerTextConfig.EffectSettings.ColorCycleSpeed = 3f;
         MarkerTextConfig.EffectSettings.ColorPalette = new Color[]
         {
-            Color.Gold,
-            Color.Orange,
-            Color.Yellow,
             Color.Red
         };
 
