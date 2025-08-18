@@ -11,8 +11,8 @@ public class MainMenuTitle : GameObject
 
     public MainMenuTitle(string name) : base(name)
     {
-        var fontinfo = TextManager.GetFont("Oswald");
-        var textConfig = new TextConfig(fontinfo);
+        var fontInfo = TextManager.GetFont("Oswald");
+        var textConfig = new TextConfig(fontInfo);
 
 
         text = AddConfigComponent<Text, TextConfig>(textConfig);

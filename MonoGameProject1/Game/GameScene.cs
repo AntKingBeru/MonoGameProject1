@@ -41,6 +41,9 @@ public class GameScene : Scene
 
         ArrangeSprites();
 
+
+        var comboManager = new ComboManager("ComboManager");
+        AddActiveObject(comboManager);
         Init();
     }
 
