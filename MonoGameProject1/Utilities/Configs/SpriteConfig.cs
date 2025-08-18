@@ -30,7 +30,14 @@ public class SpriteConfig : ComponentConfig
     
     public SpriteConfig(SpriteSheetInfo spriteSheetInfo)
     {
-        SourceRectangle = new Rectangle(0, 0, 512, 512);
+        if (spriteSheetInfo != null && spriteSheetInfo.Texture != null)
+        {
+            SourceRectangle = new Rectangle(0, 0, spriteSheetInfo.Texture.Width, spriteSheetInfo.Texture.Height);
+        }
+        else
+        {
+            SourceRectangle = null;
+        }
         Color = Color.White;
         Effects = SpriteEffects.None;
         LayerDepth = 1f;

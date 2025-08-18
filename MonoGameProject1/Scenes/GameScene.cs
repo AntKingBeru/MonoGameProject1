@@ -124,15 +124,12 @@ public class GameScene : Scene
                         {
                             case BoostZone.Green:
                                 speed *= GREEN_BOOST;
-                                Console.WriteLine("Green");
                                 break;
                             case BoostZone.Yellow:
                                 speed *= YELLOW_BOOST;
-                                Console.WriteLine("Yellow");
                                 break;
                             case BoostZone.Red:
                                 speed *= RED_BOOST;
-                                Console.WriteLine("Red");
                                 break;
                         }
                         
@@ -268,10 +265,9 @@ public class GameScene : Scene
         player.Scale = playerEdge.Scale * 2f * new Vector2(1f, 10f);
         player.Position = ScreenPosition.TopCenter() -
                           new Vector2(playerSpriteInfo.Texture.Width * 0.25f, ScreenPosition.ScreenHeight * 2f);
-        var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
-        {
-            LayerDepth = 0.5f
-        };
+        var playerSpriteConfig = new SpriteConfig(playerSpriteInfo);
+        playerSpriteConfig.LayerDepth = 0.5f;
+        playerSpriteConfig.SourceRectangle = new Rectangle(0, 0, 512, 512);
         player.AddConfigComponent<Sprite, SpriteConfig>(playerSpriteConfig);
 
         playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
@@ -286,7 +282,7 @@ public class GameScene : Scene
     {
         boostBar = new GameObject("Boost Bar");
         AddActiveObject(boostBar);
-        boostBar.Scale = new Vector2(0.75f, 0.5f);
+        boostBar.Scale = new Vector2(0.6f, 0.5f);
         var redBoosterSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("BoostBar"))
         {
             LayerDepth = 0.8f
