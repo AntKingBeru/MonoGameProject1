@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoGameProject1.Core;
 using MonoGameProject1.UI.TextGO;
 using MonoGameProject1.Utilities.Configs;
 using MonoGameProject1.Visuals;
@@ -9,22 +10,30 @@ public class HowToPlayScene : Scene
 {
     public TextConfig TextConfig;
     public Text Text;
+    private Vector2 titlePosition;
     
     public override void OnEnable()
     {
         IsActive = true;
-
+        
         var startButton = new StartButton("Start");
-        startButton.Position = (ScreenPosition.Center() + ScreenPosition.BottomCenter()) * 0.5f + new Vector2(0, 50);
+        startButton.Position = new Vector2(
+            ScreenPosition.Center().X +
+            ScreenPosition.BottomLeft().X, ScreenPosition.Center().Y + ScreenPosition.BottomLeft().Y)
+            * 0.5f + new Vector2(0, 150);
         startButton.Scale = new Vector2(0.25f, 0.25f);
         AddActiveObject(startButton);
         
         var exitButton = new ExitButton("Exit");
-        exitButton.Position = startButton.Position + new Vector2(0, 100);
+        exitButton.Position = new Vector2(
+                ScreenPosition.Center().X +
+                ScreenPosition.BottomRight().X, ScreenPosition.Center().Y + ScreenPosition.BottomRight().Y)
+            * 0.5f + new Vector2(0, 150);
         exitButton.Scale = new Vector2(0.25f, 0.25f);
         AddActiveObject(exitButton);
 
         var title = new HowToPlayTitle("HowToPlayTitle");
+        titlePosition = title.Position;
         AddActiveObject(title);
         
         var fontInfo = TextManager.GetFont("Oswald");
@@ -47,7 +56,9 @@ WASD / Arrow Keys to move.
         var howToPlayText = new GameObject("HowToPlayText");
         AddActiveObject(howToPlayText);
         howToPlayText.AddConfigComponent<Text, TextConfig>(TextConfig);
-        howToPlayText.Position = (ScreenPosition.Center() + ScreenPosition.TopCenter()) * 0.5f + new Vector2(0, 150);
+        howToPlayText.Position = new Vector2(
+            ScreenPosition.Center().X,
+            titlePosition.Y + title.GetComponent<Sprite>().spriteConfig.SpriteInfo.Texture.Height * title.Scale.Y * 2.125f);
         howToPlayText.Scale = new Vector2(0.5f, 0.5f);
             
         Init();

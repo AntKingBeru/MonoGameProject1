@@ -8,19 +8,18 @@ public class HowToPlayTitle : GameObject
 {
     public HowToPlayTitle(string name) : base(name)
     {
-        var playerEdgeSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("TitleImage"))
+        var titleSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("TitleImage"))
         {
             LayerDepth = 0.9f
         };
         
-        AddConfigComponent<Sprite, SpriteConfig>(playerEdgeSpriteConfig);
+        AddConfigComponent<Sprite, SpriteConfig>(titleSpriteConfig);
         var playerColliderConfig = new ColliderConfig(new Rectangle(
             50,
             100,
             50,
             75));
-        
-        Position = ScreenPosition.TopCenter() + new Vector2(0, 50);
-        Scale = new Vector2(1.25f, 1.25f);
+        Scale = new Vector2(0.25f, 0.25f);
+        Position = ScreenPosition.TopCenter() - new Vector2(titleSpriteConfig.SpriteInfo.Texture.Width * 0.5f * Scale.X, 0f);
     }
 }
