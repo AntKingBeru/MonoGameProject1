@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGameProject1.Core;
 using MonoGameProject1.Visuals;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace MonoGameProject1;
 
@@ -23,8 +19,16 @@ public class Game1 : Game
         _graphics.PreferredBackBufferHeight = 1000;
         _graphics.ApplyChanges();
 
+        AudioManager.ContentMan = Content;
+        AudioManager.RegisterSFX("Boom");
+        AudioManager.RegisterSFX("Bubbles");
+        AudioManager.RegisterSFX("Splat2");
+        AudioManager.RegisterSFX("Splat1");
+        AudioManager.RegisterSFX("Spear");
+        AudioManager.RegisterSong("Title_music");
         TextManager.ContentMan = Content;
         TextManager.AddFont("Oswald", "Fonts/Oswald");
+        TextManager.AddFont("Baloo2", "Fonts/Baloo2");
         SpriteManager.ContentMan = Content;
         SpriteManager.AddSprite("Button", "Images/pacman");
         SpriteManager.AddSprite("ExitButton", "Images/ExitButton");
