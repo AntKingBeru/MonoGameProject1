@@ -8,8 +8,8 @@ public class EndScene : Scene
         
         var exitButton = new ExitButton("Exit");
         AddActiveObject(exitButton);
-        // var restartButton = new RestartButton("Restart");
-        // AddActiveObject(restartButton);
+        var restartButton = new RestartButton("Restart");
+        AddActiveObject(restartButton);
         var endTitle = new EndTitle("EndTitle");
         AddActiveObject(endTitle);
         var endScore = new EndScore("EndScore");
