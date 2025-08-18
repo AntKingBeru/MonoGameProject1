@@ -44,6 +44,7 @@ public class Game1 : Game
         SpriteManager.AddSprite("ShrimpsRed", "Images/ShrimpsRed");
         SpriteManager.AddSprite("Abumnapha", "Images/Abuna");
         SpriteManager.AddSprite("DirtClip", "Images/DirtClip");
+        SpriteManager.AddSprite("BoostBar", "Images/BoostBar");
     }
 
     protected override void Initialize()

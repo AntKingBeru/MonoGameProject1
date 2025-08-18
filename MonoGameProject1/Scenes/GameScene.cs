@@ -78,7 +78,7 @@ public class GameScene : Scene
 
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (isGameStarted)
+        if (!isGameStarted)
         {
             var totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
             
@@ -286,8 +286,8 @@ public class GameScene : Scene
     {
         boostBar = new GameObject("Boost Bar");
         AddActiveObject(boostBar);
-        boostBar.Scale = new Vector2(0.75f, 0.03f);
-        var redBoosterSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("Pixel"))
+        boostBar.Scale = new Vector2(0.75f, 0.5f);
+        var redBoosterSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("BoostBar"))
         {
             LayerDepth = 0.8f
         };
@@ -411,10 +411,10 @@ public class GameScene : Scene
         var relativeRight = (playerRight - boostLeft) / (boostRight - boostLeft);
 
         // Define Zones
-        const float greenStart = 0.40f; // middle 10%
-        const float greenEnd = 0.60f;
-        const float yellowStart = 0.20f; // middle 20%
-        const float yellowEnd = 0.80f;
+        const float greenStart = 0.46f;
+        const float greenEnd = 0.54f;
+        const float yellowStart = 0.35f;
+        const float yellowEnd = 0.65f;
 
         if (relativeRight >= greenStart && relativeLeft <= greenEnd)
         {
