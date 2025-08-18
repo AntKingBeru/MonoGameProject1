@@ -55,7 +55,7 @@ public class Sprite : ConfigComponent
     }
 
     public override void SetActive(bool activeState)
-    {
+    { //TODO check if needed
         if (!activeState)
         {
             base.SetActive(false);

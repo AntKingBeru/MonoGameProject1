@@ -17,9 +17,10 @@ public class Text : ConfigComponent
         if (config is TextConfig textConfig)
         {
             this.textConfig = textConfig;
+            base.Initialize(config);
         }
 
-        base.Initialize(config);
+        
     }
 
     protected override void OnEnable()
@@ -39,9 +40,9 @@ public class Text : ConfigComponent
             textConfig.Color,
             MathHelper.ToRadians(gameObject.Rotation),
             textConfig.TextCenter,
-            textConfig.Scale,
+            gameObject.Scale,
             textConfig.SpriteEffects,
-            textConfig.Layer
+            textConfig.LayerDepth
         );
     }
 }

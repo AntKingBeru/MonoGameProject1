@@ -22,7 +22,7 @@ public class MainMenuScene : Scene
         AddActiveObject(exitButton);
 
         var title = new MainMenuTitle("MainTitle");
-
+        AddActiveObject(title);
         Init();
     }
 }
