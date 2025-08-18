@@ -27,9 +27,11 @@ public class Game1 : Game
         TextManager.AddFont("Oswald", "Fonts/Oswald");
         SpriteManager.ContentMan = Content;
         SpriteManager.AddSprite("Button", "Images/pacman");
-        SpriteManager.AddSprite("ExitButton", "Images/ExitButton");
+        SpriteManager.AddSprite("ExitButton", "Images/Exit");
+        SpriteManager.AddSprite("RestartButton", "Images/Restart");
         SpriteManager.AddSprite("SettingsButton", "Images/SettingsButton");
-        SpriteManager.AddSprite("StartButton", "Images/StartButton");
+        SpriteManager.AddSprite("StartButton", "Images/Start");
+        SpriteManager.AddSprite("HowToPlayButton", "Images/HowToPlay");
         SpriteManager.AddSprite("Background", "Images/PipeNew");
         SpriteManager.AddSprite("OutLine", "Images/PipeOutLine");
         SpriteManager.AddSprite("HighLight", "Images/WhiteCenterClip");
@@ -56,8 +58,10 @@ public class Game1 : Game
         SceneManager.EnableScene("Main Menu");
         var gameScene = new GameScene();
         SceneManager.AddScene("Game Scene", gameScene);
-        // SceneManager.EnableScene("Game Scene");
-
+        // SceneManager.EnableScene("Game Scene"); // for testing purposes
+        var endScene = new EndScene();
+        SceneManager.AddScene("End Scene", endScene);
+        // SceneManager.EnableScene("End Scene"); // for testing purposes
         base.Initialize();
     }
 

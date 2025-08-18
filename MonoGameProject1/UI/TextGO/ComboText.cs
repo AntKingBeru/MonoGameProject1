@@ -33,7 +33,7 @@ public class ComboText : GameObject
         textConfig.EffectSettings.EnableScaleEffect = true;
         textConfig.EffectSettings.BaseScale = 1f;
         textConfig.EffectSettings.MaxScale = 1.5f;
-        textConfig.EffectSettings.MaxScaleValue = ComboHandler.MAXCOMBO;
+        textConfig.EffectSettings.MaxScaleValue = ComboManager.MAXCOMBO;
 
         textConfig.EffectSettings.EnableShakeEffect = true;
         textConfig.EffectSettings.ShakeIntensity = 3f;

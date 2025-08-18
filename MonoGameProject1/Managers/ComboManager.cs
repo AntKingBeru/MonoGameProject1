@@ -7,33 +7,34 @@ using MonoGameProject1.Visuals;
 
 namespace MonoGameProject1;
 
-public class ComboHandler : GameObject
+public static class ComboManager
 {
-    private ComboText comboText;
-    // private ScoreText scoreText;
-    private DepthMeter depthMeter;
-    // private Text currentDepthText;
+    public static ComboText comboText;
+
+
+    public static DepthMeter depthMeter;
+
 
     public const int MAXCOMBO = 10;
     private const int SCOREFISH = 100;
     private const float MAXCOMBOTIME = 3.0f;
     private const float DEPTHUNIT = 10f;
 
-    private int score = 0;
-    private int combo = 0;
-    private int lastCombo = 0;
-    private float comboTimer = 0;
-    private float currentDepth = 0f;
-    private float totalDistance = 0f;
+    private static int score = 0;
+    private static int combo = 0;
+    private static int lastCombo = 0;
+    private static float comboTimer = 0;
+    private static float currentDepth = 0f;
+    private static float totalDistance = 0f;
 
     public static int TotalFishCaught { get; private set; } = 0;
     public static float MaxDepthReached { get; private set; } = 0f;
     public static int HighestCombo { get; private set; } = 0;
     public static int BestScore { get; private set; } = 0;
 
-    public int CurrentScore => score;
-    public float CurrentDepth => currentDepth;
-    public int CurrentCombo => combo;
+    public static int CurrentScore => score;
+    public static float CurrentDepth => currentDepth;
+    public static int CurrentCombo => combo;
 
     public static void UpdateFishCaught() => TotalFishCaught++;
 
@@ -61,20 +62,7 @@ public class ComboHandler : GameObject
         MaxDepthReached = 0f;
         HighestCombo = 0;
     }
-
-    public ComboHandler(string name, ComboText _comboText, ScoreText _scoreText, DepthMeter _depthMeter) : base(name)
-    {
-        Scale = new Vector2(0.5f, 0.5f);
-
-        comboText = _comboText;
-        // scoreText = _scoreText;
-        depthMeter = _depthMeter;
-        
-       
-        CreateCurrentDepthDisplay();
-    }
-    
-    private void CreateCurrentDepthDisplay()
+    private static void CreateCurrentDepthDisplay()
     {
         var fontInfo = TextManager.GetFont("Oswald");
         var currentDepthConfig = new TextConfig(fontInfo);
@@ -88,25 +76,17 @@ public class ComboHandler : GameObject
             Color.CornflowerBlue,
             Color.DeepSkyBlue
         };
-        
-  }
-
-    public override void Enable()
-    {
-        Fish.OnFishCaught += IncreaseCombo;
-        Position = ScreenPosition.TopLeft() + new Vector2(120, 40);
-        base.Enable();
     }
+    
 
-    public override void Disable()
+    public static void IncreaseCombo(Fish fish = null, bool isAboomnpha = false)
     {
-        Fish.OnFishCaught -= IncreaseCombo;
-        base.Disable();
-    }
-
-    private void IncreaseCombo(Fish fish = null, bool isAboomnpha = false)
-    {
-        if (isAboomnpha) return;
+        if (isAboomnpha)
+        {
+            combo = 0;
+            return;
+        } 
+            
         if (combo >= MAXCOMBO) return;
 
         lastCombo = combo;
@@ -130,7 +110,7 @@ public class ComboHandler : GameObject
         }
     }
 
-    public void UpdateDepth(float speed, float deltaTime)
+    public static void UpdateDepth(float speed, float deltaTime)
     {
         float depthIncrement = (speed / 100f) * deltaTime;
         totalDistance += depthIncrement;
@@ -142,7 +122,7 @@ public class ComboHandler : GameObject
         score = (TotalFishCaught * fishScore) + (int)currentDepth;
     }
 
-    public override void Update(GameTime gameTime)
+    public static void UpdateScore(GameTime gameTime)
     {
         float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -160,20 +140,14 @@ public class ComboHandler : GameObject
 
         float scaleMultiplier = 1f + ((float)combo / MAXCOMBO) * (comboText.TextConfig.EffectSettings.MaxScale - 1f);
         comboText.TextConfig.EffectSettings.BaseScale = scaleMultiplier;
-
-        base.Update(gameTime);
+        
     }
 
-    private void UpdateUITexts()
+    private static  void UpdateUITexts()
     {
         // Update combo text
         comboText.TextConfig.Text = $"Combo: {combo}x";
 
-        // Update score text  
-        // if (scoreText != null)
-        // {
-        //     scoreText.TextConfig.Text = $"Score: {score:N0}";
-        // }
 
         // Update depth meter using the new method
         if (depthMeter != null)
@@ -181,10 +155,6 @@ public class ComboHandler : GameObject
             depthMeter.UpdateDepthDisplay(currentDepth);
         }
 
-        // Update current depth display
-        // if (currentDepthText != null)
-        // {
-        //     currentDepthText.textConfig.Text = $"Depth: {currentDepth:F1}m";
-        // }
+
     }
 }
