@@ -10,6 +10,9 @@ public class Fish : GameObject
     FishBehaviour behaviour;
 
     private SpriteSheetInfo spriteInfo;
+    
+    public delegate void FishCaughtDelegate(Fish fish);
+    public static event FishCaughtDelegate OnFishCaught;
 
     public Fish(string name) : base(name)
     {
@@ -36,6 +39,15 @@ public class Fish : GameObject
     public void RandomizeSprite()
     {
         spriteInfo = SpriteManager.GetSprite(FishBehaviour.GetRandomFishSprite());
+    }
+    
+    
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.Name == "PlayerEdge")
+        {
+            OnFishCaught?.Invoke(this);
+        }
     }
 
 }

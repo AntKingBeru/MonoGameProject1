@@ -20,7 +20,7 @@ public class GameScene : Scene
     private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
     private const float ORIGINSPEED = 200f;
     private const float MAXSPEED = 2500f;
-    private const float SPEED_MULTIPLIER = 1.005f;
+    private const float SPEED_MULTIPLIER = 1.4f;
 
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
@@ -96,8 +96,8 @@ public class GameScene : Scene
 
         playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
             playerSpriteInfo.Texture.Height * 0.05f);
-
-        collider.OnCollision += CatchFish;
+        
+        Fish.OnFishCaught += CatchFishLogic;
     }
 
     private void CreateBackground()
@@ -182,14 +182,14 @@ public class GameScene : Scene
         }
     }
 
-    private void CatchFish(Collider other)
+    private void CatchFishLogic(Fish fish)
     {
         fishCatchTimer = 0f;
         isSlowing = false;
         speed *= SPEED_MULTIPLIER;
         speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
-        fishPool.Enqueue(other.gameObject);
-        other.gameObject.Disable();
+        fishPool.Enqueue(fish);
+        fish.Disable();
     }
 
     public override void Update(GameTime gameTime)

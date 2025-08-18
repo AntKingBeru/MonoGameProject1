@@ -128,28 +128,32 @@ public class GameObject : IUpdateables, IDrawables, IColliderMethods
         }
     }
 
-
+    #region Collision Methods
     public virtual void OnCollisionEnter(Collider other)
     {
     }
 
-    public void OnCollisionStay(Collider other)
+    public virtual void OnCollisionStay(Collider other)
     {
     }
 
-    public void OnCollisionExit(Collider other)
+    public virtual void OnCollisionExit(Collider other)
     {
     }
 
-    public void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
     }
 
-    public void OnTriggerStay(Collider other)
+    public virtual void OnTriggerStay(Collider other)
     {
     }
 
-    public void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
     }
+    
+
+    #endregion
+    
 }
