@@ -167,7 +167,7 @@ public class GameScene : Scene
         player = new GameObject("Player");
         AddActiveObject(player);
         player.Scale = playerEdge.Scale * 2f * new Vector2(1f, 10f);
-        player.Position = ScreenPosition.TopCenter();
+        player.Position = ScreenPosition.TopCenter() - new Vector2(playerSpriteInfo.Texture.Width * 0.25f, ScreenPosition.ScreenHeight * 2f);
         var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
         {
             LayerDepth = 0.5f
