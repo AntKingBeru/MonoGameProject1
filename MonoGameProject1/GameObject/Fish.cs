@@ -52,6 +52,21 @@ public class Fish : GameObject
         if (other.gameObject.Name == "PlayerEdge")
         {
             OnFishCaught?.Invoke(this, behaviour.isAboomnapha);
+            PlayFishCaughtSound();
+        }
+    }
+
+    private void PlayFishCaughtSound()
+    {
+        if (behaviour.isAboomnapha)
+        {
+            AudioManager.CreateSFXInstanceAndPlay("Boom");
+        }
+        else
+        {
+            var rng = new Random();
+            var x = rng.Next(0, 2);
+            AudioManager.CreateSFXInstanceAndPlay(x == 0 ? "Splat2" : "Splat1");
         }
     }
 

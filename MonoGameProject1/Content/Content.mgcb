@@ -13,35 +13,35 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Audio/Aboomnpha_Sound.wav
+#begin Audio/SFX/Aboomnpha_Sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Aboomnpha_Sound.wav
+/build:Audio/SFX/Aboomnpha_Sound.wav;Audio/SFX/Aboomnpha_Sound
 
-#begin Audio/Bubblez.wav
+#begin Audio/SFX/Bubblez.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Bubblez.wav
+/build:Audio/SFX/Bubblez.wav;Audio/SFX/Bubblez
 
-#begin Audio/Spearthrow.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Spearthrow.mp3
-
-#begin Audio/SplatSound.wav
+#begin Audio/SFX/Spearthrow.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/SplatSound.wav
+/build:Audio/SFX/Spearthrow.wav
 
-#begin Audio/SplatSound2.wav
+#begin Audio/SFX/SplatSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/SplatSound2.wav
+/build:Audio/SFX/SplatSound.wav;Audio/SFX/SplatSound
+
+#begin Audio/SFX/SplatSound2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SFX/SplatSound2.wav;Audio/SFX/SplatSound2
 
 #begin Fonts/Baloo2-SemiBold.spritefont
 /importer:FontDescriptionImporter

@@ -92,69 +92,7 @@ public class GameScene : Scene
 
         if (!isGameStarted)
         {
-            var totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
-
-            // Horizontal movement (pendulum)
-            if (fixedPlayerX < 0f)
-            {
-                playerEdge.Position = UpdatePlayerPosition(
-                    ScreenPosition.LeftGameBoundary(),
-                    ScreenPosition.RightGameBoundary(),
-                    totalTime);
-            }
-            else
-            {
-                playerEdge.Position = new Vector2(fixedPlayerX, playerEdge.Position.Y);
-            }
-            
-            var state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Space) || miniTimer > 0f)
-            {
-                miniTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                
-                // Stop the pendulum and fix the horizontal position when space is pressed the first time
-                if (fixedPlayerX < 0f)
-                {
-                    fixedPlayerX = playerEdge.Position.X;
-                }
-                
-                // Vertical movement while pressing
-                playerEdge.Position.Y += speed * miniTimer * 0.1f;
-                
-                // Once miniTimer reaches the threshold, apply speed boost
-                if (miniTimer >= 0.25f)
-                {
-                    // Check which boost zone the player is in
-                    var playerCollider = playerEdge.GetComponent<Collider>();
-                    var boostCollider = boostBar.GetComponent<Collider>();
-                    if (playerCollider != null && boostCollider != null)
-                    {
-                        var boostZone = GetBoostZone(playerCollider, boostCollider);
-                        
-                        // Apply multiplier
-                        switch (boostZone)
-                        {
-                            case BoostZone.Green:
-                                speed *= GREEN_BOOST;
-                                break;
-                            case BoostZone.Yellow:
-                                speed *= YELLOW_BOOST;
-                                break;
-                            case BoostZone.Red:
-                                speed *= RED_BOOST;
-                                break;
-                        }
-                        
-                        speed = MathHelper.Clamp(speed, 0f, MAX_MOVEMENT_SPEED);
-                    }
-                    
-                    // Remove boost bar
-                    boostBar.Disable();
-                    
-                    //Start the game
-                    isGameStarted = true;
-                }
-            }
+            StartUpSequence(gameTime);
         }
         else
         {
@@ -396,6 +334,73 @@ public class GameScene : Scene
     #endregion
 
     #region Game Logic
+
+        private void StartUpSequence(GameTime gameTime)
+    {
+        var totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
+            
+        // Horizontal movement (pendulum)
+        if (fixedPlayerX < 0f)
+        {
+            playerEdge.Position = UpdatePlayerPosition(
+                ScreenPosition.LeftGameBoundary(),
+                ScreenPosition.RightGameBoundary(),
+                totalTime);
+        }
+        else
+        {
+            playerEdge.Position = new Vector2(fixedPlayerX, playerEdge.Position.Y);
+        }
+            
+        var state = Keyboard.GetState();
+        if (state.IsKeyDown(Keys.Space) || miniTimer > 0f)
+        {
+            miniTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                
+            // Stop the pendulum and fix the horizontal position when space is pressed the first time
+            if (fixedPlayerX < 0f)
+            {
+                fixedPlayerX = playerEdge.Position.X;
+            }
+                
+            // Vertical movement while pressing
+            playerEdge.Position.Y += speed * miniTimer * 0.1f;
+                
+            // Once miniTimer reaches the threshold, apply speed boost
+            if (miniTimer >= 0.25f)
+            {
+                // Check which boost zone the player is in
+                var playerCollider = playerEdge.GetComponent<Collider>();
+                var boostCollider = boostBar.GetComponent<Collider>();
+                if (playerCollider != null && boostCollider != null)
+                {
+                    var boostZone = GetBoostZone(playerCollider, boostCollider);
+                        
+                    // Apply multiplier
+                    switch (boostZone)
+                    {
+                        case BoostZone.Green:
+                            speed *= GREEN_BOOST;
+                            break;
+                        case BoostZone.Yellow:
+                            speed *= YELLOW_BOOST;
+                            break;
+                        case BoostZone.Red:
+                            speed *= RED_BOOST;
+                            break;
+                    }
+                        
+                    speed = MathHelper.Clamp(speed, 0f, MAX_MOVEMENT_SPEED);
+                }
+                    
+                // Remove boost bar
+                boostBar.Disable();
+                    
+                //Start the game
+                isGameStarted = true;
+            }
+        }
+    }
 
     private static Vector2 UpdatePlayerPosition(Vector2 start, Vector2 end, float totalTime)
     {
