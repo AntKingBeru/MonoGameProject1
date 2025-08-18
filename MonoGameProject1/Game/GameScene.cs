@@ -86,7 +86,7 @@ public class GameScene : Scene
 
         player = new GameObject("Player");
         AddActiveObject(player);
-        player.Scale = playerEdge.Scale * 2f;
+        player.Scale = playerEdge.Scale * 2f * new Vector2(1f, 10f);
         player.Position = ScreenPosition.TopCenter();
         var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
         {
@@ -95,7 +95,7 @@ public class GameScene : Scene
         player.AddConfigComponent<Sprite, SpriteConfig>(playerSpriteConfig);
 
         playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
-            playerSpriteInfo.Texture.Height * 0.05f);
+            playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f);
         
         Fish.OnFishCaught += CatchFishLogic;
     }
@@ -195,9 +195,7 @@ public class GameScene : Scene
     public override void Update(GameTime gameTime)
     {
         if (!IsActive) return;
-
-        player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
-            playerSpriteInfo.Texture.Height * 0.05f);
+        
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         if (speed <= 1f)
@@ -242,6 +240,9 @@ public class GameScene : Scene
         }
 
         base.Update(gameTime);
+        
+        player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
+            playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f);
     }
 
     private void MoveBackground(float moveSpeed)
