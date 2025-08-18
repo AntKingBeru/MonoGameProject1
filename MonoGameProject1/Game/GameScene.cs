@@ -36,6 +36,10 @@ public class GameScene : Scene
         CreatePlayer();
         CreateFish();
         ArrangeSprites();
+
+
+        var comboManager = new ComboManager("ComboManager");
+        AddActiveObject(comboManager);
         Init();
     }
 
