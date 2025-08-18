@@ -14,8 +14,7 @@ public static class FishPatterns
 
     public static Vector2 RunAway(GameObject go, GameTime gt, bool Invert = false)
     {
-        var time = (float)gt.ElapsedGameTime.TotalSeconds;
-        var speed = 3f;
+        var speed = 4f;
         var result = go.Position - player.Position;
         result.Normalize();
         result *= speed;

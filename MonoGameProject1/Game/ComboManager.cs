@@ -14,41 +14,41 @@ public class ComboManager : GameObject
     private int score = 0;
     private int combo = 0;
     private float comboTimer = 0;
-    
+
     public ComboManager(string name) : base(name)
     {
         Scale = new Vector2(0.5f, 0.5f);
 
         var fontInfo = TextManager.GetFont("Oswald");
         var textConfig = new TextConfig(fontInfo);
-        
+
         textConfig.Text = "Combo: " + combo;
-        
+
         text = AddConfigComponent<Text, TextConfig>(textConfig);
         Position = ScreenPosition.TopLeft() + new Vector2(120, 20);
     }
+
     public override void Enable()
-    
+
     {
         Fish.OnFishCaught += IncreaseCombo;
-        
         base.Enable();
     }
 
     public override void Disable()
     {
         Fish.OnFishCaught -= IncreaseCombo;
-
         base.Disable();
     }
-    private void IncreaseCombo(Fish fish = null)
+
+    private void IncreaseCombo(Fish fish = null, bool isAboomnpha = false)
     {
-        
+        if(isAboomnpha) return;
         if (combo >= MAXCOMBO) return;
         combo++;
         comboTimer = MAX_COMBO_TIME;
     }
-    
+
     public override void Update(GameTime gameTime)
     {
         comboTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -57,10 +57,9 @@ public class ComboManager : GameObject
             combo = 0;
             comboTimer = 0;
         }
+
         text.textConfig.Text = "Combo: " + combo;
-        
+
         base.Update(gameTime);
     }
-
-    
 }
