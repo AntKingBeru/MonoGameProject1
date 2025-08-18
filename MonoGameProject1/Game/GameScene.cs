@@ -41,7 +41,11 @@ public class GameScene : Scene
 
         ArrangeSprites();
 
+        var comboManager = new ComboManager("ComboManager");
+        AddActiveObject(comboManager);        
+        
         Init();
+        
     }
 
     private static float RandomFloat(float min, float max)
