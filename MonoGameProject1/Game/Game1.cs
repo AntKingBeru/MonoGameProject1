@@ -52,6 +52,7 @@ public class Game1 : Game
         SpriteManager.AddSprite("Abumnapha", "Images/Abuna");
         SpriteManager.AddSprite("DirtClip", "Images/DirtClip");
         SpriteManager.AddSprite("BoostBar", "Images/BoostBar");
+        SpriteManager.AddSprite("TitleImage", "Images/TitleImage");
     }
 
     protected override void Initialize()
