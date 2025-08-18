@@ -5,7 +5,7 @@ using System;
 
 namespace MonoGameProject1;
 
-public class Text : ConfigComponent
+public class Text : ConfigurableComponent
 {
     public TextConfig textConfig { get; set; }
     

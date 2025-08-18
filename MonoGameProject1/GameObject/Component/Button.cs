@@ -6,7 +6,7 @@ using MonoGameProject1.Core;
 
 namespace MonoGameProject1;
 
-public class Button : ConfigComponent
+public class Button : ConfigurableComponent
 {
     public delegate void ButtonClickHandler();
 

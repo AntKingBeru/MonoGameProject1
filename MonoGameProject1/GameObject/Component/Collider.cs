@@ -5,7 +5,7 @@ using MonoGameProject1.Core;
 
 namespace MonoGameProject1;
 
-public class Collider : ConfigComponent
+public class Collider : ConfigurableComponent
 {
     public ColliderConfig colliderConfig {get; private set; }
     public delegate void CollisionHandler(Collider other);

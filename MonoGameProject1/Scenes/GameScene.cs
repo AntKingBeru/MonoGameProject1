@@ -35,7 +35,7 @@ public class GameScene : Scene
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
     private GameObject player;
-    private ComboManager comboManager;
+    private ComboHandler _comboHandler;
     private ComboText comboText;
     private DepthMeter depthMeter;
     private DepthMarker depthMarker;
@@ -66,8 +66,8 @@ public class GameScene : Scene
         AddActiveObject(depthMeter);
         scoreText = new ScoreText("ScoreText");
         AddActiveObject(scoreText);
-        comboManager = new ComboManager("ComboManager", comboText, scoreText, depthMeter);
-        AddActiveObject(comboManager);
+        _comboHandler = new ComboHandler("ComboManager", comboText, scoreText, depthMeter);
+        AddActiveObject(_comboHandler);
 
         Init();
         
@@ -151,7 +151,7 @@ public class GameScene : Scene
         {
             HandleTimer(deltaTime);
             MoveBackground(speed * deltaTime);
-            comboManager?.UpdateDepth(speed, deltaTime);
+            _comboHandler?.UpdateDepth(speed, deltaTime);
 
             CleanupIllegalFish();
             TopUpActiveFishInScene();

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public abstract class ConfigComponent : Component
+public abstract class ConfigurableComponent : Component
 {
     // an extentions class for Component to handle configuration settings
     // this class can be used configured before enabling it

@@ -7,7 +7,7 @@ using MonoGameProject1.Visuals;
 
 namespace MonoGameProject1;
 
-public class ComboManager : GameObject
+public class ComboHandler : GameObject
 {
     private ComboText comboText;
     // private ScoreText scoreText;
@@ -62,7 +62,7 @@ public class ComboManager : GameObject
         HighestCombo = 0;
     }
 
-    public ComboManager(string name, ComboText _comboText, ScoreText _scoreText, DepthMeter _depthMeter) : base(name)
+    public ComboHandler(string name, ComboText _comboText, ScoreText _scoreText, DepthMeter _depthMeter) : base(name)
     {
         Scale = new Vector2(0.5f, 0.5f);
 

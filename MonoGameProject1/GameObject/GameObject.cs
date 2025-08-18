@@ -79,7 +79,7 @@ public class GameObject : IUpdateables, IDrawables, IColliderMethods
 
 
     public T AddConfigComponent<T, TConfig>(TConfig config)
-        where T : ConfigComponent, new()
+        where T : ConfigurableComponent, new()
         where TConfig : ComponentConfig
     {
         var component = AddComponent<T>();

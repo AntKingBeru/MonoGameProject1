@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1.Core;
 
-public class Sprite : ConfigComponent
+public class Sprite : ConfigurableComponent
 {
     public SpriteConfig spriteConfig { get; private set; }
 
