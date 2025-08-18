@@ -32,19 +32,23 @@ public class ComboManager : GameObject
 
     }
     public override void Enable()
-    { 
+    
+    {
         Fish.OnFishCaught += IncreaseCombo;
+        
         base.Enable();
     }
 
     public override void Disable()
     {
         Fish.OnFishCaught -= IncreaseCombo;
+
         base.Disable();
     }
-    
-    private void IncreaseCombo(Fish fish)
+    private void IncreaseCombo(Fish fish = null)
     {
+        
+        if (combo >= MAXCOMBO) return;
         combo++;
         comboTimer = MAX_COMBO_TIME;
     }

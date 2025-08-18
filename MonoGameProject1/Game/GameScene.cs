@@ -34,14 +34,18 @@ public class GameScene : Scene
         IsActive = true;
 
         CreateBackground();
+
         CreatePlayer();
+
         CreateFish();
+
         ArrangeSprites();
 
-
         var comboManager = new ComboManager("ComboManager");
-        AddActiveObject(comboManager);
+        AddActiveObject(comboManager);        
+        
         Init();
+        
     }
 
     private static float RandomFloat(float min, float max)
