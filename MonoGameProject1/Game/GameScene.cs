@@ -32,6 +32,7 @@ public class GameScene : Scene
     public override void OnEnable()
     {
         IsActive = true;
+
         CreateBackground();
         CreatePlayer();
         CreateFish();
