@@ -13,10 +13,14 @@ public class FishBehaviour : SimpleComponent
     private bool invertPattern = false;
     private float timer = 0f;
     private SpriteConfig spriteConfiguration;
-    private const float SPEED_MULTIPLIER = 0.3f;
+    public float Speed;
+    public bool isAboomnapha = false;
+    
     private static GameObject player;
     
-    public float Speed;
+    
+    private const float SPEED_MULTIPLIER = 0.3f;
+    private const float MINIMUM_RUN_AWAY_DISTANCE = 100f;
 
     private static readonly List<string> FishSprites = new()
         { "GoldFish", "ShrimpsPink", "ShrimpsOrange", "ShrimpsRed", "Abumnapha" };
@@ -39,19 +43,15 @@ public class FishBehaviour : SimpleComponent
 
     public override void Update(GameTime gameTime)
     {
-        if (gameObject == null || !gameObject.IsActive) return;
+        if (gameObject is not { IsActive: true }) return;
         if (InitializeSpriteConfiguration()) return; // Ensure sprite configuration is available
-        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        timer += deltaTime;
         if (!IsActive || currentPattern == null) return;
-
-        if (timer - lastPatternChangeTime >= PatternChangeInterval)
-        {
-            var randomIndex = Random.Shared.Next(0, AllPatterns.Count);
-
-            currentPattern = AllPatterns[randomIndex];
-            lastPatternChangeTime = timer;
-        }
+        if (player == null) return;
+        
+        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        ChangeBehaviourByTimer(deltaTime);
+        
+        ChangeBehaviourByPlayerPosition();
 
         var nextPosition = currentPattern(gameObject, gameTime , invertPattern);
 
@@ -60,20 +60,38 @@ public class FishBehaviour : SimpleComponent
             nextPosition.Y >= ScreenPosition.BottomGameBoundary().Y + ScreenPosition.ScreenHeight * 0.5f)
         {
             invertPattern = !invertPattern;
+            nextPosition = gameObject.Position;
         }
 
-        if (gameObject.Position.X > nextPosition.X)
-        {
-            spriteConfiguration.Effects = SpriteEffects.None;
-        }
-        else
-        {
-            spriteConfiguration.Effects = SpriteEffects.FlipHorizontally;
-        }
+        spriteConfiguration.Effects = gameObject.Position.X > nextPosition.X ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
         gameObject.Position = nextPosition;
         
         gameObject.Position.Y -= Speed * deltaTime * SPEED_MULTIPLIER;
+    }
+
+    private void ChangeBehaviourByPlayerPosition()
+    {
+        float distanceToPlayer = Vector2.Distance(gameObject.Position, player.Position);
+        if (distanceToPlayer < MINIMUM_RUN_AWAY_DISTANCE)
+        {
+            // If too close to player, run away
+            currentPattern = FishPatterns.RunAway;
+            timer = 0;
+        }
+    }
+
+    private void ChangeBehaviourByTimer(float deltaTime)
+    {
+        timer += deltaTime;
+
+        if (timer - lastPatternChangeTime >= PatternChangeInterval)
+        {
+            var randomIndex = Random.Shared.Next(0, AllPatterns.Count);
+
+            currentPattern = AllPatterns[randomIndex];
+            lastPatternChangeTime = timer;
+        }
     }
 
     private bool InitializeSpriteConfiguration()
@@ -87,12 +105,6 @@ public class FishBehaviour : SimpleComponent
     {
         return FishSprites[Random.Shared.Next(0, FishSprites.Count)];
     }
-    
-    public void SetPattern(Func<GameObject, GameTime, bool, Vector2> pattern)
-    {
-        currentPattern = pattern;
-    }
-
     public static void SetPlayer(GameObject playerRef)
     {
         player = playerRef;

@@ -11,14 +11,16 @@ public class Fish : GameObject
 
     private SpriteSheetInfo spriteInfo;
     
-    public delegate void FishCaughtDelegate(Fish fish);
+    public delegate void FishCaughtDelegate(Fish fish , bool isAboomnapha);
     public static event FishCaughtDelegate OnFishCaught;
 
     public Fish(string name) : base(name)
     {
         Position = ScreenPosition.Center();
-        Scale = new Vector2(0.1f, 0.1f);
-        spriteInfo = SpriteManager.GetSprite(FishBehaviour.GetRandomFishSprite());
+        Scale = new Vector2(0.12f, 0.12f);
+        
+        var spriteName = FishBehaviour.GetRandomFishSprite();
+        spriteInfo = SpriteManager.GetSprite(spriteName);
         var spriteConfig = new SpriteConfig(spriteInfo);
         spriteConfig.LayerDepth = 0.6f;
         spriteConfig.Origin = Vector2.Zero;
@@ -27,12 +29,16 @@ public class Fish : GameObject
         var rect = new Rectangle(
             0,
             0,
-            50,
-            50);
+            60,
+            60);
         var colliderConfig = new ColliderConfig(rect , true);
         AddConfigComponent<Collider, ColliderConfig>(colliderConfig);
-
         behaviour = AddComponent<FishBehaviour>();
+        if (spriteName == "Abumnapha")
+        {
+            behaviour.isAboomnapha = true;
+            behaviour.Speed = 0.5f;
+        }
         EnableComponent(behaviour);
     }
 
@@ -45,7 +51,7 @@ public class Fish : GameObject
     {
         if (other.gameObject.Name == "PlayerEdge")
         {
-            OnFishCaught?.Invoke(this);
+            OnFishCaught?.Invoke(this, behaviour.isAboomnapha);
         }
     }
 
@@ -53,12 +59,4 @@ public class Fish : GameObject
     {
         behaviour.Speed = speed;
     }
-
-    // public override void OnCollisionEnter(Collider other)
-    // {
-    //     if (other.gameObject.Name == "PlayerEdge")
-    //     {
-    //         behaviour.SetPattern(FishPatterns.RunAway);
-    //     }
-    // }
 }

@@ -100,11 +100,18 @@ public class GameScene : Scene
         return ActiveSceneObjects.Count(potentialFish => potentialFish.Value is Fish);
     }
     
-    private void CatchFishLogic(Fish fish)
+    private void CatchFishLogic(Fish fish, bool isAboomnpha = false)
     {
-        fishCatchTimer = 0f;
-        isSlowing = false;
-        speed *= SPEED_MULTIPLIER;
+        if (isAboomnpha)
+        {
+            speed *= 0.5f;
+        }
+        else
+        {
+            fishCatchTimer = 0f;
+            isSlowing = false;
+            speed *= SPEED_MULTIPLIER;
+        } 
         speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
         fishPool.Enqueue(fish);
         fish.Disable();
