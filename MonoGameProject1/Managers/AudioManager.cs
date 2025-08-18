@@ -7,63 +7,47 @@ using Microsoft.Xna.Framework.Media;
 namespace MonoGameProject1;
 public static class AudioManager
 {
-    private static Dictionary<string, Song> songsCache = new();
-    private static Dictionary<string, SoundEffect> SFXCache = new();
+    private static Dictionary<string, Song> songs = new();
+    private static Dictionary<string, SoundEffect> SFXs = new();
     public static ContentManager ContentMan { set; get; }    
     
-    public static void RegisterSong(string songFileName)
+    public static void RegisterSong(string key, string songFilePath)
     {
-        if (songsCache.ContainsKey(songFileName)) return;
-
-        Song song = ContentMan.Load<Song>(Path.Combine("Audio/Songs", songFileName));
-
-        songsCache.Add(songFileName, song);
+        if (songs.ContainsKey(key)) return;
+        Song song = ContentMan.Load<Song>(songFilePath);
+        songs.Add(key, song);
     }
 
-    public static Song PlaySong(string songFileName)
+    public static Song PlaySong(string key)
     {
         Song song;
-        bool fetchedFromCache = false;
-        if (!songsCache.TryGetValue(songFileName, out song))
-        {
-            song = ContentMan.Load<Song>(Path.Combine("Audio/Songs", songFileName));
-        }
-        else
-        {
-            fetchedFromCache = true;
-        }
+        if (!songs.TryGetValue(key, out song)) return null;
         MediaPlayer.Play(song);
-
-        if (!fetchedFromCache) songsCache[songFileName] = song;
-
         return song;
     }
 
-    public static void RegisterSFX(string fileName)
+    public static void RegisterSFX(string key, string songFilePath)
     {
-        if (SFXCache.ContainsKey(fileName)) return;
+        if (SFXs.ContainsKey(key)) return;
 
-        SoundEffect SFX = ContentMan.Load<SoundEffect>(Path.Combine("Audio/SFX", fileName));
+        SoundEffect SFX = ContentMan.Load<SoundEffect>(songFilePath);
 
-        SFXCache.Add(fileName, SFX);
+        SFXs.Add(key, SFX);
     }
 
-    private static SoundEffect CreateSFX(string SFXFileName) // helper method to create or fetch SFX
+    private static SoundEffect CreateSFX(string key) // helper method to create or fetch SFX
     {
         SoundEffect SFX;
-        bool fetchedFromCache = false;
-        if (!SFXCache.TryGetValue(SFXFileName, out SFX))
-            SFX = ContentMan.Load<SoundEffect>(Path.Combine("Audio/SFX", SFXFileName));
-        else fetchedFromCache = true;
-
-        if (!fetchedFromCache) SFXCache[SFXFileName] = SFX;
-
+        
+        if (!SFXs.TryGetValue(key, out SFX)) return null;
+        
         return SFX;
     }
 
-    public static SoundEffectInstance CreateSFXInstanceAndPlay(string filaName)
+    public static SoundEffectInstance CreateSFXInstanceAndPlay(string key)
     {
-        var SFX = CreateSFX(filaName);
+        var SFX = CreateSFX(key);
+        if (SFX == null) return null;
         var SFXInstance = SFX.CreateInstance();
         SFXInstance.Play();
         return SFXInstance;

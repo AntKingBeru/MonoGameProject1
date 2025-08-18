@@ -20,15 +20,15 @@ public class Game1 : Game
         _graphics.ApplyChanges();
 
         AudioManager.ContentMan = Content;
-        AudioManager.RegisterSFX("Boom");
-        AudioManager.RegisterSFX("Bubbles");
-        AudioManager.RegisterSFX("Splat2");
-        AudioManager.RegisterSFX("Splat1");
-        AudioManager.RegisterSFX("Spear");
-        AudioManager.RegisterSong("Title_music");
+        AudioManager.RegisterSFX("Boom","Audio/SFX/Aboomnpha_Sound");
+        AudioManager.RegisterSFX("Bubbles","Audio/SFX/Bubblez");
+        AudioManager.RegisterSFX("Spear","Audio/SFX/Spearthrow");
+        AudioManager.RegisterSFX("Splat1","Audio/SFX/SplatSound");
+        AudioManager.RegisterSFX("Splat2","Audio/SFX/SplatSound2");
+        
         TextManager.ContentMan = Content;
         TextManager.AddFont("Oswald", "Fonts/Oswald");
-        TextManager.AddFont("Baloo2", "Fonts/Baloo2");
+        TextManager.AddFont("Baloo2", "Fonts/Baloo2-SemiBold");
         SpriteManager.ContentMan = Content;
         SpriteManager.AddSprite("Button", "Images/pacman");
         SpriteManager.AddSprite("ExitButton", "Images/ExitButton");
