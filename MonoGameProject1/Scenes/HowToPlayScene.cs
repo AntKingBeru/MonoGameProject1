@@ -15,6 +15,8 @@ public class HowToPlayScene : Scene
         IsActive = true;
 
         var startButton = new StartButton("Start");
+        startButton.Position = (ScreenPosition.Center() + ScreenPosition.BottomCenter()) * 0.5f;
+        startButton.Scale = new Vector2(0.25f, 0.25f);
         AddActiveObject(startButton);
 
         var title = new HowToPlayTitle("HowToPlayTitle");
@@ -22,21 +24,23 @@ public class HowToPlayScene : Scene
         
         var fontInfo = TextManager.GetFont("Oswald");
         TextConfig = new TextConfig(fontInfo);
-        TextConfig.Text = @"How to play
-        
-Your goal is to catch as many fish as you can, and thus reach the lowest depth.
-Once you press 'Start', you will start going back and forth. Press 'Space' to release the harpoon.
-The closer you are to the green part of the bar, the better the start you have.
-Catch fish by piercing them, but be careful of the 'Abumnapha', it slows you down.
+        TextConfig.Text = @"        
+Catch as many fish as you can, reach as far down as you can.
+After you click 'Start', time your shot and press 'Space' to launch the harpoon.
+Green means a big boost, yellow means a small boost, and red means no boost.
+Catch fish by piercing them.
+Catching an 'Aboomnapha' slows you down.
+Once your speed reaches 0, you lose.
+
+Controls:
 WASD / Arrow Keys to move.
-Space to first launch the harpoon.
-Once you slow down to 0, you lose the game.
 ";
         
         var howToPlayText = new GameObject("HowToPlayText");
         AddActiveObject(howToPlayText);
         howToPlayText.AddConfigComponent<Text, TextConfig>(TextConfig);
-        howToPlayText.Position = ScreenPosition.TopLeft()  + new Vector2(150, 50);
+        howToPlayText.Position = (ScreenPosition.Center() + ScreenPosition.TopCenter()) * 0.5f;
+        howToPlayText.Scale = new Vector2(0.3f, 0.3f);
             
         Init();
     }
