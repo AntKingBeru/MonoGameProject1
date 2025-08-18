@@ -19,17 +19,13 @@ public class ComboManager : GameObject
     {
         Scale = new Vector2(0.5f, 0.5f);
 
-
         var fontInfo = TextManager.GetFont("Oswald");
         var textConfig = new TextConfig(fontInfo);
         
         textConfig.Text = "Combo: " + combo;
         
-        
         text = AddConfigComponent<Text, TextConfig>(textConfig);
-        Position = ScreenPosition.MiddleLeft() + new Vector2(55, 0);
-
-
+        Position = ScreenPosition.TopLeft() + new Vector2(120, 20);
     }
     public override void Enable()
     

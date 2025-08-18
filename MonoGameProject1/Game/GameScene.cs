@@ -20,7 +20,8 @@ public class GameScene : Scene
     private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
     private const float ORIGINSPEED = 200f;
     private const float MAXSPEED = 2500f;
-    private const float SPEED_MULTIPLIER = 1.4f;
+    private const float SPEED_MULTIPLIER = 1.3f;
+    private const int MAX_FISH = 4;
 
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
@@ -32,13 +33,9 @@ public class GameScene : Scene
     public override void OnEnable()
     {
         IsActive = true;
-
         CreateBackground();
-
+        CreateFish(); // Fish has to be created before player for reference passing
         CreatePlayer();
-
-        CreateFish();
-
         ArrangeSprites();
 
         var comboManager = new ComboManager("ComboManager");
@@ -115,12 +112,12 @@ public class GameScene : Scene
 
     private void TopUpActiveFishInScene()
     {
-        if (GetActiveFishCount() < 5)
+        if (GetActiveFishCount() < MAX_FISH)
         {
             var fish = fishPool.Dequeue() as Fish;
             fish.Position =
                 new Vector2(RandomFloat(ScreenPosition.LeftGameBoundary().X, ScreenPosition.RightGameBoundary().X),
-                    RandomFloat(ScreenPosition.Center().Y, ScreenPosition.BottomGameBoundary().Y));
+                    ScreenPosition.BottomGameBoundary().Y + ScreenPosition.ScreenHeight * 0.25f);
             fish.RandomizeSprite();
             fish.Enable();
         }
@@ -183,6 +180,8 @@ public class GameScene : Scene
             playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f);
         
         Fish.OnFishCaught += CatchFishLogic;
+        FishPatterns.SetPlayer(playerEdge);
+        FishBehaviour.SetPlayer(playerEdge);
     }
 
     private void CreateBackground()
@@ -252,8 +251,7 @@ public class GameScene : Scene
         }
     }
     #endregion
-
-    
+    #region Game Logic
     private void HandleTimer(float deltaTime)
     {
         if (speed <= 1f)
@@ -306,4 +304,5 @@ public class GameScene : Scene
             }
         }
     }
+    #endregion
 }

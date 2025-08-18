@@ -13,6 +13,8 @@ public class FishBehaviour : SimpleComponent
     private bool invertPattern = false;
     private float timer = 0f;
     private SpriteConfig spriteConfiguration;
+    private const float SPEED_MULTIPLIER = 0.3f;
+    private static GameObject player;
     
     public float Speed;
 
@@ -38,11 +40,7 @@ public class FishBehaviour : SimpleComponent
     public override void Update(GameTime gameTime)
     {
         if (gameObject == null || !gameObject.IsActive) return;
-        if (spriteConfiguration == null)
-        {
-            spriteConfiguration = gameObject.GetComponent<Sprite>().spriteConfig;
-            if (spriteConfiguration == null) return; // Ensure sprite configuration is available
-        }
+        if (InitializeSpriteConfiguration()) return; // Ensure sprite configuration is available
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         timer += deltaTime;
         if (!IsActive || currentPattern == null) return;
@@ -55,11 +53,11 @@ public class FishBehaviour : SimpleComponent
             lastPatternChangeTime = timer;
         }
 
-
         var nextPosition = currentPattern(gameObject, gameTime , invertPattern);
-        
+
         if (nextPosition.X >= ScreenPosition.RightGameBoundary().X ||
-            nextPosition.X <= ScreenPosition.LeftGameBoundary().X || nextPosition.Y >= ScreenPosition.BottomGameBoundary().Y * 1.2f)
+            nextPosition.X <= ScreenPosition.LeftGameBoundary().X ||
+            nextPosition.Y >= ScreenPosition.BottomGameBoundary().Y + ScreenPosition.ScreenHeight * 0.5f)
         {
             invertPattern = !invertPattern;
         }
@@ -75,11 +73,28 @@ public class FishBehaviour : SimpleComponent
 
         gameObject.Position = nextPosition;
         
-        gameObject.Position.Y -= Speed * deltaTime * 0.1f;
+        gameObject.Position.Y -= Speed * deltaTime * SPEED_MULTIPLIER;
+    }
+
+    private bool InitializeSpriteConfiguration()
+    {
+        if (spriteConfiguration != null) return false;
+        spriteConfiguration = gameObject.GetComponent<Sprite>().spriteConfig;
+        return spriteConfiguration == null;
     }
 
     public static string GetRandomFishSprite()
     {
         return FishSprites[Random.Shared.Next(0, FishSprites.Count)];
+    }
+    
+    public void SetPattern(Func<GameObject, GameTime, bool, Vector2> pattern)
+    {
+        currentPattern = pattern;
+    }
+
+    public static void SetPlayer(GameObject playerRef)
+    {
+        player = playerRef;
     }
 }

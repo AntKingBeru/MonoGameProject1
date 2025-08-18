@@ -5,6 +5,22 @@ namespace MonoGameProject1.Core;
 
 public static class FishPatterns
 {
+    private static GameObject player;
+
+    public static void SetPlayer(GameObject playerRef)
+    {
+        player = playerRef;
+    }
+
+    public static Vector2 RunAway(GameObject go, GameTime gt, bool Invert = false)
+    {
+        var time = (float)gt.ElapsedGameTime.TotalSeconds;
+        var speed = 3f;
+        var result = go.Position - player.Position;
+        result.Normalize();
+        result *= speed;
+        return go.Position + result;
+    }
 
     public static Vector2 SineWave(GameObject go, GameTime gt , bool Invert = false)
     {

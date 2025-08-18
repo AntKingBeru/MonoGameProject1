@@ -53,4 +53,12 @@ public class Fish : GameObject
     {
         behaviour.Speed = speed;
     }
+
+    // public override void OnCollisionEnter(Collider other)
+    // {
+    //     if (other.gameObject.Name == "PlayerEdge")
+    //     {
+    //         behaviour.SetPattern(FishPatterns.RunAway);
+    //     }
+    // }
 }
