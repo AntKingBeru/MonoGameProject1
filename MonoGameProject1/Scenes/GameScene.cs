@@ -10,7 +10,6 @@ namespace MonoGameProject1;
 
 public class GameScene : Scene
 {
-    
     private int backgroundAmount = 5;
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float speed;
@@ -46,7 +45,6 @@ public class GameScene : Scene
     private SpriteSheetInfo playerEdgeSpriteInfo = SpriteManager.GetSprite("PlayerCollider");
 
     #region Core Methods
-
     public override void OnEnable()
     {
         IsActive = true;
@@ -108,21 +106,21 @@ public class GameScene : Scene
             {
                 playerEdge.Position = new Vector2(fixedPlayerX, playerEdge.Position.Y);
             }
-
+            
             var state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Space) || miniTimer > 0f)
             {
                 miniTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+                
                 // Stop the pendulum and fix the horizontal position when space is pressed the first time
                 if (fixedPlayerX < 0f)
                 {
                     fixedPlayerX = playerEdge.Position.X;
                 }
-
+                
                 // Vertical movement while pressing
                 playerEdge.Position.Y += speed * miniTimer * 0.1f;
-
+                
                 // Once miniTimer reaches the threshold, apply speed boost
                 if (miniTimer >= 0.25f)
                 {
@@ -132,7 +130,7 @@ public class GameScene : Scene
                     if (playerCollider != null && boostCollider != null)
                     {
                         var boostZone = GetBoostZone(playerCollider, boostCollider);
-
+                        
                         // Apply multiplier
                         switch (boostZone)
                         {
@@ -146,13 +144,13 @@ public class GameScene : Scene
                                 speed *= RED_BOOST;
                                 break;
                         }
-
+                        
                         speed = MathHelper.Clamp(speed, 0f, MAX_MOVEMENT_SPEED);
                     }
-
+                    
                     // Remove boost bar
                     boostBar.Disable();
-
+                    
                     //Start the game
                     isGameStarted = true;
                 }
@@ -162,7 +160,7 @@ public class GameScene : Scene
         {
             HandleTimer(deltaTime);
             MoveBackground(speed * deltaTime);
-            ComboManager.UpdateDepth(speed, deltaTime);
+            _comboHandler?.UpdateDepth(speed, deltaTime);
 
             CleanupIllegalFish();
             TopUpActiveFishInScene();
@@ -181,11 +179,10 @@ public class GameScene : Scene
         CollisionManager.DetectCollisions();
         ComboManager.UpdateScore(gameTime);
     }
-
+    
     #endregion
 
     #region Helper Methods
-
     private static float RandomFloat(float min, float max)
     {
         return (float)new Random().NextDouble() * (max - min) + min;
@@ -380,7 +377,7 @@ public class GameScene : Scene
             dirtClipSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
     }
-
+    
     private void ArrangeSprites()
     {
         var screenHeight =
@@ -415,10 +412,10 @@ public class GameScene : Scene
 
         var boostLeft = boostBar.Position.X + boosterRect.X * boostBar.Scale.X;
         var boostRight = boostLeft + boosterRect.Width * boostBar.Scale.X;
-
+        
         var playerLeft = playerEdge.Position.X + playerRect.X * playerEdge.Scale.X;
         var playerRight = playerLeft + playerRect.Width * playerEdge.Scale.X;
-
+        
         var relativeLeft = (playerLeft - boostLeft) / (boostRight - boostLeft);
         var relativeRight = (playerRight - boostLeft) / (boostRight - boostLeft);
 
@@ -441,7 +438,7 @@ public class GameScene : Scene
             return BoostZone.Red;
         }
     }
-
+    
     private void HandleTimer(float deltaTime)
     {
         if (speed <= 1f)
