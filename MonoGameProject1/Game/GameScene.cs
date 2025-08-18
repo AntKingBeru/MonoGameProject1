@@ -10,9 +10,10 @@ public class GameScene : Scene
 {
     private int backgroundAmount = 5;
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
-    private float speed = 200f;
+    private float speed;
     private float speedLoseStartSpeed = 0f;
     private bool isSlowing = false;
+    private bool isGameStarted = false;
     private List<GameObject> backgroundSprites = new List<GameObject>();
     private Queue<GameObject> fishPool = new Queue<GameObject>();
 
@@ -37,6 +38,7 @@ public class GameScene : Scene
         CreateFish(); // Fish has to be created before player for reference passing
         CreatePlayer();
         ArrangeSprites();
+        speed = ORIGINSPEED;
 
         var comboManager = new ComboManager("ComboManager");
         AddActiveObject(comboManager);        
@@ -49,7 +51,6 @@ public class GameScene : Scene
     {
         return (float)new Random().NextDouble() * (max - min) + min;
     }
-
 
     private void ArrangeSprites()
     {
@@ -66,24 +67,31 @@ public class GameScene : Scene
         }
     }
 
-    
-
     public override void Update(GameTime gameTime)
     {
         if (!IsActive) return;
-        
+
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         
-        HandleTimer(deltaTime);
-        MoveBackground(speed * deltaTime);
-        CleanupIlligalFish();
-        TopUpActiveFishInScene();
-
-        foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
+        if (!isGameStarted)
         {
-            fish.SetSpeed(speed);
+            var totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
+            speed = ORIGINSPEED;
+            playerEdge.Position = UpdatePlayerPosition(ScreenPosition.LeftGameBoundary(), ScreenPosition.RightGameBoundary(), totalTime);
         }
-        
+        else
+        {
+            HandleTimer(deltaTime);
+            MoveBackground(speed * deltaTime);
+            CleanupIlligalFish();
+            TopUpActiveFishInScene();
+
+            foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
+            {
+                fish.SetSpeed(speed);
+            }
+        }
+
         base.Update(gameTime);
 
         player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
@@ -92,7 +100,12 @@ public class GameScene : Scene
         CollisionManager.DetectCollisions();
     }
 
-    
+    public static Vector2 UpdatePlayerPosition(Vector2 start, Vector2 end, float totalTime)
+    {
+        var t = (float)(Math.Sin(totalTime * 2f) * 0.5f + 0.5f);
+        
+        return Vector2.Lerp(start, end, t);
+    }
 
     #region Fish Catch Logic
     private int GetActiveFishCount()
