@@ -82,7 +82,7 @@ public class TextEffectSettings
     // Shake effect
     public bool EnableShakeEffect { get; set; } = false;
     public float ShakeIntensity { get; set; } = 2f;
-    public float ShakeDuration { get; set; } = 0.3f;
+    public float ShakeDuration { get; set; } = 2f;
 
     // Pulse effect
     public bool EnablePulseEffect { get; set; } = false;
@@ -95,11 +95,19 @@ public class TextEffectSettings
 
     public Color[] ColorPalette { get; set; } =
     {
-        Color.White,
-        Color.Yellow,
-        Color.Orange,
-        Color.Red,
-        Color.Purple
+        
+        
+    Color.HotPink,
+    Color.DeepPink,
+    Color.Crimson,
+    Color.OrangeRed,
+    Color.Gold,
+    Color.LimeGreen,
+    Color.Turquoise,
+    Color.DeepSkyBlue,
+    Color.MediumPurple,
+    Color.Fuchsia,
+      
     };
 
     // Typewriter effect
