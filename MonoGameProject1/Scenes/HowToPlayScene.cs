@@ -7,6 +7,9 @@ namespace MonoGameProject1;
 
 public class HowToPlayScene : Scene
 {
+    public TextConfig TextConfig;
+    public Text Text;
+    
     public override void OnEnable()
     {
         IsActive = true;
@@ -16,11 +19,10 @@ public class HowToPlayScene : Scene
 
         var title = new HowToPlayTitle("HowToPlayTitle");
         AddActiveObject(title);
-
-        var howToPlayText = new GameObject("HowToPlayText");
+        
         var fontInfo = TextManager.GetFont("Oswald");
-        var howToPlayConfig = new TextConfig(fontInfo);
-        howToPlayConfig.Text = @"How to play
+        TextConfig = new TextConfig(fontInfo);
+        TextConfig.Text = @"How to play
         
 Your goal is to catch as many fish as you can, and thus reach the lowest depth.
 Once you press 'Start', you will start going back and forth. Press 'Space' to release the harpoon.
@@ -30,8 +32,11 @@ WASD / Arrow Keys to move.
 Space to first launch the harpoon.
 Once you slow down to 0, you lose the game.
 ";
-        howToPlayText.AddConfigComponent<Text, TextConfig>(howToPlayConfig);
+        
+        var howToPlayText = new GameObject("HowToPlayText");
         AddActiveObject(howToPlayText);
+        howToPlayText.AddConfigComponent<Text, TextConfig>(TextConfig);
+        howToPlayText.Position = ScreenPosition.TopLeft()  + new Vector2(150, 50);
             
         Init();
     }
