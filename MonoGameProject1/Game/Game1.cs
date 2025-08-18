@@ -9,6 +9,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private Color backgroundColor = new Color(15, 76, 92 , 255); // Dark blue background color
 
     public Game1()
     {
@@ -85,7 +86,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(backgroundColor);
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
