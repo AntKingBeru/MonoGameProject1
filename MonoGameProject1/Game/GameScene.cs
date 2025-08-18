@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGameProject1.Core;
+using MonoGameProject1.UI;
 
 namespace MonoGameProject1;
 
@@ -29,7 +30,7 @@ public class GameScene : Scene
 
     private const float GRACEPERIOD = 1.5f;
     private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
-    private const float ORIGINSPEED = 200f;
+    private const float ORIGINSPEED = 1000f;
     private const float MAXSPEED = 2500f;
     private const float SPEED_MULTIPLIER = 1.3f;
     private const int MAX_FISH = 4;
@@ -40,6 +41,11 @@ public class GameScene : Scene
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
     private GameObject player;
+    private ComboManager comboManager;
+    private ComboText comboText;
+    private DepthMeter depthMeter;
+    private DepthMarker depthMarker;
+    private ScoreText scoreText;
     private GameObject playerEdge;
     private GameObject boostBar;
     private SpriteSheetInfo playerSpriteInfo = SpriteManager.GetSprite("PlayerControl");
@@ -56,9 +62,18 @@ public class GameScene : Scene
         speed = ORIGINSPEED;
         miniTimer = 0f;
 
-        var comboManager = new ComboManager("ComboManager");
-        AddActiveObject(comboManager);        
-        
+
+        comboText = new ComboText("ComboText");
+        AddActiveObject(comboText);
+        depthMarker = new DepthMarker("DepthMarker");
+        AddActiveObject(depthMarker);
+        depthMeter = new DepthMeter("DepthMeter", depthMarker);
+        AddActiveObject(depthMeter);
+        scoreText = new ScoreText("ScoreText");
+        AddActiveObject(scoreText);
+        comboManager = new ComboManager("ComboManager", comboText, scoreText, depthMeter);
+        AddActiveObject(comboManager);
+
         Init();
         
     }
@@ -88,8 +103,8 @@ public class GameScene : Scene
         if (!IsActive) return;
 
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        
-        if (!isGameStarted)
+
+        if (isGameStarted)
         {
             var totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
             
@@ -162,6 +177,8 @@ public class GameScene : Scene
         {
             HandleTimer(deltaTime);
             MoveBackground(speed * deltaTime);
+            comboManager?.UpdateDepth(speed, deltaTime);
+
             CleanupIlligalFish();
             TopUpActiveFishInScene();
 
@@ -175,23 +192,24 @@ public class GameScene : Scene
 
         player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
             playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f);
-        
+
         CollisionManager.DetectCollisions();
     }
 
     public static Vector2 UpdatePlayerPosition(Vector2 start, Vector2 end, float totalTime)
     {
         var t = (float)(Math.Sin(totalTime * 2f) * 0.5f + 0.5f);
-        
+
         return Vector2.Lerp(start, end, t);
     }
 
     #region Fish Catch Logic
+
     private int GetActiveFishCount()
     {
         return ActiveSceneObjects.Count(potentialFish => potentialFish.Value is Fish);
     }
-    
+
     private void CatchFishLogic(Fish fish, bool isAboomnpha = false)
     {
         if (isAboomnpha)
@@ -203,7 +221,8 @@ public class GameScene : Scene
             fishCatchTimer = 0f;
             isSlowing = false;
             speed *= SPEED_MULTIPLIER;
-        } 
+        }
+
         speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
         fishPool.Enqueue(fish);
         fish.Disable();
@@ -234,7 +253,9 @@ public class GameScene : Scene
     
 
     #endregion
+
     #region gameobject creation
+
     private void CreateFish()
     {
         for (var i = 0; i < 10; i++)
@@ -245,7 +266,7 @@ public class GameScene : Scene
             AddInactiveObject(fish);
         }
     }
-    
+
     private void CreatePlayer()
     {
         playerEdge = new GameObject("PlayerEdge");
@@ -268,7 +289,8 @@ public class GameScene : Scene
         player = new GameObject("Player");
         AddActiveObject(player);
         player.Scale = playerEdge.Scale * 2f * new Vector2(1f, 10f);
-        player.Position = ScreenPosition.TopCenter() - new Vector2(playerSpriteInfo.Texture.Width * 0.25f, ScreenPosition.ScreenHeight * 2f);
+        player.Position = ScreenPosition.TopCenter() -
+                          new Vector2(playerSpriteInfo.Texture.Width * 0.25f, ScreenPosition.ScreenHeight * 2f);
         var playerSpriteConfig = new SpriteConfig(playerSpriteInfo)
         {
             LayerDepth = 0.5f
@@ -277,7 +299,7 @@ public class GameScene : Scene
 
         playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
             playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f);
-        
+
         Fish.OnFishCaught += CatchFishLogic;
         FishPatterns.SetPlayer(playerEdge);
         FishBehaviour.SetPlayer(playerEdge);
@@ -370,7 +392,9 @@ public class GameScene : Scene
             dirtClipSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
     }
+
     #endregion
+
     #region Game Logic
 
     private BoostZone GetBoostZone(Collider playerCollider, Collider booster)
@@ -425,12 +449,14 @@ public class GameScene : Scene
                     isSlowing = true;
                     speedLoseStartSpeed = speed;
                 }
+
                 speed -= deltaTime * (speedLoseStartSpeed / TIMETHRESHOLD);
             }
+
             fishCatchTimer += deltaTime;
         }
     }
-    
+
     private void MoveBackground(float moveSpeed)
     {
         var screenHeight = ScreenPosition.ScreenHeight;
@@ -460,5 +486,6 @@ public class GameScene : Scene
             }
         }
     }
+
     #endregion
 }
