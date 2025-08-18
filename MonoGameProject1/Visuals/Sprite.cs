@@ -9,9 +9,8 @@ public class Sprite : ConfigComponent
 
     public Sprite() : base()
     {
-        
     }
-    
+
     public override void Initialize<T>(T config)
     {
         if (config is SpriteConfig spriteConfig)
@@ -44,20 +43,19 @@ public class Sprite : ConfigComponent
             spriteConfig.SourceRectangle,
             spriteConfig.Color,
             MathHelper.ToRadians(gameObject.Rotation),
-            spriteConfig.Origin, 
+            spriteConfig.Origin,
             gameObject.Scale,
             spriteConfig.Effects,
-            spriteConfig.LayerDepth 
+            spriteConfig.LayerDepth
         );
     }
 
     public override void Update(GameTime gameTime)
     {
-        
     }
 
     public override void SetActive(bool activeState)
-    {
+    { //TODO check if needed
         if (!activeState)
         {
             base.SetActive(false);

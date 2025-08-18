@@ -32,11 +32,20 @@ public class GameScene : Scene
     public override void OnEnable()
     {
         IsActive = true;
+
         CreateBackground();
+
         CreatePlayer();
+
         CreateFish();
+
         ArrangeSprites();
+
+        var comboManager = new ComboManager("ComboManager");
+        AddActiveObject(comboManager);        
+        
         Init();
+        
     }
 
     private static float RandomFloat(float min, float max)
@@ -76,7 +85,7 @@ public class GameScene : Scene
         base.Update(gameTime);
 
         player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
-            playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f); // enforce handle position
+            playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f);
         
         CollisionManager.DetectCollisions();
     }

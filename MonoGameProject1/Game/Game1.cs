@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameProject1.Core;
+using MonoGameProject1.Visuals;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace MonoGameProject1;
@@ -21,7 +22,10 @@ public class Game1 : Game
         _graphics.PreferredBackBufferWidth = 600;
         _graphics.PreferredBackBufferHeight = 800;
         _graphics.ApplyChanges();
-        SpriteManager.ContentMan = Content; 
+
+        TextManager.ContentMan = Content;
+        TextManager.AddFont("Oswald", "Fonts/Oswald");
+        SpriteManager.ContentMan = Content;
         SpriteManager.AddSprite("Button", "Images/pacman");
         SpriteManager.AddSprite("ExitButton", "Images/ExitButton");
         SpriteManager.AddSprite("SettingsButton", "Images/SettingsButton");
@@ -80,7 +84,7 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
         _spriteBatch.Begin();
-        
+
         SceneManager.Draw(_spriteBatch);
 
         _spriteBatch.End();
