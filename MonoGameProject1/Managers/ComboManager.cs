@@ -58,10 +58,14 @@ public static class ComboManager
 
     public static void Reset()
     {
-        TotalFishCaught = 0;
-        MaxDepthReached = 0f;
-        HighestCombo = 0;
+        score = 0;
+        combo = 0;
+        lastCombo = 0;
+        comboTimer = 0;
+        currentDepth = 0f;
+        totalDistance = 0f;
     }
+
     private static void CreateCurrentDepthDisplay()
     {
         var fontInfo = TextManager.GetFont("Oswald");
@@ -77,7 +81,7 @@ public static class ComboManager
             Color.DeepSkyBlue
         };
     }
-    
+
 
     public static void IncreaseCombo(Fish fish = null, bool isAboomnpha = false)
     {
@@ -85,8 +89,8 @@ public static class ComboManager
         {
             combo = 0;
             return;
-        } 
-            
+        }
+
         if (combo >= MAXCOMBO) return;
 
         lastCombo = combo;
@@ -140,10 +144,9 @@ public static class ComboManager
 
         float scaleMultiplier = 1f + ((float)combo / MAXCOMBO) * (comboText.TextConfig.EffectSettings.MaxScale - 1f);
         comboText.TextConfig.EffectSettings.BaseScale = scaleMultiplier;
-        
     }
 
-    private static  void UpdateUITexts()
+    private static void UpdateUITexts()
     {
         // Update combo text
         comboText.TextConfig.Text = $"Combo: {combo}x";
@@ -154,7 +157,5 @@ public static class ComboManager
         {
             depthMeter.UpdateDepthDisplay(currentDepth);
         }
-
-
     }
 }

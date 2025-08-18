@@ -14,6 +14,7 @@ public abstract class ConfigurableComponent : Component
     
     protected override void OnEnable()
     {
+        
     }
 
     protected override void OnDisable()
