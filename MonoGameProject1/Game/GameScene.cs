@@ -41,9 +41,6 @@ public class GameScene : Scene
 
         ArrangeSprites();
 
-
-        var comboManager = new ComboManager("ComboManager");
-        AddActiveObject(comboManager);
         Init();
     }
 
@@ -52,6 +49,7 @@ public class GameScene : Scene
         return (float)new Random().NextDouble() * (max - min) + min;
     }
 
+    #region gameobject creation
     private void CreateFish()
     {
         for (var i = 0; i < 10; i++)
@@ -62,12 +60,7 @@ public class GameScene : Scene
             AddInactiveObject(fish);
         }
     }
-
-    private int GetActiveFishCount()
-    {
-        return ActiveSceneObjects.Count(potentialFish => potentialFish.Value is Fish);
-    }
-
+    
     private void CreatePlayer()
     {
         playerEdge = new GameObject("PlayerEdge");
@@ -169,6 +162,7 @@ public class GameScene : Scene
             dirtClipSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
     }
+    #endregion
 
     private void ArrangeSprites()
     {
@@ -185,15 +179,7 @@ public class GameScene : Scene
         }
     }
 
-    private void CatchFishLogic(Fish fish)
-    {
-        fishCatchTimer = 0f;
-        isSlowing = false;
-        speed *= SPEED_MULTIPLIER;
-        speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
-        fishPool.Enqueue(fish);
-        fish.Disable();
-    }
+    
 
     public override void Update(GameTime gameTime)
     {
@@ -208,11 +194,57 @@ public class GameScene : Scene
         MoveBackground(speed * deltaTime);
 
         CleanupIlligalFish();
-        TopupActiveFishInScene();
-
+        TopUpActiveFishInScene();
+        
         base.Update(gameTime);
+        CollisionManager.DetectCollisions();
     }
 
+    
+
+    #region Fish Catch Logic
+    private int GetActiveFishCount()
+    {
+        return ActiveSceneObjects.Count(potentialFish => potentialFish.Value is Fish);
+    }
+    
+    private void CatchFishLogic(Fish fish)
+    {
+        fishCatchTimer = 0f;
+        isSlowing = false;
+        speed *= SPEED_MULTIPLIER;
+        speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
+        fishPool.Enqueue(fish);
+        fish.Disable();
+    }
+
+    private void TopUpActiveFishInScene()
+    {
+        if (GetActiveFishCount() < 5)
+        {
+            var fish = fishPool.Dequeue() as Fish;
+            fish.Position =
+                new Vector2(RandomFloat(ScreenPosition.LeftGameBoundary().X, ScreenPosition.RightGameBoundary().X),
+                    RandomFloat(ScreenPosition.Center().Y, ScreenPosition.BottomGameBoundary().Y));
+            fish.RandomizeSprite();
+            fish.Enable();
+        }
+    }
+
+    private void CleanupIlligalFish()
+    {
+        foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
+        {
+            if (!(fish.Position.Y <= 0)) continue;
+            fishPool.Enqueue(fish);
+            fish.Disable();
+        }
+    }
+    
+
+    #endregion
+    
+    
     private void HandleTimer(float deltaTime)
     {
         if (speed <= 1f)
@@ -235,30 +267,7 @@ public class GameScene : Scene
             fishCatchTimer += deltaTime;
         }
     }
-
-    private void TopupActiveFishInScene()
-    {
-        if (GetActiveFishCount() < 5)
-        {
-            var fish = fishPool.Dequeue() as Fish;
-            fish.Position =
-                new Vector2(RandomFloat(ScreenPosition.LeftGameBoundary().X, ScreenPosition.RightGameBoundary().X),
-                    RandomFloat(ScreenPosition.Center().Y, ScreenPosition.BottomGameBoundary().Y));
-            fish.RandomizeSprite();
-            fish.Enable();
-        }
-    }
-
-    private void CleanupIlligalFish()
-    {
-        foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
-        {
-            if (!(fish.Position.Y <= 0)) continue;
-            fishPool.Enqueue(fish);
-            fish.Disable();
-        }
-    }
-
+    
     private void MoveBackground(float moveSpeed)
     {
         var screenHeight = ScreenPosition.ScreenHeight;
