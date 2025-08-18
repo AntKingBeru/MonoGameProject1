@@ -74,18 +74,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/BlackSideClip.png
 
-#begin Images/BoostBar.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/BoostBar.png
-
 #begin Images/DirtClip.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -97,6 +85,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/DirtClip.png
+
+#begin Images/Exit.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Exit.png
 
 #begin Images/ExitButton.png
 /importer:TextureImporter
@@ -146,6 +146,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/HarpoonTipNew.png
 
+#begin Images/HowToPlay.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/HowToPlay.png
+
 #begin Images/pacman.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -194,6 +206,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/pixel.png
 
+#begin Images/Restart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Restart.png
+
 #begin Images/SettingsButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -241,6 +265,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/ShrimpsRed.png
+
+#begin Images/Start.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Start.png
 
 #begin Images/StartButton.png
 /importer:TextureImporter
