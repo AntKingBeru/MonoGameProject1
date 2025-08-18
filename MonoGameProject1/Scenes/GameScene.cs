@@ -10,6 +10,9 @@ namespace MonoGameProject1;
 
 public class GameScene : Scene
 {
+    public delegate void GameOver();
+    public event GameOver EndGame;
+    
     private int backgroundAmount = 5;
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float speed;
@@ -431,7 +434,7 @@ public class GameScene : Scene
         if (speed <= 1f)
         {
             speed = 1f;
-            //TODO: game over logic
+            EndGame.Invoke();
         }
 
         else
