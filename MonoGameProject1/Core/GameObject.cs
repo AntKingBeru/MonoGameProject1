@@ -127,6 +127,11 @@ public class GameObject : IUpdateables, IDrawables, IColliderMethods
             }
         }
     }
+    
+    public T GetComponent<T>() where T : Component
+    {
+        return ActiveComponents.OfType<T>().FirstOrDefault() ?? InactiveComponents.OfType<T>().FirstOrDefault();
+    }
 
     #region Collision Methods
     public virtual void OnCollisionEnter(Collider other)
