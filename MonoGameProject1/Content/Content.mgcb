@@ -43,6 +43,13 @@
 /processorParam:Quality=Best
 /build:Audio/SplatSound2.wav
 
+#begin Fonts/Baloo2-SemiBold.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Baloo2-SemiBold.spritefont
+
 #begin Fonts/Oswald.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -73,6 +80,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/BlackSideClip.png
+
+#begin Images/BoostBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/BoostBar.png
 
 #begin Images/DirtClip.png
 /importer:TextureImporter
@@ -289,6 +308,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/StartButton.png
+
+#begin Images/TitleImage.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/TitleImage.png
 
 #begin Images/WhiteCenterClip.png
 /importer:TextureImporter
