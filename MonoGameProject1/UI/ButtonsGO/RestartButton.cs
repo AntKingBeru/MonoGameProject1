@@ -16,7 +16,7 @@ public class RestartButton : GameObject
     {
         Position = ScreenPosition.BottomCenter() + new Vector2(-200,-200);
 
-        var spriteConfig = new SpriteConfig(SpriteManager.GetSprite("restartButton"));
+        var spriteConfig = new SpriteConfig(SpriteManager.GetSprite("RestartButton"));
         sprite = AddConfigComponent<Sprite, SpriteConfig>(spriteConfig);
         buttonConfig = new ButtonConfig(sprite);
         button = AddConfigComponent<Button, ButtonConfig>(buttonConfig);

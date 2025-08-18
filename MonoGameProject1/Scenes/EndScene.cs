@@ -15,10 +15,6 @@ public class EndScene : Scene
         var endScore = new EndScore("EndScore");
         AddActiveObject(endScore);
         
-        
-        
-        
-        
         Init();
     }
     
