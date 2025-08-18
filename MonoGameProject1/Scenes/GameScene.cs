@@ -160,7 +160,7 @@ public class GameScene : Scene
         {
             HandleTimer(deltaTime);
             MoveBackground(speed * deltaTime);
-            _comboHandler?.UpdateDepth(speed, deltaTime);
+            ComboManager.UpdateDepth(speed, deltaTime);
 
             CleanupIllegalFish();
             TopUpActiveFishInScene();
