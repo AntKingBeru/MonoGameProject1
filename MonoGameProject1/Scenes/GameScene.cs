@@ -120,8 +120,6 @@ public class GameScene : Scene
         ComboManager.UpdateScore(gameTime);
     }
 
-
-
     #endregion
 
     #region Helper Methods
@@ -423,10 +421,10 @@ public class GameScene : Scene
 
         var boostLeft = boostBar.Position.X + boosterRect.X * boostBar.Scale.X;
         var boostRight = boostLeft + boosterRect.Width * boostBar.Scale.X;
-
+        
         var playerLeft = playerEdge.Position.X + playerRect.X * playerEdge.Scale.X;
         var playerRight = playerLeft + playerRect.Width * playerEdge.Scale.X;
-
+        
         var relativeLeft = (playerLeft - boostLeft) / (boostRight - boostLeft);
         var relativeRight = (playerRight - boostLeft) / (boostRight - boostLeft);
 
@@ -449,7 +447,7 @@ public class GameScene : Scene
             return BoostZone.Red;
         }
     }
-
+    
     private void HandleTimer(float deltaTime)
     {
         if (speed <= 1f)
