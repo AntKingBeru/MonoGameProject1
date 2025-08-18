@@ -20,7 +20,7 @@ public class GameScene : Scene
     private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
     private const float ORIGINSPEED = 200f;
     private const float MAXSPEED = 2500f;
-    private const float SPEED_MULTIPLIER = 1.005f;
+    private const float SPEED_MULTIPLIER = 1.4f;
 
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
@@ -97,7 +97,7 @@ public class GameScene : Scene
         playerEdge.Position = player.Position + new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
             playerSpriteInfo.Texture.Height * 0.05f);
 
-        collider.OnCollision += CatchFish;
+        Fish.OnFishCaught += CatchFishLogic;
     }
 
     private void CreateBackground()
@@ -182,14 +182,14 @@ public class GameScene : Scene
         }
     }
 
-    private void CatchFish(Collider other)
+    private void CatchFishLogic(Fish fish)
     {
         fishCatchTimer = 0f;
         isSlowing = false;
         speed *= SPEED_MULTIPLIER;
         speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
-        fishPool.Enqueue(other.gameObject);
-        other.gameObject.Disable();
+        fishPool.Enqueue(fish);
+        fish.Disable();
     }
 
     public override void Update(GameTime gameTime)
@@ -197,13 +197,25 @@ public class GameScene : Scene
         if (!IsActive) return;
 
         player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
-            playerSpriteInfo.Texture.Height * 0.05f);
-        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            playerSpriteInfo.Texture.Height * 0.05f); // enforce handle position
 
+        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        HandleTimer(deltaTime);
+
+        MoveBackground(speed * deltaTime);
+
+        CleanupIlligalFish();
+        TopupActiveFishInScene();
+
+        base.Update(gameTime);
+    }
+
+    private void HandleTimer(float deltaTime)
+    {
         if (speed <= 1f)
         {
             speed = 1f;
-            //TODO: add logic when speed reaches 0
+            //TODO: game over logic
         }
 
         else
@@ -215,15 +227,14 @@ public class GameScene : Scene
                     isSlowing = true;
                     speedLoseStartSpeed = speed;
                 }
-
                 speed -= deltaTime * (speedLoseStartSpeed / TIMETHRESHOLD);
             }
-
             fishCatchTimer += deltaTime;
         }
+    }
 
-        MoveBackground(speed * deltaTime);
-
+    private void TopupActiveFishInScene()
+    {
         if (GetActiveFishCount() < 5)
         {
             var fish = fishPool.Dequeue() as Fish;
@@ -233,15 +244,16 @@ public class GameScene : Scene
             fish.RandomizeSprite();
             fish.Enable();
         }
+    }
 
+    private void CleanupIlligalFish()
+    {
         foreach (var fish in ActiveSceneObjects.Values.OfType<Fish>())
         {
             if (!(fish.Position.Y <= 0)) continue;
             fishPool.Enqueue(fish);
             fish.Disable();
         }
-
-        base.Update(gameTime);
     }
 
     private void MoveBackground(float moveSpeed)
