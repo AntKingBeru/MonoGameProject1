@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using MonoGameProject1.Core;
 
 namespace MonoGameProject1;
 
 public class GameScene : Scene
 {
+    private enum BoostZone
+    {
+        Red,
+        Yellow,
+        Green
+    }
+    
     private int backgroundAmount = 5;
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float speed;
@@ -16,6 +24,8 @@ public class GameScene : Scene
     private bool isGameStarted = false;
     private List<GameObject> backgroundSprites = new List<GameObject>();
     private Queue<GameObject> fishPool = new Queue<GameObject>();
+    private float miniTimer = 0f;
+    private float fixedPlayerX = -1f; // -1 means not initialized
 
     private const float GRACEPERIOD = 1.5f;
     private const float TIMETHRESHOLD = GRACEPERIOD + 5f;
@@ -23,11 +33,15 @@ public class GameScene : Scene
     private const float MAXSPEED = 2500f;
     private const float SPEED_MULTIPLIER = 1.3f;
     private const int MAX_FISH = 4;
+    private const float RED_BOOST = 5f;
+    private const float YELLOW_BOOST = 7.5f;
+    private const float GREEN_BOOST = 10f;
 
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
     private GameObject player;
     private GameObject playerEdge;
+    private GameObject boostBar;
     private SpriteSheetInfo playerSpriteInfo = SpriteManager.GetSprite("PlayerControl");
     private SpriteSheetInfo playerEdgeSpriteInfo = SpriteManager.GetSprite("PlayerCollider");
 
@@ -37,8 +51,10 @@ public class GameScene : Scene
         CreateBackground();
         CreateFish(); // Fish has to be created before player for reference passing
         CreatePlayer();
+        CreateBoostBar();
         ArrangeSprites();
         speed = ORIGINSPEED;
+        miniTimer = 0f;
 
         var comboManager = new ComboManager("ComboManager");
         AddActiveObject(comboManager);        
@@ -76,8 +92,71 @@ public class GameScene : Scene
         if (!isGameStarted)
         {
             var totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
-            speed = ORIGINSPEED;
-            playerEdge.Position = UpdatePlayerPosition(ScreenPosition.LeftGameBoundary(), ScreenPosition.RightGameBoundary(), totalTime);
+            
+            // Horizontal movement (pendulum)
+            if (fixedPlayerX < 0f)
+            {
+                playerEdge.Position = UpdatePlayerPosition(
+                    ScreenPosition.LeftGameBoundary(),
+                    ScreenPosition.RightGameBoundary(),
+                    totalTime);
+            }
+            else
+            {
+                playerEdge.Position = new Vector2(fixedPlayerX, playerEdge.Position.Y);
+            }
+            
+            var state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Space) || miniTimer > 0f)
+            {
+                miniTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                
+                // Stop the pendulum and fix the horizontal position when space is pressed the first time
+                if (fixedPlayerX < 0f)
+                {
+                    fixedPlayerX = playerEdge.Position.X;
+                }
+                
+                // Vertical movement while pressing
+                playerEdge.Position.Y += speed * miniTimer * 0.1f;
+                
+                // Once miniTimer reaches the threshold, apply speed boost
+                if (miniTimer >= 0.25f)
+                {
+                    // Check which boost zone the player is in
+                    var playerCollider = playerEdge.GetComponent<Collider>();
+                    var boostCollider = boostBar.GetComponent<Collider>();
+                    if (playerCollider != null && boostCollider != null)
+                    {
+                        var boostZone = GetBoostZone(playerCollider, boostCollider);
+                        
+                        // Apply multiplier
+                        switch (boostZone)
+                        {
+                            case BoostZone.Green:
+                                speed *= GREEN_BOOST;
+                                Console.WriteLine("Green");
+                                break;
+                            case BoostZone.Yellow:
+                                speed *= YELLOW_BOOST;
+                                Console.WriteLine("Yellow");
+                                break;
+                            case BoostZone.Red:
+                                speed *= RED_BOOST;
+                                Console.WriteLine("Red");
+                                break;
+                        }
+                        
+                        speed = MathHelper.Clamp(speed, 0f, MAXSPEED);
+                    }
+                    
+                    // Remove boost bar
+                    boostBar.Disable();
+                    
+                    //Start the game
+                    isGameStarted = true;
+                }
+            }
         }
         else
         {
@@ -204,6 +283,27 @@ public class GameScene : Scene
         FishBehaviour.SetPlayer(playerEdge);
     }
 
+    private void CreateBoostBar()
+    {
+        boostBar = new GameObject("Boost Bar");
+        AddActiveObject(boostBar);
+        boostBar.Scale = new Vector2(0.75f, 0.03f);
+        var redBoosterSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("Pixel"))
+        {
+            LayerDepth = 0.8f
+        };
+        boostBar.AddConfigComponent<Sprite, SpriteConfig>(redBoosterSpriteConfig);
+        boostBar.Position = new Vector2(
+            RandomFloat(45, 175),
+            playerEdge.GetComponent<Sprite>().spriteConfig.SpriteInfo.Texture.Height * playerEdge.Scale.Y * 1.25f);
+        var redColliderConfig = new ColliderConfig(new Rectangle(
+            0,
+            0,
+            385,
+            5));
+        boostBar.AddConfigComponent<Collider, ColliderConfig>(redColliderConfig);
+    }
+
     private void CreateBackground()
     {
         var backSpriteConfig = new SpriteConfig(backgroundSpriteInfo)
@@ -272,6 +372,42 @@ public class GameScene : Scene
     }
     #endregion
     #region Game Logic
+
+    private BoostZone GetBoostZone(Collider playerCollider, Collider booster)
+    {
+        // Get rectangles of each collider
+        var playerRect = playerCollider.colliderConfig.Bounds;
+        var boosterRect = booster.colliderConfig.Bounds;
+
+        var boostLeft = boostBar.Position.X + boosterRect.X * boostBar.Scale.X;
+        var boostRight = boostLeft + boosterRect.Width * boostBar.Scale.X;
+        
+        var playerLeft = playerEdge.Position.X + playerRect.X * playerEdge.Scale.X;
+        var playerRight = playerLeft + playerRect.Width * playerEdge.Scale.X;
+        
+        var relativeLeft = (playerLeft - boostLeft) / (boostRight - boostLeft);
+        var relativeRight = (playerRight - boostLeft) / (boostRight - boostLeft);
+
+        // Define Zones
+        const float greenStart = 0.40f; // middle 10%
+        const float greenEnd = 0.60f;
+        const float yellowStart = 0.20f; // middle 20%
+        const float yellowEnd = 0.80f;
+
+        if (relativeRight >= greenStart && relativeLeft <= greenEnd)
+        {
+            return BoostZone.Green;
+        }
+        else if (relativeRight >= yellowStart && relativeLeft <= yellowEnd)
+        {
+            return BoostZone.Yellow;
+        }
+        else
+        {
+            return BoostZone.Red;
+        }
+    }
+    
     private void HandleTimer(float deltaTime)
     {
         if (speed <= 1f)
