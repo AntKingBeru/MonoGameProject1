@@ -12,7 +12,7 @@ public class EndScore : GameObject
 
     public EndScore(string name) : base(name)
     {
-        Position = ScreenPosition.Center() + new Vector2(0,-40 );
+        Position = ScreenPosition.Center() + new Vector2(0,-60 );
         Scale = new Vector2(1.05f, 1.05f);
         var fontInfo = TextManager.GetFont("Oswald");
         textConfig = new TextConfig(fontInfo);
@@ -24,7 +24,11 @@ public class EndScore : GameObject
 
         textConfig.Text = $"Your Score: {ComboManager.BestScore}\r\n" +
                           $"Fish Caught: {ComboManager.TotalFishCaught}\r\n" +
-                          $"Depth: {ComboManager.CurrentDepth:0.00}m";
+                          $"Highest Combo: {ComboManager.HighestCombo}\r\n" +
+                          $"Depth: {ComboManager.CurrentDepth:0.00}m\n\r" + 
+                          "Thanks for playing!";
+        
+        
         text = AddConfigComponent<Text, TextConfig>(textConfig);
     }
 }

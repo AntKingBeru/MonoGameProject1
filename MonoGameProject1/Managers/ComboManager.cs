@@ -27,7 +27,7 @@ public static class ComboManager
 
     public static int TotalFishCaught { get; private set; } = 0;
     private static float MaxDepthReached { get; set; } = 0f;
-    private static int HighestCombo { get; set; } = 0;
+    public static int HighestCombo { get; set; } = 0;
     public static int BestScore { get; private set; } = 0;
 
     public static float CurrentDepth => currentDepth;
