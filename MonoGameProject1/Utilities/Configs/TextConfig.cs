@@ -7,12 +7,11 @@ namespace MonoGameProject1.Utilities.Configs;
 public class TextConfig : ComponentConfig
 {
     private FontInfo fontInfo;
-
     public string Name { get; set; }
     public SpriteFont Font { get; set; }
-
-    private string _text;
-
+    public Vector2 TextCenter { get; set; }
+    public SpriteEffects SpriteEffects { get; set; }
+    public float LayerDepth { get; set; }
     public string Text
     {
         get => _text;
@@ -22,11 +21,11 @@ public class TextConfig : ComponentConfig
             UpdateTextCenter();
         }
     }
+    private string _text;
+
 
     public Color Color = Color.Black;
-    public Vector2 TextCenter { get; set; }
-    public SpriteEffects SpriteEffects { get; set; }
-    public float LayerDepth { get; set; }
+    
 
     public TextEffectSettings EffectSettings { get; set; } = new TextEffectSettings();
 

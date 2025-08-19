@@ -48,6 +48,7 @@ public class Fish : GameObject
     
     public override void OnTriggerEnter(Collider other)
     {
+        if (!IsActive || other == null) return;
         if (other.gameObject.Name != "PlayerEdge") return;
         OnFishCaught?.Invoke(this, behaviour.isAboomnapha);
         PlayFishCaughtSound();

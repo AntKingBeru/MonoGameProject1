@@ -7,7 +7,7 @@ namespace MonoGameProject1.UI;
 public class DepthMarker : GameObject
 {
     public Text markerText;
-    public TextConfig MarkerTextConfig;
+    private TextConfig MarkerTextConfig;
 
 
     public DepthMarker(string name) : base(name)

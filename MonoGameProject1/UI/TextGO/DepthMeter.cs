@@ -6,8 +6,8 @@ namespace MonoGameProject1.UI;
 
 public class DepthMeter : GameObject
 {
-    public TextConfig TextConfig;
-    public TextConfig MarkerTextConfig;
+    private TextConfig TextConfig;
+    private TextConfig MarkerTextConfig;
     public Text depthText;
     private DepthMarker depthMarker;
 

@@ -6,7 +6,7 @@ namespace MonoGameProject1;
 
 public class ScoreText :GameObject
 {
-    public TextConfig TextConfig;
+    private TextConfig TextConfig;
     public Text Text;
     
     public ScoreText(string name) : base(name)

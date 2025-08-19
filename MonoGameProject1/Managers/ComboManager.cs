@@ -26,29 +26,27 @@ public static class ComboManager
     private static float totalDistance = 0f;
 
     public static int TotalFishCaught { get; private set; } = 0;
-    public static float MaxDepthReached { get; private set; } = 0f;
-    public static int HighestCombo { get; private set; } = 0;
+    private static float MaxDepthReached { get; set; } = 0f;
+    private static int HighestCombo { get; set; } = 0;
     public static int BestScore { get; private set; } = 0;
 
-    public static int CurrentScore => score;
     public static float CurrentDepth => currentDepth;
-    public static int CurrentCombo => combo;
 
-    public static void UpdateFishCaught() => TotalFishCaught++;
+    private static void UpdateFishCaught() => TotalFishCaught++;
 
-    public static void UpdateMaxDepth(float depth)
+    private static void UpdateMaxDepth(float depth)
     {
         if (depth > MaxDepthReached)
             MaxDepthReached = depth;
     }
 
-    public static void UpdateHighestCombo(int combo)
+    private static void UpdateHighestCombo(int combo)
     {
         if (combo > HighestCombo)
             HighestCombo = combo;
     }
 
-    public static void UpdateBestScore(int score)
+    private static void UpdateBestScore(int score)
     {
         if (score > BestScore)
             BestScore = score;
@@ -67,23 +65,6 @@ public static class ComboManager
         HighestCombo = 0;
         BestScore = 0;
     }
-
-    private static void CreateCurrentDepthDisplay()
-    {
-        var fontInfo = TextManager.GetFont("Oswald");
-        var currentDepthConfig = new TextConfig(fontInfo);
-
-        currentDepthConfig.Color = Color.LightBlue;
-        currentDepthConfig.EffectSettings.EnableColorCycle = true;
-        currentDepthConfig.EffectSettings.ColorCycleSpeed = 0.5f;
-        currentDepthConfig.EffectSettings.ColorPalette = new Color[]
-        {
-            Color.LightBlue,
-            Color.CornflowerBlue,
-            Color.DeepSkyBlue
-        };
-    }
-
 
     public static void IncreaseCombo(Fish fish = null, bool isAboomnpha = false)
     {

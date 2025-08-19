@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGameProject1;
 
-public class GameObject : IUpdateables, IDrawables, IColliderMethods
+public class GameObject : BaseColliderMethods, IUpdateables, IDrawables
 {
     // Represents a game object in the scene, which can have multiple components attached to it.
     public string Name;
@@ -133,27 +133,27 @@ public class GameObject : IUpdateables, IDrawables, IColliderMethods
     }
 
     #region Collision Methods
-    public void OnCollisionEnter(Collider other)
+    public override void OnCollisionEnter(Collider other)
     {
     }
 
-    public void OnCollisionStay(Collider other)
+    public override void OnCollisionStay(Collider other)
     {
     }
 
-    public void OnCollisionExit(Collider other)
+    public override void OnCollisionExit(Collider other)
     {
     }
 
-    public void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
     }
 
-    public void OnTriggerStay(Collider other)
+    public override void OnTriggerStay(Collider other)
     {
     }
 
-    public void OnTriggerExit(Collider other)
+    public override void OnTriggerExit(Collider other)
     {
     }
     

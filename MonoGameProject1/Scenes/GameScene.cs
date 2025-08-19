@@ -9,16 +9,28 @@ using MonoGameProject1.UI;
 
 namespace MonoGameProject1;
 
-public class GameScene : Scene
-{
-    private Queue<GameObject> fishPool = new Queue<GameObject>();
+public class GameScene : Scene 
+{ 
+    /// <summary>
+    /// This class represents the main game scene.
+    /// It handles the game logic, player control, fish catching,
+    /// background movement, and UI elements.
+    /// It also manages the speed of the game and the player's depth.
+    /// The game starts with a startup sequence where the player can control the player edge
+    /// and eventually starts the game by pressing the space bar.
+    /// </summary>
+    
+    
+    private Queue<GameObject> fishPool = new Queue<GameObject>(); // Pools
     private List<GameObject> backgroundSprites = new List<GameObject>();
-    private GameObject player;
-    private ComboText comboText;
+    
+    private GameObject player; // player object
+    private GameObject playerEdge;
+    
+    private ComboText comboText; //ui elements
     private DepthMeter depthMeter;
     private DepthMarker depthMarker;
     private ScoreText scoreText;
-    private GameObject playerEdge;
     private GameObject boostBar;
 
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
@@ -72,24 +84,7 @@ public class GameScene : Scene
         Fish.OnFishCaught -= ComboManager.IncreaseCombo;
         base.OnDisable();
     }
-
-    private void CreateComboManager()
-    {
-        comboText = new ComboText("ComboText");
-        AddActiveObject(comboText);
-        depthMarker = new DepthMarker("DepthMarker");
-        AddActiveObject(depthMarker);
-        depthMeter = new DepthMeter("DepthMeter", depthMarker);
-        AddActiveObject(depthMeter);
-        scoreText = new ScoreText("ScoreText");
-        AddActiveObject(scoreText);
-
-        ComboManager.comboText = comboText;
-        ComboManager.depthMeter = depthMeter;
-
-        Fish.OnFishCaught += ComboManager.IncreaseCombo;
-    }
-
+    
     public override void Update(GameTime gameTime)
     {
         if (!IsActive) return;
@@ -117,6 +112,10 @@ public class GameScene : Scene
 
         base.Update(gameTime);
 
+        // Update the player position based on the player edge
+        // This ensures that the player is always positioned correctly relative to the player edge
+        // Logic that needs to be executed at the end of the update cycle
+        
         player.Position = playerEdge.Position - new Vector2(playerSpriteInfo.Texture.Width * 0.125f,
             playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f);
 
@@ -234,6 +233,24 @@ public class GameScene : Scene
         FishPatterns.SetPlayer(playerEdge);
         FishBehaviour.SetPlayer(playerEdge);
     }
+    
+    private void CreateComboManager()
+    {
+        comboText = new ComboText("ComboText");
+        AddActiveObject(comboText);
+        depthMarker = new DepthMarker("DepthMarker");
+        AddActiveObject(depthMarker);
+        depthMeter = new DepthMeter("DepthMeter", depthMarker);
+        AddActiveObject(depthMeter);
+        scoreText = new ScoreText("ScoreText");
+        AddActiveObject(scoreText);
+
+        ComboManager.comboText = comboText;
+        ComboManager.depthMeter = depthMeter;
+
+        Fish.OnFishCaught += ComboManager.IncreaseCombo;
+    }
+
 
     private void CreateBoostBar()
     {
