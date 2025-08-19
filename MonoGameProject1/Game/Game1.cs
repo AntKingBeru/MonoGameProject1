@@ -78,6 +78,8 @@ public class Game1 : Game
         AudioManager.RegisterSFX("Spear","Audio/SFX/Spearthrow");
         AudioManager.RegisterSFX("Splat1","Audio/SFX/SplatSound");
         AudioManager.RegisterSFX("Splat2","Audio/SFX/SplatSound2");
+        AudioManager.RegisterSong("Theme","Audio/Music/Theme");
+        AudioManager.RegisterSong("InGameTheme","Audio/Music/MarioSong");
         
         TextManager.ContentMan = Content;
         TextManager.AddFont("Oswald", "Fonts/Oswald");

@@ -11,6 +11,8 @@ public class MainMenuScene : Scene
     public override void OnEnable()
     {
         IsActive = true;
+        
+        AudioManager.PlaySong("Theme");
 
         var startButton = new StartButton("Start");
         AddActiveObject(startButton);

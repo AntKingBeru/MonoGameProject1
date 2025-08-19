@@ -66,6 +66,7 @@ public class GameScene : Scene
     public override void OnEnable()
     {
         IsActive = true;
+        AudioManager.PlaySong("InGameTheme");
         CreateBackground();
         CreateFish(); // Fish has to be created before player for reference passing
         CreatePlayer();

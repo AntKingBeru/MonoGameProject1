@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/Music/MarioSong.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/MarioSong.ogg
+
+#begin Audio/Music/Theme.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Theme.ogg
+
 #begin Audio/SFX/Aboomnpha_Sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
