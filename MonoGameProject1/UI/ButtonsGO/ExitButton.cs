@@ -13,16 +13,19 @@ public class ExitButton : GameObject
     public ExitButton(string name) : base(name)
     {
 
-        Position = ScreenPosition.Center() + new Vector2(0, 200); // offset
-        
         var spriteConfig = new SpriteConfig(SpriteManager.GetSprite("ExitButton"));
         sprite = AddConfigComponent<Sprite, SpriteConfig>(spriteConfig);
         buttonConfig = new ButtonConfig(sprite);
         button = AddConfigComponent<Button, ButtonConfig>(buttonConfig);
+        Scale = new Vector2(0.25f, 0.25f);
+        Position = ScreenPosition.Center() + new Vector2(-100, 0);
+
+        
     }
 
     public override void Enable()
     {
+
         button.OnButtonClick += Exit;
 
 

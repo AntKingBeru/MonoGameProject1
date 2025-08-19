@@ -11,8 +11,8 @@ public class StartButton : GameObject
     
     public StartButton(string name) : base(name)
     {
-        Position = ScreenPosition.Center() - new Vector2(0, 200); // offset
-
+        Position = ScreenPosition.Center() - new Vector2(100, 200); // offset
+         Scale = new Vector2(0.25f, 0.25f);
         var spriteConfig = new SpriteConfig(SpriteManager.GetSprite("StartButton"));
         sprite = AddConfigComponent<Sprite, SpriteConfig>(spriteConfig);
         buttonConfig = new ButtonConfig(sprite);

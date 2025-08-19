@@ -18,5 +18,6 @@ public class MainMenuTitle : GameObject
         text = AddConfigComponent<Text, TextConfig>(textConfig);
         text.textConfig.Text = "FishKebab";
         Position = ScreenPosition.TopCenter() + new Vector2(0, 50);
+        Scale = new Vector2(1.5f, 1.5f);
     }
 }
