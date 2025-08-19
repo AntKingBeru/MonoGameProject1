@@ -36,6 +36,6 @@ public class StartButton : GameObject
 
     public void StartGame()
     {
-        SceneManager.EnableScene("Game Scene");
+        SceneManager.ReloadNextScene("Game Scene");
     }
 }

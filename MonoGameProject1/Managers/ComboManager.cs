@@ -11,9 +11,7 @@ public static class ComboManager
 {
     public static ComboText comboText;
 
-
     public static DepthMeter depthMeter;
-
 
     public const int MAXCOMBO = 10;
     private const int SCOREFISH = 100;
@@ -64,6 +62,10 @@ public static class ComboManager
         comboTimer = 0;
         currentDepth = 0f;
         totalDistance = 0f;
+        TotalFishCaught = 0;
+        MaxDepthReached = 0f;
+        HighestCombo = 0;
+        BestScore = 0;
     }
 
     private static void CreateCurrentDepthDisplay()

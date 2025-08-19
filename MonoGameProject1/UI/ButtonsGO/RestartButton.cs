@@ -25,7 +25,7 @@ public class RestartButton : GameObject
     private void RestartGame()
     {
         ComboManager.Reset();
-        SceneManager.EnableScene("Game Scene");
+        SceneManager.ReloadNextScene("Game Scene");
     }
 
 

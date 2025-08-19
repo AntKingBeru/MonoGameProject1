@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameProject1.Core;
 using MonoGameProject1.UI;
@@ -10,31 +11,8 @@ namespace MonoGameProject1;
 
 public class GameScene : Scene
 {
-    
-    private int backgroundAmount = 5;
-    private float fishCatchTimer = 0f; //Time in seconds between each fish catch
-    private float speed;
-    private float speedLoseStartSpeed = 0f;
-    private bool isSlowing = false;
-    private bool isGameStarted = false;
-    private List<GameObject> backgroundSprites = new List<GameObject>();
     private Queue<GameObject> fishPool = new Queue<GameObject>();
-    private float miniTimer = 0f;
-    private float fixedPlayerX = -1f; // -1 means not initialized
-
-    private const float GRACE_PERIOD = 1.5f;
-    private const float TIME_THRESHOLD = GRACE_PERIOD + 5f;
-    private const float ORIGIN_SPEED = 700f;
-    private const float MAX_MOVEMENT_SPEED = 1500f;
-    private const float SPEED_MULTIPLIER = 1.3f;
-    private const int MAX_FISH = 4;
-    private const float RED_BOOST = 5f;
-    private const float YELLOW_BOOST = 7.5f;
-    private const float GREEN_BOOST = 10f;
-    private const float ABOOMNAPHA_SPEED_MULTIPLIER = 0.7f;
-
-    private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
-
+    private List<GameObject> backgroundSprites = new List<GameObject>();
     private GameObject player;
     private ComboText comboText;
     private DepthMeter depthMeter;
@@ -42,8 +20,34 @@ public class GameScene : Scene
     private ScoreText scoreText;
     private GameObject playerEdge;
     private GameObject boostBar;
+
+    private float fishCatchTimer = 0f; //Time in seconds between each fish catch
+    private float speed;
+    private float speedLoseStartSpeed = 0f;
+    private bool isSlowing = false;
+    private bool isGameStarted = false;
+    private float miniTimer = 0f;
+    private float fixedPlayerX = -1f; // -1 means not initialized
+
     private SpriteSheetInfo playerSpriteInfo = SpriteManager.GetSprite("PlayerControl");
     private SpriteSheetInfo playerEdgeSpriteInfo = SpriteManager.GetSprite("PlayerCollider");
+    private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
+
+    #region Const City
+
+    private const int BACKGROUND_PANEL_AMOUNT = 5;
+    private const float GRACE_PERIOD = 1.5f;
+    private const float TIME_THRESHOLD = GRACE_PERIOD + 5f;
+    private const float ORIGIN_SPEED = 500f;
+    private const float MAX_MOVEMENT_SPEED = 1500f;
+    private const float SPEED_MULTIPLIER = 1.3f;
+    private const int MAX_FISH = 4;
+    private const float RED_BOOST = 1.2f;
+    private const float YELLOW_BOOST = 1.5f;
+    private const float GREEN_BOOST = 2f;
+    private const float ABOOMNAPHA_SPEED_MULTIPLIER = 0.7f;
+
+    #endregion
 
     #region Core Methods
 
@@ -56,10 +60,10 @@ public class GameScene : Scene
         CreateBoostBar();
         ArrangeSprites();
         CreateComboManager();
+        ComboManager.Reset();
         speed = ORIGIN_SPEED;
-        miniTimer = 0f;
-
-
+        miniTimer = 0;
+        
         Init();
     }
 
@@ -120,8 +124,6 @@ public class GameScene : Scene
         ComboManager.UpdateScore(gameTime);
     }
 
-
-
     #endregion
 
     #region Helper Methods
@@ -180,7 +182,6 @@ public class GameScene : Scene
             fish.Disable();
         }
     }
-    
 
     #endregion
 
@@ -296,7 +297,7 @@ public class GameScene : Scene
                 new Rectangle(0, 0, backgroundSpriteInfo.Texture.Width, backgroundSpriteInfo.Texture.Height),
         };
 
-        for (var i = 0; i < backgroundAmount; i++)
+        for (var i = 0; i < BACKGROUND_PANEL_AMOUNT; i++)
         {
             var backgroundHandler = new GameObject("BackgroundHandler" + i);
             backgroundHandler.Scale =
@@ -325,9 +326,9 @@ public class GameScene : Scene
     private void ArrangeSprites()
     {
         var screenHeight =
-            ScreenPosition.ScreenHeight; // Assuming a fixed screen height of 1920 pixels for this example
+            ScreenPosition.ScreenHeight;
 
-        for (var i = 0; i < backgroundAmount; i++)
+        for (var i = 0; i < BACKGROUND_PANEL_AMOUNT; i++)
         {
             var yPos = ScreenPosition.TopLeft().Y - (i * screenHeight);
             backgroundSprites[i].Position = new Vector2(
@@ -341,10 +342,10 @@ public class GameScene : Scene
 
     #region Game Logic
 
-        private void StartUpSequence(GameTime gameTime)
+    private void StartUpSequence(GameTime gameTime)
     {
         var totalTime = (float)gameTime.TotalGameTime.TotalSeconds;
-            
+
         // Horizontal movement (pendulum)
         if (fixedPlayerX < 0f)
         {
@@ -357,21 +358,21 @@ public class GameScene : Scene
         {
             playerEdge.Position = new Vector2(fixedPlayerX, playerEdge.Position.Y);
         }
-            
+
         var state = Keyboard.GetState();
         if (state.IsKeyDown(Keys.Space) || miniTimer > 0f)
         {
             miniTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                
+
             // Stop the pendulum and fix the horizontal position when space is pressed the first time
             if (fixedPlayerX < 0f)
             {
                 fixedPlayerX = playerEdge.Position.X;
             }
-                
+
             // Vertical movement while pressing
             playerEdge.Position.Y += speed * miniTimer * 0.1f;
-                
+
             // Once miniTimer reaches the threshold, apply speed boost
             if (miniTimer >= 0.25f)
             {
@@ -381,7 +382,7 @@ public class GameScene : Scene
                 if (playerCollider != null && boostCollider != null)
                 {
                     var boostZone = GetBoostZone(playerCollider, boostCollider);
-                        
+
                     // Apply multiplier
                     switch (boostZone)
                     {
@@ -395,13 +396,13 @@ public class GameScene : Scene
                             speed *= RED_BOOST;
                             break;
                     }
-                        
+
                     speed = MathHelper.Clamp(speed, 0f, MAX_MOVEMENT_SPEED);
                 }
-                    
+
                 // Remove boost bar
                 boostBar.Disable();
-                    
+
                 //Start the game
                 isGameStarted = true;
             }
@@ -455,7 +456,8 @@ public class GameScene : Scene
         if (speed <= 1f)
         {
             speed = 1f;
-            SceneManager.EnableScene("End Scene");        }
+            SceneManager.ReloadNextScene("End Scene");
+        }
 
         else
         {
@@ -478,7 +480,7 @@ public class GameScene : Scene
     {
         var screenHeight = ScreenPosition.ScreenHeight;
 
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < BACKGROUND_PANEL_AMOUNT; i++)
         {
             backgroundSprites[i].Position = new Vector2(
                 backgroundSprites[i].Position.X,
@@ -486,7 +488,7 @@ public class GameScene : Scene
             );
         }
 
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < BACKGROUND_PANEL_AMOUNT; i++)
         {
             if (backgroundSprites[i].Position.Y + screenHeight <= 0)
             {

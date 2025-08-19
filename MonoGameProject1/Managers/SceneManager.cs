@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -15,6 +16,15 @@ public static class SceneManager
     {
         DisableCurrentScene();
         EnableScene(scene);
+    }
+
+    public static void ReloadNextScene(string scene)
+    {
+        if (!scenes.ContainsKey(scene))return;
+        scenes[scene].OnDisable();
+        var sceneType = scenes[scene].GetType();
+        scenes[scene] = (Scene)Activator.CreateInstance(sceneType);
+        ChangeScene(scene);
     }
 
     public static void EnableScene(string scene)
@@ -34,9 +44,15 @@ public static class SceneManager
         CurrentScene?.OnDisable();
     }
 
-    public static void AddScene(string name, Scene scene)
+    public static T AddScene<T>(string name) where T : Scene , new()
     {
+        if (scenes.ContainsKey(name))
+        {
+            throw new Exception($"Scene with name {name} already exists.");
+        }
+        var scene = new T { Name = name };
         scenes.Add(name, scene);
+        return scene;
     }
     
     public static void Update(GameTime gameTime)
