@@ -15,10 +15,17 @@ public class MainMenuScene : Scene
         var startButton = new StartButton("Start");
         AddActiveObject(startButton);
 
+
+        var howToPlayButton = new HowToPlayButton("HowToPlay");
+        AddActiveObject(howToPlayButton);
+
         var exitButton = new ExitButton("Exit");
         AddActiveObject(exitButton);
 
+
         var title = new MainMenuTitle("MainTitle");
+
+
         AddActiveObject(title);
         Init();
     }
