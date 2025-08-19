@@ -8,6 +8,7 @@ public class EndScene : Scene
     {
         IsActive = true;
         
+        AudioManager.PlaySong("Theme");
         var exitButton = new ExitButton("Exit");
         exitButton.Position = ScreenPosition.BottomCenter() + new Vector2(-100, -120);
         AddActiveObject(exitButton);

@@ -56,6 +56,7 @@ public class Fish : GameObject
 
     private void PlayFishCaughtSound()
     {
+        AudioManager.CreateSFXInstanceAndPlay("Spear");
         if (behaviour.isAboomnapha)
         {
             AudioManager.CreateSFXInstanceAndPlay("Boom");

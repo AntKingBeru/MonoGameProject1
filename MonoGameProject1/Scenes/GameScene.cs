@@ -83,6 +83,7 @@ public class GameScene : Scene
     public override void OnDisable()
     {
         Fish.OnFishCaught -= ComboManager.IncreaseCombo;
+        Fish.OnFishCaught -= CatchFishLogic;
         base.OnDisable();
     }
     

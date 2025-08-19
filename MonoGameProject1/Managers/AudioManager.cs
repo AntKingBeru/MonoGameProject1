@@ -23,6 +23,7 @@ public static class AudioManager
         Song song;
         if (!songs.TryGetValue(key, out song)) return null;
         MediaPlayer.Play(song);
+        MediaPlayer.IsRepeating = true; // Set to true if you want the song to loop
         return song;
     }
 

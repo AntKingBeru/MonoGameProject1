@@ -16,6 +16,7 @@ public static class SceneManager
     {
         DisableCurrentScene();
         EnableScene(scene);
+        AudioManager.CreateSFXInstanceAndPlay("Bubbles");
     }
 
     public static void ReloadNextScene(string scene)
@@ -31,6 +32,7 @@ public static class SceneManager
     {
         currentScene = GetScene(scene);
         currentScene.OnEnable();
+        AudioManager.CreateSFXInstanceAndPlay("Bubbles");
     }
 
     private static Scene GetScene(string scene)
