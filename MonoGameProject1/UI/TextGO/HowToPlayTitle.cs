@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGameProject1.Core;
-using MonoGameProject1.Utilities.Configs;
 
 namespace MonoGameProject1.UI.TextGO;
 
