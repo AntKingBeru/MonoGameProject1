@@ -32,9 +32,11 @@ public class Game1 : Game
         TextManager.AddFont("Baloo2", "Fonts/Baloo2-SemiBold");
         SpriteManager.ContentMan = Content;
         SpriteManager.AddSprite("Button", "Images/pacman");
-        SpriteManager.AddSprite("ExitButton", "Images/ExitButton");
+        SpriteManager.AddSprite("ExitButton", "Images/Exit");
+        SpriteManager.AddSprite("RestartButton", "Images/Restart");
         SpriteManager.AddSprite("SettingsButton", "Images/SettingsButton");
-        SpriteManager.AddSprite("StartButton", "Images/StartButton");
+        SpriteManager.AddSprite("StartButton", "Images/Start");
+        SpriteManager.AddSprite("HowToPlayButton", "Images/HowToPlay");
         SpriteManager.AddSprite("Background", "Images/PipeNew");
         SpriteManager.AddSprite("OutLine", "Images/PipeOutLine");
         SpriteManager.AddSprite("HighLight", "Images/WhiteCenterClip");
@@ -50,7 +52,6 @@ public class Game1 : Game
         SpriteManager.AddSprite("Abumnapha", "Images/Abuna");
         SpriteManager.AddSprite("DirtClip", "Images/DirtClip");
         SpriteManager.AddSprite("BoostBar", "Images/BoostBar");
-        SpriteManager.AddSprite("TitleImage", "Images/TitleImage");
     }
 
     protected override void Initialize()
@@ -59,11 +60,10 @@ public class Game1 : Game
         ScreenPosition.InitializePos(GraphicsDevice);
         var mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
-        // SceneManager.EnableScene("Main Menu");
-        var howToPlayScene = new HowToPlayScene();
-        SceneManager.AddScene("How to Play", howToPlayScene);
+        SceneManager.EnableScene("Main Menu");
         var gameScene = new GameScene();
         SceneManager.AddScene("Game Scene", gameScene);
+        // SceneManager.EnableScene("Game Scene"); // for testing purposes
         var endScene = new EndScene();
         SceneManager.AddScene("End Scene", endScene);
         SceneManager.EnableScene("How to Play"); // For testing purposes

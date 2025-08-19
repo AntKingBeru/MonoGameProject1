@@ -10,6 +10,7 @@ namespace MonoGameProject1;
 
 public class GameScene : Scene
 {
+    
     private int backgroundAmount = 5;
     private float fishCatchTimer = 0f; //Time in seconds between each fish catch
     private float speed;
@@ -35,7 +36,6 @@ public class GameScene : Scene
     private static SpriteSheetInfo backgroundSpriteInfo = SpriteManager.GetSprite("Background");
 
     private GameObject player;
-    private ComboHandler _comboHandler;
     private ComboText comboText;
     private DepthMeter depthMeter;
     private DepthMarker depthMarker;
@@ -46,6 +46,7 @@ public class GameScene : Scene
     private SpriteSheetInfo playerEdgeSpriteInfo = SpriteManager.GetSprite("PlayerCollider");
 
     #region Core Methods
+
     public override void OnEnable()
     {
         IsActive = true;
@@ -54,10 +55,22 @@ public class GameScene : Scene
         CreatePlayer();
         CreateBoostBar();
         ArrangeSprites();
+        CreateComboManager();
         speed = ORIGIN_SPEED;
         miniTimer = 0f;
 
 
+        Init();
+    }
+
+    public override void OnDisable()
+    {
+        Fish.OnFishCaught -= ComboManager.IncreaseCombo;
+        base.OnDisable();
+    }
+
+    private void CreateComboManager()
+    {
         comboText = new ComboText("ComboText");
         AddActiveObject(comboText);
         depthMarker = new DepthMarker("DepthMarker");
@@ -66,12 +79,13 @@ public class GameScene : Scene
         AddActiveObject(depthMeter);
         scoreText = new ScoreText("ScoreText");
         AddActiveObject(scoreText);
-        _comboHandler = new ComboHandler("ComboManager", comboText, scoreText, depthMeter);
-        AddActiveObject(_comboHandler);
 
-        Init();
-        
+        ComboManager.comboText = comboText;
+        ComboManager.depthMeter = depthMeter;
+
+        Fish.OnFishCaught += ComboManager.IncreaseCombo;
     }
+
     public override void Update(GameTime gameTime)
     {
         if (!IsActive) return;
@@ -86,7 +100,7 @@ public class GameScene : Scene
         {
             HandleTimer(deltaTime);
             MoveBackground(speed * deltaTime);
-            _comboHandler?.UpdateDepth(speed, deltaTime);
+            ComboManager.UpdateDepth(speed, deltaTime);
 
             CleanupIllegalFish();
             TopUpActiveFishInScene();
@@ -103,12 +117,15 @@ public class GameScene : Scene
             playerSpriteInfo.Texture.Height * 0.667f - playerEdgeSpriteInfo.Texture.Height * playerEdge.Scale.Y * 0.5f);
 
         CollisionManager.DetectCollisions();
+        ComboManager.UpdateScore(gameTime);
     }
+
 
 
     #endregion
 
     #region Helper Methods
+
     private static float RandomFloat(float min, float max)
     {
         return (float)new Random().NextDouble() * (max - min) + min;
@@ -304,7 +321,7 @@ public class GameScene : Scene
             dirtClipSprite.spriteConfig.Origin = ScreenPosition.TopLeft();
         }
     }
-    
+
     private void ArrangeSprites()
     {
         var screenHeight =
@@ -397,6 +414,7 @@ public class GameScene : Scene
 
         return Vector2.Lerp(start, end, t);
     }
+
     private BoostZone GetBoostZone(Collider playerCollider, Collider booster)
     {
         // Get rectangles of each collider
@@ -405,10 +423,10 @@ public class GameScene : Scene
 
         var boostLeft = boostBar.Position.X + boosterRect.X * boostBar.Scale.X;
         var boostRight = boostLeft + boosterRect.Width * boostBar.Scale.X;
-        
+
         var playerLeft = playerEdge.Position.X + playerRect.X * playerEdge.Scale.X;
         var playerRight = playerLeft + playerRect.Width * playerEdge.Scale.X;
-        
+
         var relativeLeft = (playerLeft - boostLeft) / (boostRight - boostLeft);
         var relativeRight = (playerRight - boostLeft) / (boostRight - boostLeft);
 
@@ -431,14 +449,13 @@ public class GameScene : Scene
             return BoostZone.Red;
         }
     }
-    
+
     private void HandleTimer(float deltaTime)
     {
         if (speed <= 1f)
         {
             speed = 1f;
-            //TODO: game over logic
-        }
+            SceneManager.EnableScene("End Scene");        }
 
         else
         {
@@ -489,7 +506,6 @@ public class GameScene : Scene
 
     #endregion
 }
-
 
 public enum BoostZone
 {
