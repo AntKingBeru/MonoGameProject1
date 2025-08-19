@@ -5,7 +5,7 @@ namespace MonoGameProject1;
 
 public abstract class ConfigurableComponent : Component
 {
-    // an extentions class for Component to handle configuration settings
+    // an extensions class for Component to handle configuration settings
     // this class can be used configured before enabling it
     public virtual void Initialize<T>(T config) where T : ComponentConfig
     {

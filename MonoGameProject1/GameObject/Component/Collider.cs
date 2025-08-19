@@ -17,12 +17,10 @@ public class Collider : ConfigurableComponent
 
     public override void Initialize<T>(T config)
     {
-        if (config is ColliderConfig colliderConfig)
-        {
-            this.colliderConfig = colliderConfig;
-            CollisionManager.RegisterCollider(this);
-            base.Initialize(config);
-        }
+        if (config is not ColliderConfig colliderConfig) return;
+        this.colliderConfig = colliderConfig;
+        CollisionManager.RegisterCollider(this);
+        base.Initialize(config);
     }
 
     protected override void OnEnable()
@@ -86,18 +84,5 @@ public class Collider : ConfigurableComponent
     public override void Update(GameTime gameTime)
     {
         colliderConfig.Bounds = new Rectangle((int)gameObject.Position.X, (int)gameObject.Position.Y, colliderConfig.Bounds.Width, colliderConfig.Bounds.Height);
-    }
-    
-    public void Notify(Collider other)
-    {
-        if (colliderConfig.IsTrigger)
-        {
-            //Console.WriteLine("Collision Detected: " + gameObject.Name + " with " + other.gameObject.Name);
-            OnTrigger?.Invoke(other);
-        }
-        else
-        {
-            OnCollision?.Invoke(other);
-        }
     }
 }

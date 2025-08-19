@@ -34,7 +34,7 @@ public class StartButton : GameObject
         base.Disable();
     }
 
-    public void StartGame()
+    private void StartGame()
     {
         SceneManager.ReloadNextScene("Game Scene");
     }

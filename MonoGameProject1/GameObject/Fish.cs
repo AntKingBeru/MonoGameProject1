@@ -7,10 +7,8 @@ namespace MonoGameProject1;
 
 public class Fish : GameObject
 {
-    FishBehaviour behaviour;
-
+    private FishBehaviour behaviour;
     private SpriteSheetInfo spriteInfo;
-    
     public delegate void FishCaughtDelegate(Fish fish , bool isAboomnapha);
     public static event FishCaughtDelegate OnFishCaught;
 
@@ -21,9 +19,11 @@ public class Fish : GameObject
         
         var spriteName = FishBehaviour.GetRandomFishSprite();
         spriteInfo = SpriteManager.GetSprite(spriteName);
-        var spriteConfig = new SpriteConfig(spriteInfo);
-        spriteConfig.LayerDepth = 0.6f;
-        spriteConfig.Origin = Vector2.Zero;
+        var spriteConfig = new SpriteConfig(spriteInfo)
+        {
+            LayerDepth = 0.6f,
+            Origin = Vector2.Zero
+        };
         AddConfigComponent<Sprite, SpriteConfig>(spriteConfig);
         
         var rect = new Rectangle(
@@ -33,13 +33,12 @@ public class Fish : GameObject
             60);
         var colliderConfig = new ColliderConfig(rect , true);
         AddConfigComponent<Collider, ColliderConfig>(colliderConfig);
-        behaviour = AddComponent<FishBehaviour>();
+        behaviour = AddSimpleComponent<FishBehaviour>();
         if (spriteName == "Abumnapha")
         {
             behaviour.isAboomnapha = true;
             behaviour.Speed = 0.5f;
         }
-        EnableComponent(behaviour);
     }
 
     public void RandomizeSprite()
@@ -49,11 +48,9 @@ public class Fish : GameObject
     
     public override void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.Name == "PlayerEdge")
-        {
-            OnFishCaught?.Invoke(this, behaviour.isAboomnapha);
-            PlayFishCaughtSound();
-        }
+        if (other.gameObject.Name != "PlayerEdge") return;
+        OnFishCaught?.Invoke(this, behaviour.isAboomnapha);
+        PlayFishCaughtSound();
     }
 
     private void PlayFishCaughtSound()

@@ -12,7 +12,7 @@ public class Button : ConfigurableComponent
 
     public event ButtonClickHandler OnButtonClick;
 
-    public ButtonConfig buttonConfig { get; set; }
+    private ButtonConfig buttonConfig { get; set; }
     public Sprite sprite;
     private bool WasPressed = false;
 

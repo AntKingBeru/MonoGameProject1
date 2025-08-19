@@ -3,24 +3,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace MonoGameProject1.Core;
+namespace MonoGameProject1;
 
 public class Input : SimpleComponent
 {
     private float speed = 375f;
-
     private Vector2 moveVector = Vector2.Zero;
+    private bool disableMovement = false;
     
-    private bool disableMovement = false; //TODO change to true after there are buttons to start the game and shit
     private const float HORIZONTALMULTIPLIER = 1f;
     private const float UPMULTIPLIER = 1.4f;
     private const float DOWNMULTIPLIER = 0.6f;
-    private const float SLOWMOTION = 0.7f;
-    
-    public Input() : base()
-    {
-        
-    }
     
     public void EnableMovement()
     {
@@ -32,14 +25,6 @@ public class Input : SimpleComponent
     {
         disableMovement = true;
         SetActive(false);
-    }
-
-    protected override void OnEnable()
-    {
-    }
-
-    protected override void OnDisable()
-    {
     }
 
     public override void Update(GameTime gameTime)
@@ -96,9 +81,5 @@ public class Input : SimpleComponent
         }
 
         gameObject.Position = ScreenPosition.ClampInBoundaries(gameObject.Position);
-    }
-
-    public override void Draw(SpriteBatch spriteBatch)
-    {
     }
 }

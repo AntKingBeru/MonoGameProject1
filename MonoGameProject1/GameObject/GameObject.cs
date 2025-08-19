@@ -8,12 +8,11 @@ namespace MonoGameProject1;
 
 public class GameObject : IUpdateables, IDrawables, IColliderMethods
 {
+    // Represents a game object in the scene, which can have multiple components attached to it.
     public string Name;
     public readonly int Index;
     public bool IsActive = false;
-
     public Vector2 Position = Vector2.Zero;
-
     public Vector2 Scale = new Vector2(0.5f, 0.5f);
     public float Rotation;
 
@@ -21,18 +20,18 @@ public class GameObject : IUpdateables, IDrawables, IColliderMethods
     private List<Component> InactiveComponents;
 
     private static int GameObjectCounter = 0;
-
+    
     public delegate void GameObjectHandler(GameObject gameObject);
-
     public event GameObjectHandler OnGameObjectDisable;
     public event GameObjectHandler OnGameObjectEnable;
+    
 
     public GameObject(string name)
     {
         Name = name;
         Index = GameObjectCounter++;
-        ActiveComponents = new List<Component>();
-        InactiveComponents = new List<Component>();
+        ActiveComponents = [];
+        InactiveComponents = [];
     }
 
     public virtual void Enable()
@@ -134,27 +133,27 @@ public class GameObject : IUpdateables, IDrawables, IColliderMethods
     }
 
     #region Collision Methods
-    public virtual void OnCollisionEnter(Collider other)
+    public void OnCollisionEnter(Collider other)
     {
     }
 
-    public virtual void OnCollisionStay(Collider other)
+    public void OnCollisionStay(Collider other)
     {
     }
 
-    public virtual void OnCollisionExit(Collider other)
+    public void OnCollisionExit(Collider other)
     {
     }
 
-    public virtual void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
     }
 
-    public virtual void OnTriggerStay(Collider other)
+    public void OnTriggerStay(Collider other)
     {
     }
 
-    public virtual void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other)
     {
     }
     

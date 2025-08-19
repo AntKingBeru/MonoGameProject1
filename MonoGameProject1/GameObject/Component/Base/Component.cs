@@ -5,6 +5,7 @@ namespace MonoGameProject1;
 
 public abstract class Component : IUpdateables, IDrawables
 {
+    // Base class for all components that can be attached to a GameObject.
     public GameObject gameObject;
     public bool IsActive {get;  set;}
     

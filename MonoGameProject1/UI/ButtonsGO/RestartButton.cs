@@ -6,12 +6,10 @@ namespace MonoGameProject1;
 
 public class RestartButton : GameObject
 {
-    
     Sprite sprite;
     Button button;
     ButtonConfig buttonConfig;
- 
-
+    
     public RestartButton(string name) : base(name)
     {
         Position = ScreenPosition.BottomCenter() + new Vector2(-100,-300);

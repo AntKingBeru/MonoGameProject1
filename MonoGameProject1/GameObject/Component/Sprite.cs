@@ -7,10 +7,6 @@ public class Sprite : ConfigurableComponent
 {
     public SpriteConfig spriteConfig { get; private set; }
 
-    public Sprite() : base()
-    {
-    }
-
     public override void Initialize<T>(T config)
     {
         if (config is SpriteConfig spriteConfig)
@@ -18,14 +14,6 @@ public class Sprite : ConfigurableComponent
             this.spriteConfig = spriteConfig;
             base.Initialize(config);
         }
-    }
-
-    protected override void OnEnable()
-    {
-    }
-
-    protected override void OnDisable()
-    {
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -48,10 +36,6 @@ public class Sprite : ConfigurableComponent
             spriteConfig.Effects,
             spriteConfig.LayerDepth
         );
-    }
-
-    public override void Update(GameTime gameTime)
-    {
     }
 
     public override void SetActive(bool activeState)

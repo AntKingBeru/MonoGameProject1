@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGameProject1.Core;
 
-namespace MonoGameProject1.Core;
+namespace MonoGameProject1;
 
 public class FishBehaviour : SimpleComponent
 {
+    private static GameObject player;
     private Func<GameObject, GameTime, bool, Vector2> currentPattern;
+    private SpriteConfig spriteConfiguration;
+    
     private double lastPatternChangeTime;
-    private const float PatternChangeInterval = 0.5f; //change interval in seconds
     private bool invertPattern = false;
     private float timer = 0f;
-    private SpriteConfig spriteConfiguration;
     public float Speed;
     public bool isAboomnapha = false;
     
-    private static GameObject player;
-    
+    private const float PATTERN_CHANGE_INTERVAL = 0.5f; //change interval in seconds
     private const float SPEED_MULTIPLIER = 0.5f;
     private const float MINIMUM_RUN_AWAY_DISTANCE = 100f;
 
@@ -84,7 +85,7 @@ public class FishBehaviour : SimpleComponent
     {
         timer += deltaTime;
 
-        if (timer - lastPatternChangeTime >= PatternChangeInterval)
+        if (timer - lastPatternChangeTime >= PATTERN_CHANGE_INTERVAL)
         {
             var randomIndex = Random.Shared.Next(0, AllPatterns.Count);
 

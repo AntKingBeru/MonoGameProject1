@@ -13,11 +13,6 @@ public class HowToPlayTitle : GameObject
         };
         
         AddConfigComponent<Sprite, SpriteConfig>(titleSpriteConfig);
-        var playerColliderConfig = new ColliderConfig(new Rectangle(
-            50,
-            100,
-            50,
-            75));
         Scale = new Vector2(0.25f, 0.25f);
         Position = ScreenPosition.TopCenter() - new Vector2(titleSpriteConfig.SpriteInfo.Texture.Width * 0.5f * Scale.X, 0f);
     }

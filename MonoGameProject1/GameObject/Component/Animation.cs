@@ -35,7 +35,7 @@ public class Animation : Sprite
         }
     }
 
-    public Rectangle? GetDestRectangle(Rectangle rect)
+    private Rectangle? GetDestRectangle(Rectangle rect)
     {
         var width = (int)(rect.Width * gameObject.Scale.X);
         var height = (int)(rect.Height * gameObject.Scale.Y);

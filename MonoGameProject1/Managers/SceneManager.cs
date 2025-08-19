@@ -7,12 +7,12 @@ namespace MonoGameProject1;
 
 public static class SceneManager
 {
-    private static Scene CurrentScene;
+    private static Scene currentScene;
     private static Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
     public static bool Exit { get; set; }
     public static bool IsLoading { get; set; }
 
-    public static void ChangeScene(string scene)
+    private static void ChangeScene(string scene)
     {
         DisableCurrentScene();
         EnableScene(scene);
@@ -29,8 +29,8 @@ public static class SceneManager
 
     public static void EnableScene(string scene)
     {
-        CurrentScene = GetScene(scene);
-        CurrentScene.OnEnable();
+        currentScene = GetScene(scene);
+        currentScene.OnEnable();
     }
 
     private static Scene GetScene(string scene)
@@ -41,7 +41,7 @@ public static class SceneManager
     private static void DisableCurrentScene()
     { 
         IsLoading = true;
-        CurrentScene?.OnDisable();
+        currentScene?.OnDisable();
     }
 
     public static T AddScene<T>(string name) where T : Scene , new()
@@ -58,15 +58,15 @@ public static class SceneManager
     public static void Update(GameTime gameTime)
     {
         if (Exit) return;
-        if (CurrentScene == null) return;
-        CurrentScene.Update(gameTime);
+        if (currentScene == null) return;
+        currentScene.Update(gameTime);
     }
     
     public static void Draw(SpriteBatch spriteBatch)
     {
         if (Exit) return;
-        if (CurrentScene == null) return;
-        CurrentScene.Draw(spriteBatch);
+        if (currentScene == null) return;
+        currentScene.Draw(spriteBatch);
     }
 
 }
