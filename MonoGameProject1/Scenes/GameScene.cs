@@ -49,13 +49,6 @@ public class GameScene : Scene
 
     public override void OnEnable()
     {
-        IsActive = true;
-        CreateBackground();
-        CreateFish(); // Fish has to be created before player for reference passing
-        CreatePlayer();
-        CreateBoostBar();
-        ArrangeSprites();
-        CreateComboManager();
         speed = ORIGIN_SPEED;
         miniTimer = 0f;
 
@@ -66,26 +59,10 @@ public class GameScene : Scene
     public override void OnDisable()
     {
         Fish.OnFishCaught -= ComboManager.IncreaseCombo;
+        Fish.OnFishCaught -= CatchFishLogic;
         base.OnDisable();
     }
-
-    private void CreateComboManager()
-    {
-        comboText = new ComboText("ComboText");
-        AddActiveObject(comboText);
-        depthMarker = new DepthMarker("DepthMarker");
-        AddActiveObject(depthMarker);
-        depthMeter = new DepthMeter("DepthMeter", depthMarker);
-        AddActiveObject(depthMeter);
-        scoreText = new ScoreText("ScoreText");
-        AddActiveObject(scoreText);
-
-        ComboManager.comboText = comboText;
-        ComboManager.depthMeter = depthMeter;
-
-        Fish.OnFishCaught += ComboManager.IncreaseCombo;
-    }
-
+    
     public override void Update(GameTime gameTime)
     {
         if (!IsActive) return;
@@ -184,6 +161,23 @@ public class GameScene : Scene
 
     #region gameobject creation
 
+    private void CreateComboManager()
+    {
+        comboText = new ComboText("ComboText");
+        AddActiveObject(comboText);
+        depthMarker = new DepthMarker("DepthMarker");
+        AddActiveObject(depthMarker);
+        depthMeter = new DepthMeter("DepthMeter", depthMarker);
+        AddActiveObject(depthMeter);
+        scoreText = new ScoreText("ScoreText");
+        AddActiveObject(scoreText);
+
+        ComboManager.comboText = comboText;
+        ComboManager.depthMeter = depthMeter;
+
+        Fish.OnFishCaught += ComboManager.IncreaseCombo;
+    }
+
     private void CreateFish()
     {
         for (var i = 0; i < 10; i++)
@@ -210,7 +204,7 @@ public class GameScene : Scene
             100,
             50,
             75));
-        var collider = playerEdge.AddConfigComponent<Collider, ColliderConfig>(playerColliderConfig);
+        playerEdge.AddConfigComponent<Collider, ColliderConfig>(playerColliderConfig);
         var playerEdgeInput = playerEdge.AddComponent<Input>();
         playerEdgeInput.EnableMovement();
 
