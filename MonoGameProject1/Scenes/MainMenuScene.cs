@@ -15,6 +15,9 @@ public class MainMenuScene : Scene
         var startButton = new StartButton("Start");
         AddActiveObject(startButton);
 
+        var settingsButton = new SettingsButton("Settings");
+        AddActiveObject(settingsButton);
+
         var exitButton = new ExitButton("Exit");
         AddActiveObject(exitButton);
 
