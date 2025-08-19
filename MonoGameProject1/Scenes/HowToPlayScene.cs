@@ -17,19 +17,20 @@ public class HowToPlayScene : Scene
         IsActive = true;
         
         var startButton = new StartButton("Start");
-        startButton.Position = new Vector2(
-            ScreenPosition.Center().X +
-            ScreenPosition.BottomLeft().X, ScreenPosition.Center().Y + ScreenPosition.BottomLeft().Y)
-            * 0.5f + new Vector2(0, 150);
         startButton.Scale = new Vector2(0.25f, 0.25f);
+        startButton.Position = new Vector2(
+            (ScreenPosition.Center().X + ScreenPosition.BottomLeft().X) * 0.25f,
+            (ScreenPosition.Center().Y + ScreenPosition.BottomLeft().Y) * 0.5f)
+            + new Vector2(0f, 100f);
+        
         AddActiveObject(startButton);
         
         var exitButton = new ExitButton("Exit");
-        exitButton.Position = new Vector2(
-                ScreenPosition.Center().X +
-                ScreenPosition.BottomRight().X, ScreenPosition.Center().Y + ScreenPosition.BottomRight().Y)
-            * 0.5f + new Vector2(0, 150);
         exitButton.Scale = new Vector2(0.25f, 0.25f);
+        exitButton.Position = new Vector2(
+            (ScreenPosition.Center().X + ScreenPosition.BottomRight().X) * 0.375f,
+            (ScreenPosition.Center().Y + ScreenPosition.BottomRight().Y) * 0.5f)
+            + new Vector2(0f, 107.5f);
         AddActiveObject(exitButton);
 
         var title = new HowToPlayTitle("HowToPlayTitle");
