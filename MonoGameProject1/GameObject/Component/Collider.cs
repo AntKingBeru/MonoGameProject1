@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGameProject1.Core;
 
 namespace MonoGameProject1;
@@ -10,6 +11,8 @@ public class Collider : ConfigurableComponent
     public ColliderConfig colliderConfig {get; private set; }
     public delegate void CollisionHandler(Collider other);
     private static Texture2D Texture => SpriteManager.GetSprite("Pixel").Texture;
+    private static bool isPressed = false;
+    private static bool isDebugMode = false;
 
     public Collider() : base()
     {
@@ -36,53 +39,65 @@ public class Collider : ConfigurableComponent
 
     public override void Draw(SpriteBatch _spriteBatch)
     {
-        int thickness = 5;
-        var color = Color.Red;
-        // Draw outline
+        if (isDebugMode)
+        {
+            int thickness = 5;
+            var color = Color.Red;
+            // Draw outline
         
-        // top
-        _spriteBatch.Draw(Texture,
-            new Rectangle(
-                colliderConfig.Bounds.X,
-                colliderConfig.Bounds.Y,
-                colliderConfig.Bounds.Width,
-                thickness
-            ), 
-            color);
+            // top
+            _spriteBatch.Draw(Texture,
+                new Rectangle(
+                    colliderConfig.Bounds.X,
+                    colliderConfig.Bounds.Y,
+                    colliderConfig.Bounds.Width,
+                    thickness
+                ), 
+                color);
         
-        // left
-        _spriteBatch.Draw(Texture,
-            new Rectangle(
-                colliderConfig.Bounds.X,
-                colliderConfig.Bounds.Y,
-                thickness,
-                colliderConfig.Bounds.Height
-            ), 
-            color);
+            // left
+            _spriteBatch.Draw(Texture,
+                new Rectangle(
+                    colliderConfig.Bounds.X,
+                    colliderConfig.Bounds.Y,
+                    thickness,
+                    colliderConfig.Bounds.Height
+                ), 
+                color);
         
-        // right
-        _spriteBatch.Draw(Texture,
-            new Rectangle(
-                colliderConfig.Bounds.X + colliderConfig.Bounds.Width - thickness,
-                colliderConfig.Bounds.Y,
-                thickness,
-                colliderConfig.Bounds.Height
-            ), 
-            color);
+            // right
+            _spriteBatch.Draw(Texture,
+                new Rectangle(
+                    colliderConfig.Bounds.X + colliderConfig.Bounds.Width - thickness,
+                    colliderConfig.Bounds.Y,
+                    thickness,
+                    colliderConfig.Bounds.Height
+                ), 
+                color);
         
-        // bottom
-        _spriteBatch.Draw(Texture,
-            new Rectangle(
-                colliderConfig.Bounds.X,
-                colliderConfig.Bounds.Y + colliderConfig.Bounds.Height - thickness,
-                colliderConfig.Bounds.Width,
-                thickness
-            ), 
-            color);
+            // bottom
+            _spriteBatch.Draw(Texture,
+                new Rectangle(
+                    colliderConfig.Bounds.X,
+                    colliderConfig.Bounds.Y + colliderConfig.Bounds.Height - thickness,
+                    colliderConfig.Bounds.Width,
+                    thickness
+                ), 
+                color);
+        }
     }
     
     public override void Update(GameTime gameTime)
     {
         colliderConfig.Bounds = new Rectangle((int)gameObject.Position.X, (int)gameObject.Position.Y, colliderConfig.Bounds.Width, colliderConfig.Bounds.Height);
+        if (Keyboard.GetState().IsKeyDown(Keys.F6))
+        {
+            isPressed = true;
+        }
+        if (Keyboard.GetState().IsKeyUp(Keys.F6) && isPressed)
+        {
+            isDebugMode = !isDebugMode;
+            isPressed = false;
+        }
     }
 }
