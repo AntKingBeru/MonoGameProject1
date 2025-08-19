@@ -6,6 +6,11 @@ namespace MonoGameProject1;
 
 public static class GameObjectFactory
 {
+    // Factory for creating GameObjects with components.
+    // This factory allows for dynamic registration of components and their configurations.
+    // Sadly we didn't use this factory in the end, but it is here for reference and future use.
+    // Simply didn't have time to implement it fully in the game.
+    
     private static readonly Dictionary<string, (Type ComponentType, ComponentConfig DefaultConfig)> ComponentRegistry = new();
 
     public static void RegisterComponent<T>(string name, ComponentConfig defaultConfig = null) 
