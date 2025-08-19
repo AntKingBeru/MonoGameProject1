@@ -61,13 +61,13 @@ public class Game1 : Game
         ScreenPosition.InitializePos(GraphicsDevice);
         var mainMenuScene = new MainMenuScene();
         SceneManager.AddScene("Main Menu", mainMenuScene);
-        SceneManager.EnableScene("Main Menu");
+        // SceneManager.EnableScene("Main Menu");
+        var howToPlayScene = new HowToPlayScene();
+        SceneManager.AddScene("How to Play", howToPlayScene);
         var gameScene = new GameScene();
         SceneManager.AddScene("Game Scene", gameScene);
         var endScene = new EndScene();
         SceneManager.AddScene("End Scene", endScene);
-        var howToPlayScene = new HowToPlayScene();
-        SceneManager.AddScene("How to Play", howToPlayScene);
         SceneManager.EnableScene("How to Play"); // For testing purposes
         base.Initialize();
     }
