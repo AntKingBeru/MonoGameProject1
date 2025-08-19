@@ -68,7 +68,7 @@ public class Game1 : Game
         SceneManager.AddScene("End Scene", endScene);
         var howToPlayScene = new HowToPlayScene();
         SceneManager.AddScene("How to Play", howToPlayScene);
-        SceneManager.EnableScene("Main Menu"); // For testing purposes
+        SceneManager.EnableScene("How to Play"); // For testing purposes
         base.Initialize();
     }
 
