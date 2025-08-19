@@ -52,7 +52,6 @@ public class Game1 : Game
         SpriteManager.AddSprite("Abumnapha", "Images/Abuna");
         SpriteManager.AddSprite("DirtClip", "Images/DirtClip");
         SpriteManager.AddSprite("BoostBar", "Images/BoostBar");
-        SpriteManager.AddSprite("TitleImage", "Images/TitleImage");
     }
 
     protected override void Initialize()
@@ -64,11 +63,10 @@ public class Game1 : Game
         SceneManager.EnableScene("Main Menu");
         var gameScene = new GameScene();
         SceneManager.AddScene("Game Scene", gameScene);
+        // SceneManager.EnableScene("Game Scene"); // for testing purposes
         var endScene = new EndScene();
         SceneManager.AddScene("End Scene", endScene);
-        var howToPlayScene = new HowToPlayScene();
-        SceneManager.AddScene("How to Play", howToPlayScene);
-        SceneManager.EnableScene("How to Play"); // For testing purposes
+        // SceneManager.EnableScene("End Scene"); // for testing purposes
         base.Initialize();
     }
 
