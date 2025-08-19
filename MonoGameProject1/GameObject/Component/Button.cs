@@ -16,6 +16,16 @@ public class Button : ConfigurableComponent
     public Sprite sprite;
     private bool WasPressed = false;
 
+
+    public override void Initialize<T>(T config)
+    {
+        if (config is ButtonConfig buttonConfig)
+        {
+            this.buttonConfig = buttonConfig;
+            base.Initialize(config);
+        }
+    }
+
     protected override void OnEnable()
     {
         buttonConfig = new ButtonConfig();
@@ -31,14 +41,15 @@ public class Button : ConfigurableComponent
 
     protected override void OnDisable()
     {
+        
     }
 
     public override void Update(GameTime gameTime)
     {
-        buttonConfig._clickArea.X = (int)(gameObject.Position.X - sprite.spriteConfig.SpriteInfo.Texture.Width * 0.5f);
-        buttonConfig._clickArea.Y = (int)(gameObject.Position.Y- sprite.spriteConfig.SpriteInfo.Texture.Height * 0.5f);
-        buttonConfig._clickArea.Width = (int)sprite.spriteConfig.SpriteInfo.Texture.Width;
-        buttonConfig._clickArea.Height = (int)sprite.spriteConfig.SpriteInfo.Texture.Height;
+        buttonConfig._clickArea.X = (int)(gameObject.Position.X - buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Width * 0.5f * gameObject.Scale.X);
+        buttonConfig._clickArea.Y = (int)(gameObject.Position.Y - buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Height * 0.5f * gameObject.Scale.Y);
+        buttonConfig._clickArea.Width = (int)(buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Width * gameObject.Scale.X);
+        buttonConfig._clickArea.Height = (int)(buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Height * gameObject.Scale.Y);
         if (Mouse.GetState().LeftButton == ButtonState.Pressed)
         {
             if (WasPressed)
