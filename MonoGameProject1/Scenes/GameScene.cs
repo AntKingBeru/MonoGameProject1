@@ -49,10 +49,15 @@ public class GameScene : Scene
 
     public override void OnEnable()
     {
+        IsActive = true;
+        CreateBackground();
+        CreateFish(); // Fish has to be created before player for reference passing
+        CreatePlayer();
+        CreateBoostBar();
+        ArrangeSprites();
+        CreateComboManager();
         speed = ORIGIN_SPEED;
         miniTimer = 0f;
-
-
         Init();
     }
 
