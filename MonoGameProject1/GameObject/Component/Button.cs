@@ -7,8 +7,9 @@ using MonoGameProject1.Core;
 namespace MonoGameProject1;
 
 public class Button : ConfigurableComponent
-{ 
+{
     public delegate void ButtonClickHandler();
+
     public event ButtonClickHandler OnButtonClick;
     public ButtonConfig buttonConfig { get; set; }
     private bool WasPressed = false;
@@ -25,20 +26,21 @@ public class Button : ConfigurableComponent
 
     protected override void OnEnable()
     {
-        if(buttonConfig == null) return;
+        if (buttonConfig == null) return;
     }
 
     protected override void OnDisable()
     {
-        
     }
 
     public override void Update(GameTime gameTime)
     {
-        buttonConfig._clickArea.X = (int)(gameObject.Position.X - buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Width * 0.5f * gameObject.Scale.X);
-        buttonConfig._clickArea.Y = (int)(gameObject.Position.Y - buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Height * 0.5f * gameObject.Scale.Y);
-        buttonConfig._clickArea.Width = (int)(buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Width * gameObject.Scale.X);
-        buttonConfig._clickArea.Height = (int)(buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Height * gameObject.Scale.Y);
+        buttonConfig._clickArea.X = (int)gameObject.Position.X;
+        buttonConfig._clickArea.Y = (int)gameObject.Position.Y;
+        buttonConfig._clickArea.Width =
+            (int)(buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Width * gameObject.Scale.X);
+        buttonConfig._clickArea.Height =
+            (int)(buttonConfig.Sprite.spriteConfig.SpriteInfo.Texture.Height * gameObject.Scale.Y);
         if (Mouse.GetState().LeftButton == ButtonState.Pressed)
         {
             if (WasPressed)
