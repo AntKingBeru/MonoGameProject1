@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
 using Microsoft.Xna.Framework;
+using MonoGameProject1.Core;
 using MonoGameProject1.Utilities.Configs;
 using MonoGameProject1.Visuals;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace MonoGameProject1;
 
@@ -11,13 +13,19 @@ public class MainMenuTitle : GameObject
 
     public MainMenuTitle(string name) : base(name)
     {
-        var fontInfo = TextManager.GetFont("Oswald");
-        var textConfig = new TextConfig(fontInfo);
+        var titleSpriteConfig = new SpriteConfig(SpriteManager.GetSprite("TitleImage"))
+        {
+            LayerDepth = 0.9f
+        };
 
-
-        text = AddConfigComponent<Text, TextConfig>(textConfig);
-        text.textConfig.Text = "FishKebab";
-        Position = ScreenPosition.TopCenter() + new Vector2(0, 50);
-        Scale = new Vector2(1.5f, 1.5f);
+        AddConfigComponent<Sprite, SpriteConfig>(titleSpriteConfig);
+        var playerColliderConfig = new ColliderConfig(new Rectangle(
+            50,
+            100,
+            50,
+            75));
+        Scale = new Vector2(0.25f, 0.25f);
+        Position = ScreenPosition.TopCenter() -
+                   new Vector2(titleSpriteConfig.SpriteInfo.Texture.Width * 0.5f * Scale.X, 0f);
     }
 }
